@@ -18,6 +18,10 @@
                 {{#cartList}}
                     <tr class="cart-table my-cart-list" id="cart-{{id}}">
                         <td>{{indexNum}}</td>
+                        <input type="hidden" name="cartId" value="{{id}}">
+                        <input type="hidden" name="orderQty" value="{{orderQty}}">
+                        <input type="hidden" name="productId" value="{{productId}}">
+                        <span class="notVisible">{{id}}</span>
                         <td>
                             <div style="width:150px; margin:0 auto;">
                                 <img src="/upload/{{img}}" alt="Product Image"
@@ -72,6 +76,8 @@
         </div>
     </div>
 </div>
+
+<script src="/js/cart-check.js"></script>
 
 <script>
     let cartSaveList = [];
@@ -203,6 +209,7 @@
     //수량 수정 반영
 
 </script>
+
 
 <script src="/js/sum-calculate.js"></script>
 <script src="/js/list.js"></script>

@@ -43,14 +43,21 @@ public class CartController {
         return "redirect:/cart-list";
     }
 
-
     @PostMapping("/cart/update")
     public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> reqDTO) {
         System.out.println("장바구니 값 받니? : " + reqDTO);
-        cartJPARepository.updateCheckedById();
+
 
         return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
     }
+
+//    @PostMapping("/cart/update")
+//    public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> reqDTO) {
+//        System.out.println("장바구니 값 받니? : " + reqDTO);
+//        cartJPARepository.updateCheckedById();
+//
+//        return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
+//    }
 
 //    public @ResponseBody String update() {
 //        return "구매를 진행하겠습니다.";

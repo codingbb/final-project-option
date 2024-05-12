@@ -12,6 +12,12 @@ public class OrderController {
     private final OrderService orderService;
     private final HttpSession session;
 
+    @GetMapping("/order-save-form")
+    public String saveForm() {
+
+        return "/order/save-form";
+    }
+
     // 주문 목록
     @GetMapping({"/order-list"})
     public String list() {
