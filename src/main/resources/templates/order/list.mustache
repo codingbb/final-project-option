@@ -10,27 +10,32 @@
                 <tr>
                     <th>번호</th>
                     <th>상품명</th>
-                    <th>상품가격</th>
-                    <th>구매수량</th>
+                    <th>결제금액</th>
+                    <th>주문날짜</th>
                     <th>주문상태</th>
                 </tr>
-
-                    <tr>
+            {{#orderItemList}}
                     <tr>
                         <td>1</td>
-                        <td>상품명</td>
                         <td>
                             <div style="width:150px; margin:0 auto;">
-                                <img src="/upload/img" alt="Product Image"
+                                <img src="/upload/{{img}}" alt="Product Image"
                                      style="max-width: 100%; max-height: 100%;">
                             </div>
-                            가격
+                            {{pName}} 외 몇개~~ 보통 사이트 어떻게 나오지?
+                        </td>
+                        <td>
+                            {{sum}}
                         </td>
 
                         <td>
-                            구매 수량
+                            {{createdAt}}
+                        </td>
+                        <td>
+                            {{status}} 이건 값 가공해주고
                         </td>
                     </tr>
+            {{/orderItemList}}
             </table>
         </div>
         <!--주문 테이블-->

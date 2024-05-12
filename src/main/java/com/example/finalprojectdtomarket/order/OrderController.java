@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.order;
 
 import com.example.finalprojectdtomarket.cart.CartResponse;
+import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.user.User;
 import com.example.finalprojectdtomarket.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +39,12 @@ public class OrderController {
 
     // 주문 목록
     @GetMapping({"/order-list"})
-    public String list() {
+    public String list(HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.findUserId(sessionUser.getId());
 
-
+        List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
+        request.setAttribute("orderItemList", orderItemList);
         return "/order/list";
     }
 
@@ -57,12 +61,10 @@ public class OrderController {
         //구매하기 로직
         orderService.saveOrder(requestDTO, user);
 
-
-
         return "redirect:/order-list";
     }
 
-    // 삭제하기
+    // 삭제하기 <- order는 삭제하지 않고 update로 상태값만 바꿔서 합니다
     @PostMapping("/order/{id}/delete")
     public String delete() {
         return "";

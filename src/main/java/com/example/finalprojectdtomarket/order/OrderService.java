@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,6 +27,35 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ProductJPARepository productJPARepository;
 
+    //order-list
+    @Transactional  //TODO: 이거 쿼리문 자꾸 터지는데 트랜젝션을 꼭 붙여야하나요??
+    public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
+        OrderStatus status = OrderStatus.ORDER_COMPLETE;
+        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId, status);
+        System.out.println("아이템 리스트 " + orderItemList);
+
+        List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
+                -> new OrderResponse.ListDTO(orderItem)).toList();
+        System.out.println("아이고 " + orderList);
+
+        // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
+        Map<Integer, OrderResponse.ListDTO> orderDistinct =
+                orderList.stream().collect(Collectors.toMap(
+                        list -> list.getOrderId(),  //orderId가 키값
+                        list -> list,           // 값
+                        (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
+                ));
+
+        // Map의 values 컬렉션을 List로 변환하여 반환
+        List<OrderResponse.ListDTO> distinctOrderList = new ArrayList<>(orderDistinct.values());
+        // 주문 ID(orderId)를 기준으로 내림차순 정렬
+        distinctOrderList.sort((order1, order2) -> order2.getOrderId().compareTo(order1.getOrderId()));
+
+        return distinctOrderList;
+
+    }
+
+    //구매하기
     @Transactional
     public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
         System.out.println("값확인" + requestDTO);
@@ -48,12 +79,10 @@ public class OrderService {
             cartJPARepository.deleteByCartId(requestDTO.getCartId().get(i));
 
         }
-
-
-
     }
 
 
+    //order-save-form
     @Transactional
     public List<CartResponse.ListDTO> orderCartList(Integer userId) {
         Boolean isChecked = true;

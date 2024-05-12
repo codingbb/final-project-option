@@ -1,9 +1,44 @@
 package com.example.finalprojectdtomarket.order;
 
+import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.product.Product;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 public class OrderResponse {
+
+    @Data
+    public static class ListDTO {
+        private Integer orderId;    //order PK
+        private String pName;
+        private Integer sum;     //order
+        private OrderStatus status; //이거 타입 보류
+        private LocalDate createdAt;
+        private String img;
+
+        public ListDTO(OrderItem orderItem) {
+            this.orderId = orderItem.getOrder().getId();
+            this.pName = orderItem.getProduct().getName();
+            this.sum = orderItem.getOrder().getSum();
+            this.status = orderItem.getOrder().getStatus();
+            this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
+            this.img = orderItem.getProduct().getImg();
+        }
+
+//        public ListDTO(Order order, Product product) {
+//            this.orderId = order.getId();
+//            this.pName = product.getName();
+//            this.sum = order.getSum();
+//            this.status = order.getStatus();
+//            this.createdAt = order.getCreatedAt().toLocalDateTime().toLocalDate();
+//        }
+
+
+    }
+
+
+
     //주문서 확인폼
 //    @Data
 //    public static class OrderSaveDTO {
