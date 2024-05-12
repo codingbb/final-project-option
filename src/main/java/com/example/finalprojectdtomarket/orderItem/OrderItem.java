@@ -20,8 +20,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
@@ -37,9 +37,8 @@ public class OrderItem {
     private Timestamp createdAt;
 
     @Builder
-    public OrderItem(Integer id, User user, Product product, Order order, Integer orderQty, Timestamp createdAt) {
+    public OrderItem(Integer id, Product product, Order order, Integer orderQty, Timestamp createdAt) {
         this.id = id;
-        this.user = user;
         this.product = product;
         this.order = order;
         this.orderQty = orderQty;
