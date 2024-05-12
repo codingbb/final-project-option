@@ -1,7 +1,7 @@
 {{> layout/header}}
 
 <div class="container sub-page" style="text-align: center">
-    <form action="#" method="post" class="needs-validation" novalidate="">
+    <form action="/order/save" method="post" class="needs-validation" novalidate="">
         <h3>주문서</h3>
         <div class="order-W d-flex">
             <!--주문 테이블-->
@@ -17,11 +17,16 @@
                             <td>합계</td> <!-- 구매수량과 가격의 순서가 바뀌었습니다 -->
                         </tr>
                     {{#cartList}}
+                        <input type="hidden" name="cartId" value="{{id}}">
+                        <input type="hidden" name="productId" value="{{productId}}">
                         <tr>
                             <td>1</td>
                             <td>{{pName}}</td> <!-- 상품명은 product 객체의 name 속성입니다 -->
+                            <input type="hidden" name="pName" value="{{pName}}">
                             <td>{{price}}</td> <!-- 상품 가격은 product 객체의 price 속성입니다 -->
+                            <input type="hidden" name="price" value="{{price}}">
                             <td>{{orderQty}}</td> <!-- 구매수량 -->
+                            <input type="hidden" name="orderQty" value="{{orderQty}}">
                             <td>{{sum}}</td> <!-- 구매수량 -->
                         </tr>
                     {{/cartList}}
@@ -35,6 +40,7 @@
                 <div class="user-info">
                     <h2 class="bold-500">주문자 정보</h2>
                     <table>
+                        <input type="hidden" name="userId" value="{{user.id}}">
                         <tr>
                             <th>받는 분</th>
                             <td>{{user.username}}</td>
@@ -50,6 +56,7 @@
                         <tr>
                             <th>배송지</th>
                             <td>배송지 적으세요</td>
+                            <input type="hidden" name="address" value="배송지배송지">
                         </tr>
                     </table>
                 </div>
@@ -61,17 +68,17 @@
                     <dl class="d-flex" style="margin:20px auto; width:300px; justify-content: space-between">
                         <dd>최종 결제금액</dd>
                         <dt>{{totalSum}}원</dt>
+                        <input type="hidden" name="totalSum" value="{{totalSum}}" readonly>
                     </dl>
                 </div>
                 <!--주문완료버튼-->
                 <div class="mt-30">
                     <!--                <a href="/order/list">-->
-                    <button class="btn btn-mint" style="width:300px">주문완료하기</button>
+                    <button class="btn btn-mint" type="submit" style="width:300px">주문완료하기</button>
                 </div>
                 <!--주문완료버튼-->
             </div>
             <!--총 결제금액-->
-
         </div>
     </form>
 

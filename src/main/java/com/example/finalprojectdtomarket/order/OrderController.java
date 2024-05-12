@@ -39,12 +39,23 @@ public class OrderController {
     // 주문 목록
     @GetMapping({"/order-list"})
     public String list() {
-        return "";
+
+
+        return "/order/list";
     }
 
     // 주문하기
     @PostMapping("/order/save")
-    public String order() {
+    public String order(OrderRequest.SaveDTO requestDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.findUserId(sessionUser.getId());
+
+        orderService.saveOrder(requestDTO, user);
+
+        requestDTO.setStatus(OrderStatus.ORDER_COMPLETE);
+        System.out.println("오더리스트 나오나요 " + requestDTO);
+
+
         return "redirect:/order-list";
     }
 

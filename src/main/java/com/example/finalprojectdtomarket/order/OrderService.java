@@ -1,8 +1,13 @@
 package com.example.finalprojectdtomarket.order;
 
+import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.cart.Cart;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.cart.CartResponse;
+import com.example.finalprojectdtomarket.orderItem.OrderItem;
+import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
+import com.example.finalprojectdtomarket.product.Product;
+import com.example.finalprojectdtomarket.product.ProductJPARepository;
 import com.example.finalprojectdtomarket.user.User;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +21,28 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
     private final OrderJPARepository orderJPARepository;
+    private final OrderItemJPARepository orderItemJPARepository;
     private final CartJPARepository cartJPARepository;
+    private final ProductJPARepository productJPARepository;
+
+    @Transactional
+    public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
+        System.out.println("값확인" + requestDTO);
+
+        Order order = orderJPARepository.save(requestDTO.toOrderEntity(user));
+
+        for (int i = 0; i < requestDTO.getProductId().size(); i++) {
+            Product product = productJPARepository.findById(requestDTO.getProductId().get(i))
+                    .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
+
+            Integer quantity = requestDTO.getOrderQty().get(i);
+
+            orderItemJPARepository.save(requestDTO.toOrderItemEntity(order, product, quantity));
+        }
+
+
+    }
+
 
     @Transactional
     public List<CartResponse.ListDTO> orderCartList(Integer userId) {
