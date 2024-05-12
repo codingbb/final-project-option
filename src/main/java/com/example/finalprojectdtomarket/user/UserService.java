@@ -46,4 +46,12 @@ public class UserService {
         userJPARepository.save(user);
         return new UserResponse.JoinDTO(user);
     }
+
+    public User findUserId(Integer id) {
+        //TODO: 이거 404 맞는지?
+        User user = userJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("존재하지 않는 사용자 입니다"));
+
+        return user;
+    }
 }
