@@ -13,10 +13,10 @@ INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('애플청포�
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('고랭지 부사 1.3kg(4~5d입)', 21900, 100, 'prod_6.jpg',NOW());
 
 -- cart 정보
-INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, true, NOW());
-INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, true, NOW());
-INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 4,  5, true, NOW());
-INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, true, NOW());
+INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
+INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, false, NOW());
+INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 4,  5, false, NOW());
+INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, false, NOW());
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (3, 5, 10, false, NOW());
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (4, 2,  3, false, NOW());
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (4, 3,  20, false, NOW());

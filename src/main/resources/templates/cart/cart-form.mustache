@@ -19,7 +19,6 @@
                     <tr class="cart-table my-cart-list" id="cart-{{id}}">
                         <td>{{indexNum}}</td>
                         <input type="hidden" name="cartId" value="{{id}}">
-                        <input type="hidden" name="orderQty" value="{{orderQty}}">
                         <input type="hidden" name="productId" value="{{productId}}">
                         <span class="notVisible">{{id}}</span>
                         <td>
@@ -36,7 +35,7 @@
                                  style="width: 100px; text-align: center; margin:0 auto">
                                 <button type="button" class="decrease-btn" aria-label="수량내리기" style="">-
                                 </button>
-                                <input type="text" class="quantity orderQty orderQty-change" name="orderQty"
+                                <input type="text" class="quantity orderQty orderQty-change" id="orderQty" name="orderQty"
                                        value="{{orderQty}}"
                                        style="text-align: center; ">
                                 <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
@@ -207,6 +206,8 @@
     }
 
     //수량 수정 반영
+
+
 
 </script>
 

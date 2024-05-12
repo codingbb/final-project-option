@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.cart;
 
+import com.example.finalprojectdtomarket.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,11 +25,14 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     //cart-list 용
     @Query("select c from Cart c join fetch c.product p where c.user.id = :userId order by c.id desc")
-    List<Cart> findByCartUserId(@PathVariable("userId") Integer userId);
+    List<Cart> findByCartUserId(@Param("userId") Integer userId);
 
 
     @Modifying
     @Query("delete from Cart c where c.product.id = :productId")
-    void deleteByProductId(@PathVariable("productId") Integer productId);
+    void deleteByProductId(@Param("productId") Integer productId);
 
+    //재고 수량 조회
+    @Query("select c from Cart c join fetch c.product p where c.id = :cartId")
+    Cart findByQtyWithId(@Param("cartId") Integer cartId);
 }
