@@ -29,8 +29,10 @@ public class OrderService {
     public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
         System.out.println("값확인" + requestDTO);
 
+        //오더 저장
         Order order = orderJPARepository.save(requestDTO.toOrderEntity(user));
 
+        //오더 아이템 저장
         for (int i = 0; i < requestDTO.getProductId().size(); i++) {
             Product product = productJPARepository.findById(requestDTO.getProductId().get(i))
                     .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
@@ -38,7 +40,15 @@ public class OrderService {
             Integer quantity = requestDTO.getOrderQty().get(i);
 
             orderItemJPARepository.save(requestDTO.toOrderItemEntity(order, product, quantity));
+
+            //상품 수량 변경 //더티체킹
+            product.setQty(product.getQty() - quantity);
+
+            //선택한 카트 딜리트
+            cartJPARepository.deleteByCartId(requestDTO.getCartId().get(i));
+
         }
+
 
 
     }

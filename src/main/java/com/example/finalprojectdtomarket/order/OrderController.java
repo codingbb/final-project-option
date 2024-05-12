@@ -47,13 +47,16 @@ public class OrderController {
     // 주문하기
     @PostMapping("/order/save")
     public String order(OrderRequest.SaveDTO requestDTO) {
+        System.out.println("오더리스트 나오나요 " + requestDTO);
+
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
+        //Enum 쓰기!!
+        requestDTO.setStatus(OrderStatus.ORDER_COMPLETE);
+        //구매하기 로직
         orderService.saveOrder(requestDTO, user);
 
-        requestDTO.setStatus(OrderStatus.ORDER_COMPLETE);
-        System.out.println("오더리스트 나오나요 " + requestDTO);
 
 
         return "redirect:/order-list";

@@ -41,4 +41,8 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     //재고 수량 조회
     @Query("select c from Cart c join fetch c.product p where c.id = :cartId")
     Cart findByQtyWithId(@Param("cartId") Integer cartId);
+
+    @Modifying
+    @Query("delete from Cart c where c.id = :cartId")
+    void deleteByCartId(@Param("cartId") Integer cartId);
 }
