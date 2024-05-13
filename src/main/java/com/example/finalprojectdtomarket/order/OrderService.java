@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true) // lazy 로딩하려면 붙이기
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -28,7 +29,6 @@ public class OrderService {
     private final ProductJPARepository productJPARepository;
 
     //order-list
-    @Transactional  //TODO: 이거 쿼리문 자꾸 터지는데 트랜젝션을 꼭 붙여야하나요??
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
         OrderStatus status = OrderStatus.ORDER_COMPLETE;
         List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId, status);
@@ -72,6 +72,8 @@ public class OrderService {
 
             orderItemJPARepository.save(requestDTO.toOrderItemEntity(order, product, quantity));
 
+//            order.addOrderItem(requestDTO.toOrderItemEntity(order, product, quantity));
+
             //상품 수량 변경 //더티체킹
             product.setQty(product.getQty() - quantity);
 
@@ -90,13 +92,13 @@ public class OrderService {
         List<Cart> carts = cartJPARepository.findByUserIdAndCheckedV2(userId, isChecked);
         List<CartResponse.ListDTO> cartList = carts.stream().map(cart -> new CartResponse.ListDTO(cart)).toList();
 
-        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
+//        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
         //카트 롤백
         for (Cart cart : carts) {
             cart.setIsChecked(false);
         }
 
-        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
+//        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
         return cartList;
     }
 

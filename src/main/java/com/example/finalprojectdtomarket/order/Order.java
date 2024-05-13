@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.order;
 
 import com.example.finalprojectdtomarket.cart.Cart;
+import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.product.Product;
 import com.example.finalprojectdtomarket.user.User;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -36,6 +38,14 @@ public class Order {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    // Json  직렬화 터질수도 있어서!! 조심! -> Casecade 영속성 전파
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+//    private List<OrderItem> orderItems;
+//
+//    public void addOrderItem(OrderItem orderItem){
+//        this.orderItems.add(orderItem);
+//    }
 
     @Builder
     public Order(Integer id, User user, String address, Integer sum, OrderStatus status, Timestamp createdAt) {

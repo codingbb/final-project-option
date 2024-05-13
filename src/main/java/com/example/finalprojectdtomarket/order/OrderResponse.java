@@ -19,7 +19,7 @@ public class OrderResponse {
 
         public ListDTO(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
-            this.pName = orderItem.getProduct().getName();
+            this.pName = orderItem.getProduct().getName(); // lazy 로딩
             this.sum = orderItem.getOrder().getSum();
             this.status = orderItem.getOrder().getStatus();
             this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
