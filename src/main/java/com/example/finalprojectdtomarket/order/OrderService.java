@@ -60,7 +60,7 @@ public class OrderService {
     public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
         System.out.println("값확인" + requestDTO);
 
-        //오더 저장
+        //오더 저장 //TODO : save 부분
         Order order = orderJPARepository.save(requestDTO.toOrderEntity(user));
 
         //오더 아이템 저장
