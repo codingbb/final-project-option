@@ -35,20 +35,21 @@
                                  style="width: 100px; text-align: center; margin:0 auto">
                                 <button type="button" class="decrease-btn" aria-label="수량내리기" style="">-
                                 </button>
-                                <input type="text" class="quantity orderQty orderQty-change" id="orderQty" name="orderQty"
+                                <input type="text" class="quantity orderQty orderQty-change" id="orderQty"
+                                       name="orderQty"
                                        value="{{orderQty}}"
                                        style="text-align: center; ">
                                 <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
                             </div>
                         </td>
 
-                        <td class="price-class">{{price}}</td>
+                        <td class="price-class" id="price-item" data-price="{{price}}">{{price}}</td>
 
-                        <td class="sum-class">{{sum}}</td>
+                        <td class="sum-class" id="sum-item" data-sum="{{sum}}">{{sum}}</td>
 
                         <td>
                             <input class="form-check-input product-checkbox item-check" type="checkbox" name="itemCheck"
-                                   id="itemCheck-id" style="width:20px !important; margin: 0 auto">
+                                   id="itemCheck-id" value="{{sum}}" style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
                 {{/cartList}}
@@ -76,144 +77,47 @@
     </div>
 </div>
 
-<script src="/js/cart-check.js"></script>
 
 <script>
-    let cartSaveList = [];
-    // 총합을 계산하고 화면에 표시하는 함수
-    function calculateAndDisplayTotal() {
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(total) {
+        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // 체크박스에서 값 들어오는 jQuery
+    $(".item-check").change(function (e) {
+        // console.log(e);
+        // console.log(this);
         let total = 0;
-        document.querySelectorAll(".my-cart-list").forEach(row => {
-            let checkBox = row.querySelector(".item-check");
-            if(checkBox.checked){
-                let price = parseInt(row.querySelector(".price-class").textContent);
-                let orderQty = parseInt(row.querySelector(".orderQty").value);
-                total += price * orderQty;
-            }
+        $(".item-check:checked").each(function () {
+            // let price = $(this).val();
+            // console.log(price);
+            total = total + parseInt($(this).val());
+            console.log(total);
         });
-
-        document.querySelector(".totalSum").textContent = total.toLocaleString();
-    }
-
-    // 체크박스 클릭 시 총합 계산 로직 실행
-    document.querySelectorAll(".my-cart-list .form-check-input").forEach(checkbox => {
-        checkbox.addEventListener("click", calculateAndDisplayTotal);
+        $("#totalSum").text(numberWithCommas(total));
     });
 
-    // 구매하기 버튼 클릭 이벤트
-    document.querySelector("#purchaseButton").addEventListener("click", function (e) {
-        e.preventDefault();
-
-        let cartTable = document.querySelectorAll(".my-cart-list");
-
-        cartTable.forEach(value => {
-            let checkBox = value.querySelector("div.form-check > input[type='checkbox']");
-            if(checkBox.checked){
-                let cartId = checkBox.value;
-                let orderQty = value.querySelector(".orderQty > input").value;
-
-                let checkedCart = {
-                    cartId: cartId,
-                    orderQty: orderQty,
-                    checkedBox: checkBox.checked ? true : false
-                };
-
-                cartSaveList.push(checkedCart);
-            }
-            calculateAndDisplayTotal(); // 최종 확인용 총합계 다시 계산
-            alert("주문이 완료되었습니다. 총 합계: " + document.querySelector(".totalSum").textContent + "원");
-        });
-
-        console.log(cartSaveList);
-
-        // AJAX 요청으로 선택된 상품을 서버로 전송
-        $.ajax({
-            url: '/cart/update',
-            data: JSON.stringify(cartSaveList),
-            contentType: 'application/json; charset=utf-8',
-            type: 'POST'
-        }).done((res) => {
-            alert(`결과: ${res}`);
-            location.href = "/order-save-form";
-        }).fail((res) => {
-            // 오류 처리
-        });
+    // 장바구니에 상품가격 콤마 찍기
+    $(".price-class").each(function () {
+        let price = $(this).data("price");
+        console.log(price);
+        $(this).text(numberWithCommas(price));
     });
 
-
-    //수량 수정 반영
-    $(document).ready(function setTotal() {
-        // 수량 증가 버튼 클릭 이벤트
-        $(".increase-btn").click(function () {
-            var $quantityInput = $(this).siblings(".quantity");
-            var $price = $(this).closest("tr").find(".price-class").text(); // 상품 가격 가져오기
-            var currentQuantity = parseInt($quantityInput.val());
-            var newQuantity = currentQuantity + 1;
-            $quantityInput.val(newQuantity); // 수량 업데이트
-            updateSum($(this), $price, newQuantity); // 합계 업데이트
-
-        });
-
-        // 수량 감소 버튼 클릭 이벤트
-        $(".decrease-btn").click(function () {
-            var $quantityInput = $(this).siblings(".quantity");
-            var $price = $(this).closest("tr").find(".price-class").text(); // 상품 가격 가져오기
-            var currentQuantity = parseInt($quantityInput.val());
-            if (currentQuantity > 1) {
-                var newQuantity = currentQuantity - 1;
-                $quantityInput.val(newQuantity); // 수량 업데이트
-                updateSum($(this), $price, newQuantity); // 합계 업데이트
-            }
-        });
-
-        // 합계 업데이트 함수
-        function updateSum($element, price, quantity) {
-            var sum = parseInt(price) * quantity; // 새 합계 계산
-            $element.closest("tr").find(".sum-class").text(sum); // 합계 텍스트 업데이트
-        }
-
-        // 수량 입력 필드 값이 변경될 때 이벤트 처리
-        $(".quantity").on("input", function () {
-            var $quantityInput = $(this); // 현재 수정된 수량 입력 필드
-            var $price = $(this).closest("tr").find(".price-class").text(); // 상품 가격 가져오기
-            var currentQuantity = parseInt($quantityInput.val()); // 현재 입력된 수량
-            if (!isNaN(currentQuantity)) { // 입력된 값이 숫자인 경우에만 처리
-                updateSum($(this), $price, currentQuantity); // 합계 업데이트
-            }
-        });
-
-        // 재고 수량 계산하여 표시    //TODO: qty 안해서 수정 안함
-        var productQty = parseInt("{qty}}");
-        var orderQty = parseInt($(".quantity").val());
-        var remainingQty = productQty - orderQty;
-        $(".remaining-qty").text("재고 수량: " + remainingQty);
+    //장바구니에 구매금액(총액) 콤마 찍기
+    $(".sum-class").each(function () {
+        let sum = $(this).data("sum");
+        console.log(sum);
+        $(this).text(numberWithCommas(sum));
     });
-
-    // 전체 합계 업데이트 함수
-    function updateTotalSum() {
-        var totalSum = 0;
-        $(".sum-class").each(function () { // 모든 합계 클래스를 순회하면서
-            totalSum += parseInt($(this).text()); // 각 합계를 더함
-        });
-        $(".totalSum").text(totalSum); // 전체 합계 업데이트
-    }
-
-    // 합계 업데이트 함수 내에서 전체 합계 업데이트 함수 호출
-    function updateSum($element, price, quantity) {
-        var sum = parseInt(price) * quantity; // 새 합계 계산
-        $element.closest("tr").find(".sum-class").text(sum); // 합계 텍스트 업데이트
-        updateTotalSum(); // 전체 합계 업데이트 호출
-    }
-
-    //수량 수정 반영
 
 
 
 </script>
 
+<script src="/js/cart-check.js"></script>
 
-<script src="/js/sum-calculate.js"></script>
-<script src="/js/list.js"></script>
-<script src="/js/check-all.js"></script>
+
 
 {{> layout/footer}}
