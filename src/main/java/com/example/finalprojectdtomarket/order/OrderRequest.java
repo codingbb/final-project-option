@@ -12,6 +12,14 @@ import java.util.List;
 public class OrderRequest {
 
     @Data
+    public static class CancelDTO {
+        private Integer orderId;
+        private Integer productId;
+        private Integer orderQty;
+    }
+
+
+    @Data
     public static class SaveDTO {
         //order에 넣는 부분
         private String address;

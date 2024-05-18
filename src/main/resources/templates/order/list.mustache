@@ -13,6 +13,7 @@
                     <th>결제금액</th>
                     <th>주문날짜</th>
                     <th>주문상태</th>
+                    <th>선택하기</th>
                 </tr>
             {{#orderItemList}}
                     <tr>
@@ -32,15 +33,66 @@
                             {{createdAt}}
                         </td>
                         <td>
-                            {{status}} 이건 값 가공해주고
+                            {{status}}
+                        </td>
+                        <td>
+                            <input class="form-check-input product-checkbox item-check" type="checkbox" name="itemCheck orderId"
+                                   id="itemCheck-id" value="{{sum}}"
+                                   data-order-id="{{orderId}}" data-product-id="{{productId}}" data-order-qty="{{orderQty}}"
+                                   style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
             {{/orderItemList}}
             </table>
+
+            <button type="button" class="btn btn-mint" onclick="order()" id="purchaseButton" style="width:300px">주문취소</button>
+
         </div>
         <!--주문 테이블-->
     </div>
 </div>
 
+<script>
+
+    let requestBody = [];
+
+    function order() {
+        $(".item-check:checked").each(function() {
+            let orderId = $(this).data("order-id");
+            let productId = $(this).data("product-id");
+            let orderQty = $(this).data("order-qty");
+            // console.log(orderItemId);
+
+            let checkedOrder = {
+                orderId: orderId,
+                productId: productId,
+                orderQty: orderQty
+
+            };    //객체 형식으로 만들어주기
+
+            requestBody.push(checkedOrder); // orderId를 객체로 추가
+        });
+
+        console.log(requestBody);
+        console.log(JSON.stringify(requestBody));
+
+
+        $.ajax({
+            url: '/order/cancel',
+            data: JSON.stringify(requestBody),
+            contentType: 'application/json; charset=utf-8',
+            type: 'POST'
+
+        }).done((res)=>{
+            alert("취소가 완료되었습니다!");
+            location.href = "/order-list"
+
+        }).fail((res)=>{
+            alert("통신 오류")
+        });
+
+    }
+
+</script>
 
 {{> layout/footer}}

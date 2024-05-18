@@ -28,15 +28,41 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ProductJPARepository productJPARepository;
 
+    @Transactional
+    public void orderCancel(List<OrderRequest.CancelDTO> requestDTO) {
+        OrderStatus status;
+
+        //값이 1개밖에 안들어오니까 (중복제거 해놔서) 해당 값으로 orderItem을 찾음
+        for (int i = 0; i < requestDTO.size(); i++) {
+            List<OrderItem> orderItemList = orderItemJPARepository.findByOrderId(requestDTO.get(i).getOrderId());
+            System.out.println("아이템리스트 " + orderItemList);
+
+            status = OrderStatus.ORDER_CANCEL;
+
+            //안쪽에서 for문 돌려야함
+            for (OrderItem orderItem : orderItemList) {
+                // order 테이블 상태변경
+                orderItem.getOrder().setStatus(status);
+
+                // product 테이블 재고 변경
+                Integer productQty = orderItem.getProduct().getQty();
+//                System.out.println("재고" + productQty);
+                orderItem.getProduct().setQty(productQty + orderItem.getOrderQty());
+            }
+
+        }
+    }
+
+
     //order-list
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
         OrderStatus status = OrderStatus.ORDER_COMPLETE;
         List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId, status);
-        System.out.println("아이템 리스트 " + orderItemList);
+//        System.out.println("아이템 리스트 " + orderItemList);
 
         List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
                 -> new OrderResponse.ListDTO(orderItem)).toList();
-        System.out.println("아이고 " + orderList);
+//        System.out.println("아이고 " + orderList);
 
         // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
         Map<Integer, OrderResponse.ListDTO> orderDistinct =

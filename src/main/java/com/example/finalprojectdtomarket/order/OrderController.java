@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class OrderController {
         User user = userService.findUserId(sessionUser.getId());
 
         List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
+        System.out.println("orderItemList = " + orderItemList);
         request.setAttribute("orderItemList", orderItemList);
         return "/order/list";
     }
@@ -51,7 +54,7 @@ public class OrderController {
     // 주문하기
     @PostMapping("/order/save")
     public String order(OrderRequest.SaveDTO requestDTO) {
-        System.out.println("오더리스트 나오나요 " + requestDTO);
+//        System.out.println("오더리스트 나오나요 " + requestDTO);
 
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
@@ -65,8 +68,11 @@ public class OrderController {
     }
 
     // 삭제하기 <- order는 삭제하지 않고 update로 상태값만 바꿔서 합니다
-    @PostMapping("/order/{id}/delete")
-    public String delete() {
-        return "";
+    @PostMapping("/order/cancel")
+    public @ResponseBody String cancel(@RequestBody List<OrderRequest.CancelDTO> requestDTO) {
+        System.out.println("받는지 확인 " + requestDTO);
+        orderService.orderCancel(requestDTO);
+
+        return "redirect:/order-list";
     }
 }
