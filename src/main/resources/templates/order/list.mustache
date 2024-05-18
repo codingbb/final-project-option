@@ -8,6 +8,12 @@
     .panel-title {
         display: none;
     }
+
+    .flip:hover {
+        cursor: pointer;
+    }
+
+
 </style>
 
 <div class="container pt-5" style="text-align: center">
@@ -53,6 +59,14 @@
                     </tr>
                 {{/orderItemList}}
 
+                <tr class="panel-title">
+                    <th></th>
+                    <th>상품명</th>
+                    <th>상품금액</th>
+                    <th>주문수량</th>
+                    <th>합계</th>
+                    <th>주문상태</th>
+                </tr>
 
                 <!--   슬라이드 쇼 용 -->
                 {{#orderItemListV2}}
@@ -68,21 +82,10 @@
                         <td>{{price}}</td>
                         <td>{{orderQty}}</td>
                         <td>{{sum}}</td>
-                        <td>결제완료</td>
+                        <td>{{status}}</td>
 
                     </tr>
                 {{/orderItemListV2}}
-
-
-                <tr class="panel-title">
-                    <th></th>
-                    <th>상품명</th>
-                    <th>상품금액</th>
-                    <th>주문수량</th>
-                    <th>합계</th>
-                    <th>주문상태</th>
-                </tr>
-
 
             </table>
 
@@ -101,10 +104,11 @@
         // alert("ㄱㄱ");
         var orderId = $(this).data("order-id");
         // 모든 .panel 요소를 숨김
-        // $(".panel").slideUp("fast");
+        $(".panel").slideUp("fast");
 
         // 동일한 data-order-id를 가진 .panel만 토글
         setTimeout(() => {
+            $(".panel-title").slideToggle("fast");
             $(".panel").each(function () {
                 if ($(this).data("order-id") == orderId) {
                     $(this).slideToggle("fast");
