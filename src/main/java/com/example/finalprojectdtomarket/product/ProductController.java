@@ -41,6 +41,7 @@ public class ProductController {
 
     @PostMapping("/product/save")
     public String save(ProductRequest.SaveDTO reqDTO) {
+        System.out.println("dd" + reqDTO);
         productService.save(reqDTO);
         return "redirect:/";
     }

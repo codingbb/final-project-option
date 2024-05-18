@@ -93,6 +93,8 @@
             </button>
 
         </div>
+
+        <br><br><br>
         <!--주문 테이블-->
     </div>
 </div>
@@ -108,7 +110,7 @@
 
         // 동일한 data-order-id를 가진 .panel만 토글
         setTimeout(() => {
-            $(".panel-title").slideToggle("fast");
+            // $(".panel-title").slideToggle("fast");
             $(".panel").each(function () {
                 if ($(this).data("order-id") == orderId) {
                     $(this).slideToggle("fast");
