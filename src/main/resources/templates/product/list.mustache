@@ -62,7 +62,7 @@
                         <div class="card-body">
                             <button class="btn mb-20">상세보기</button>
                             <h4 class="card-title">{{name}}</h4>
-                            <p class="card-text price fw-600 ft-20">{{price}}원</p>
+                            <p class="card-text price fw-600 ft-20 price-class">{{price}}원</p>
                         </div>
                     </a>
                     {{/productList}}
@@ -80,5 +80,20 @@
 
 </div>
 <!--메인 끝-->
+
+<script>
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(".price-class").each(function () {
+       let price = $(this).text();
+       // console.log(price);
+       $(this).text(numberWithCommas(price));
+    });
+
+
+</script>
 
 {{> layout/footer}}
