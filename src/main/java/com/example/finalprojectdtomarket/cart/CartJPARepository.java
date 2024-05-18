@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.cart;
 
 import com.example.finalprojectdtomarket.product.Product;
+import com.example.finalprojectdtomarket.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -45,4 +46,8 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Modifying
     @Query("delete from Cart c where c.id = :cartId")
     void deleteByCartId(@Param("cartId") Integer cartId);
+
+
+    @Query("select c from Cart c where c.user.id = :sessionUserId and c.product.id = :productId")
+    Cart findByUserAndProduct(@Param("sessionUserId") Integer sessionUserId, @Param("productId") Integer productId);
 }

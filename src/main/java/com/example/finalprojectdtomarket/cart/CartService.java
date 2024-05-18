@@ -26,7 +26,14 @@ public class CartService {
         //장바구니에 존재하지 않는 상품을 넣을 수도 있으니까
         Product product = productJPARepository.findById(requestDTO.getProductId())
                         .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다"));
-        cartJPARepository.save(requestDTO.toEntity(sessionUser, product));
+
+        Cart cart = cartJPARepository.findByUserAndProduct(sessionUser.getId(), requestDTO.getProductId());
+
+        if (cart != null) {
+            cart.setOrderQty(cart.getOrderQty() + requestDTO.getOrderQty());
+        } else {
+            cartJPARepository.save(requestDTO.toEntity(sessionUser, product));
+        }
     }
 
 
