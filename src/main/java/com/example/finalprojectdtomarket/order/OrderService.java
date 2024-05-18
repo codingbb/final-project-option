@@ -78,7 +78,7 @@ public class OrderService {
         distinctOrderList.sort((order1, order2) -> order2.getOrderId().compareTo(order1.getOrderId()));
 
         return distinctOrderList;
-
+//        return orderList;
     }
 
     //구매하기
