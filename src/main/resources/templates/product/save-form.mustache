@@ -43,7 +43,7 @@
                         <tr>
                             <th>상품가격</th>
                             <td colspan="2">
-                                <input name="price" type="number" class="form-control price"
+                                <input name="price" type="text" class="form-control price price-class"
                                        placeholder="상품 가격을 적어주세요." style="width: 100%">
                             </td>
                         </tr>
@@ -75,5 +75,30 @@
     </form>
 </div>
 
+<script>
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //금액을 수정할때 실시간으로 콤마 찍기
+    $(".price-class").on("input", function () {
+        let price = $(this).val().replace(/,/g, "");
+        $(this).val(numberWithCommas(price));
+
+    });
+
+    //폼 제출할땐 text가 아니라 int 로 인식 되어야함
+    $('form').submit(function(e){
+        $(".price-class").each(function(){
+            var price = $(this).val();
+            // 쉼표 제거
+            price = price.replace(/,/g, "");
+            // 쉼표가 제거된 값을 필드에 다시 설정
+            $(this).val(price);
+        });
+    });
+
+</script>
 
 {{> layout/footer}}
