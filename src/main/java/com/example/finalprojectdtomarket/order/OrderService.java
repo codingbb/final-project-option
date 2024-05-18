@@ -56,8 +56,8 @@ public class OrderService {
 
     //order-list
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
-        OrderStatus status = OrderStatus.ORDER_COMPLETE;
-        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId, status);
+//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
+        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId);
 //        System.out.println("아이템 리스트 " + orderItemList);
 
         List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
@@ -79,6 +79,19 @@ public class OrderService {
 
         return distinctOrderList;
 //        return orderList;
+    }
+
+    //order-list-V2 (토글용 ..)
+    public List<OrderResponse.ListDTOV2> orderListV2(Integer sessionUserId) {
+//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
+        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId);
+//        System.out.println("아이템 리스트 " + orderItemList);
+
+        List<OrderResponse.ListDTOV2> orderList = orderItemList.stream().map(orderItem
+                -> new OrderResponse.ListDTOV2(orderItem)).toList();
+        System.out.println("아이고 " + orderList);
+
+        return orderList;
     }
 
     //구매하기

@@ -46,8 +46,10 @@ public class OrderController {
         User user = userService.findUserId(sessionUser.getId());
 
         List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
+        List<OrderResponse.ListDTOV2> orderItemListV2 = orderService.orderListV2(user.getId());
 //        System.out.println("orderItemList = " + orderItemList);
         request.setAttribute("orderItemList", orderItemList);
+        request.setAttribute("orderItemListV2", orderItemListV2);
         return "/order/list";
     }
 

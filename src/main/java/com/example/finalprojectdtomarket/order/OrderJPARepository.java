@@ -14,8 +14,8 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
     @Query("select oi from OrderItem oi " +
             "join fetch oi.order o " +
             "join fetch oi.product p " +
-            "where o.user.id = :sessionUserId and o.status = :status order by o.id desc")
-    List<OrderItem> findOrderList(@Param("sessionUserId") Integer sessionUserId, @Param("status") OrderStatus status);
+            "where o.user.id = :sessionUserId order by o.id desc")
+    List<OrderItem> findOrderList(@Param("sessionUserId") Integer sessionUserId);
 
 
 }

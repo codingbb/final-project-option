@@ -1,7 +1,17 @@
 {{> layout/header}}
 
+<style>
+    .panel {
+        display: none;
+    }
+
+    .panel-title {
+        display: none;
+    }
+</style>
+
 <div class="container pt-5" style="text-align: center">
-<br>
+    <br>
     <br><br><br><br>
     <div class="row">
         <!--주문 테이블-->
@@ -15,14 +25,11 @@
                     <th>주문상태</th>
                     <th>선택하기</th>
                 </tr>
-            {{#orderItemList}}
-                    <tr>
+
+                {{#orderItemList}}
+                    <tr class="flip" data-order-id="{{orderId}}">
                         <td>{{orderNumb}}</td>
                         <td>
-<!--                            <div style="width:150px; margin:0 auto;">-->
-<!--                                <img src="/upload/{{img}}" alt="Product Image"-->
-<!--                                     style="max-width: 100%; max-height: 100%;">-->
-<!--                            </div>-->
                             {{pName}}
                         </td>
                         <td>
@@ -36,16 +43,51 @@
                             {{status}}
                         </td>
                         <td>
-                            <input class="form-check-input product-checkbox item-check" type="checkbox" name="itemCheck orderId"
+                            <input class="form-check-input product-checkbox item-check" type="checkbox"
+                                   name="itemCheck orderId"
                                    id="itemCheck-id" value="{{sum}}"
-                                   data-order-id="{{orderId}}" data-product-id="{{productId}}" data-order-qty="{{orderQty}}"
+                                   data-order-id="{{orderId}}" data-product-id="{{productId}}"
+                                   data-order-qty="{{orderQty}}"
                                    style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
-            {{/orderItemList}}
+                {{/orderItemList}}
+
+
+                <!--   슬라이드 쇼 용 -->
+                {{#orderItemListV2}}
+                    <tr class="panel" data-order-id="{{orderId}}">
+                        <td>
+                            <div style="width:150px; margin:0 auto;">
+                                <img src="/upload/{{img}}" alt="Product Image"
+                                     style="max-width: 100%; max-height: 100%;">
+                            </div>
+                        </td>
+
+                        <td>{{pName}}</td>
+                        <td>{{price}}</td>
+                        <td>{{orderQty}}</td>
+                        <td>{{sum}}</td>
+                        <td>결제완료</td>
+
+                    </tr>
+                {{/orderItemListV2}}
+
+
+                <tr class="panel-title">
+                    <th></th>
+                    <th>상품명</th>
+                    <th>상품금액</th>
+                    <th>주문수량</th>
+                    <th>합계</th>
+                    <th>주문상태</th>
+                </tr>
+
+
             </table>
 
-            <button type="button" class="btn btn-mint" onclick="order()" id="purchaseButton" style="width:300px">주문취소</button>
+            <button type="button" class="btn btn-mint" onclick="order()" id="purchaseButton" style="width:300px">주문취소
+            </button>
 
         </div>
         <!--주문 테이블-->
@@ -54,10 +96,29 @@
 
 <script>
 
+    //슬라이드 쇼
+    $(".flip").click(function () {
+        // alert("ㄱㄱ");
+        var orderId = $(this).data("order-id");
+        // 모든 .panel 요소를 숨김
+        // $(".panel").slideUp("fast");
+
+        // 동일한 data-order-id를 가진 .panel만 토글
+        setTimeout(() => {
+            $(".panel").each(function () {
+                if ($(this).data("order-id") == orderId) {
+                    $(this).slideToggle("fast");
+                }
+            });
+        }, 200); // slideUp 애니메이션이 완료될 시간을 고려하여 적당한 딜레이를 설정
+    });
+
+
+    // 값 받기
     let requestBody = [];
 
     function order() {
-        $(".item-check:checked").each(function() {
+        $(".item-check:checked").each(function () {
             let orderId = $(this).data("order-id");
             let productId = $(this).data("product-id");
             let orderQty = $(this).data("order-qty");
@@ -83,11 +144,11 @@
             contentType: 'application/json; charset=utf-8',
             type: 'POST'
 
-        }).done((res)=>{
+        }).done((res) => {
             alert("취소가 완료되었습니다!");
             location.href = "/order-list"
 
-        }).fail((res)=>{
+        }).fail((res) => {
             alert("통신 오류")
         });
 

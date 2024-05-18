@@ -65,11 +65,46 @@ public class OrderResponse {
                 return "주문완료";
             }
             if (OrderStatus.ORDER_CANCEL.equals(status)) {
-                return "취소완료";
+                return "주문취소";
             }
             return "다시 확인하세요";
         }
     }
+
+    @Data
+    public static class ListDTOV2 {
+        private Integer orderId;    //order PK
+        private String pName;
+        private Integer sum;     //order
+        private OrderStatus status; //이거 타입 보류
+        private Integer orderQty;
+        private Integer productId;
+        private Integer price;
+        private String img;
+
+        public ListDTOV2(OrderItem orderItem) {
+            this.orderId = orderItem.getOrder().getId();
+            this.pName = orderItem.getProduct().getName(); // lazy 로딩
+            this.sum = orderItem.getProduct().getPrice() * orderItem.getOrderQty();
+            this.status = orderItem.getOrder().getStatus();
+            this.orderQty = orderItem.getOrderQty();
+            this.productId = orderItem.getProduct().getId();
+            this.price = orderItem.getProduct().getPrice();
+            this.img = orderItem.getProduct().getImg();
+        }
+
+        // Lombok에서 생성된 getStatus() 메서드를 오버라이드
+        public String getStatus() {
+            if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                return "주문완료";
+            }
+            if (OrderStatus.ORDER_CANCEL.equals(status)) {
+                return "주문취소";
+            }
+            return "다시 확인하세요";
+        }
+    }
+
 
 
 
