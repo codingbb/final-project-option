@@ -37,7 +37,7 @@
                             <tr>
                                 <th>상품가격</th>
                                 <td colspan="2">
-                                    <input name="price" type="number" class="form-control price"
+                                    <input name="price" type="text" class="form-control price price-class"
                                            value="{{product.price}}" disabled style="width: 100%">
                                 </td>
                             </tr>
@@ -117,7 +117,7 @@
                             <tr>
                                 <th>상품가격</th>
                                 <td colspan="2">
-                                    <input name="price" type="number" class="form-control price"
+                                    <input name="price" type="text" class="form-control price price-class"
                                            value="{{product.price}}" disabled
                                            style="width: 100%">
                                 </td>
@@ -188,7 +188,7 @@
                     <tr>
                         <th>상품가격</th>
                         <td colspan="2">
-                            <input name="price" type="number" class="form-control price"
+                            <input name="price" type="text" class="form-control price price-class"
                                    value="{{product.price}}" disabled style="width: 100%">
                         </td>
                     </tr>
@@ -234,6 +234,22 @@
 <!--지우면 구매수량 안올라 갑니다. 구매 수량만 올리는 이벤트일뿐 변수 값 해당 머스태치에 뿌려야 됩니다.-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(".price-class").each(function () {
+        let price = $(this).val();
+        console.log(price);
+        $(this).val(numberWithCommas(price));
+    });
+
+
+
+
+
     $(document).ready(function () {
         // 수량 증가 버튼 클릭 이벤트
         $(".increase-btn").click(function () {
@@ -257,6 +273,9 @@
         var remainingQty = productQty - orderQty;
         $(".remaining-qty").text("재고 수량: " + remainingQty);
     });
+
+
+
 </script>
 
 {{> layout/footer}}
