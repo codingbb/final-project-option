@@ -24,7 +24,10 @@ public class OrderResponse {
 
         // 주문번호
         private String orderNumb;
+        // 주문 취소가 잘 안보여서 색 변경
+        private String classChange;
 
+        //주문 번호 생성
         @Data
         public class MakeOrderNum {
             private String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -47,7 +50,6 @@ public class OrderResponse {
 
         }
 
-
         public ListDTO(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
             this.pName = orderItem.getProduct().getName(); // lazy 로딩
@@ -59,6 +61,7 @@ public class OrderResponse {
             this.img = orderItem.getProduct().getImg();
             this.address = orderItem.getOrder().getAddress();
             this.orderNumb = new MakeOrderNum().makeNumb();
+            classChange();
         }
 
         // Lombok에서 생성된 getStatus() 메서드를 오버라이드
@@ -71,6 +74,16 @@ public class OrderResponse {
             }
             return "다시 확인하세요";
         }
+
+        //색 변경용
+        public String classChange() {
+            if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                return this.classChange = "color: green";
+            } else {
+                return this.classChange = "color: red";
+            }
+        }
+
     }
 
     @Data
@@ -83,6 +96,7 @@ public class OrderResponse {
         private Integer productId;
         private Integer price;
         private String img;
+        private String classChange;
 
         public ListDTOV2(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
@@ -93,6 +107,7 @@ public class OrderResponse {
             this.productId = orderItem.getProduct().getId();
             this.price = orderItem.getProduct().getPrice();
             this.img = orderItem.getProduct().getImg();
+            classChange();
         }
 
         // Lombok에서 생성된 getStatus() 메서드를 오버라이드
@@ -105,6 +120,16 @@ public class OrderResponse {
             }
             return "다시 확인하세요";
         }
+
+        //색 변경용
+        public String classChange() {
+            if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                return this.classChange = "color: green";
+            } else {
+                return this.classChange = "color: red";
+            }
+        }
+
     }
 
 
