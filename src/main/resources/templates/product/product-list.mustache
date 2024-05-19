@@ -1,0 +1,56 @@
+{{> layout/header}}
+
+<style>
+    .point {
+        display: flex;
+        flex-wrap: wrap; /* 항목들이 너무 많아 한 줄에 다 표시되지 않을 때 다음 줄로 넘어가게 합니다. */
+        justify-content: flex-start; /* 항목들을 왼쪽에서 시작하도록 정렬합니다. */
+    }
+
+    .point > div {
+        width: calc(25% - 20px); /* 부모 컨테이너 너비의 1/3에서 마진을 빼줍니다. */
+        margin: 10px; /* 상하좌우 마진을 주어 항목 사이의 간격을 만듭니다. */
+    }
+
+</style>
+
+<br><br><br>
+
+<!--section2 상품 리스트-->
+<section class="section2 main_sc2">
+    <!--타이틀-->
+    <div class="main_title mt-100 mb-40">등록한 상품 목록</div>
+    <div class="point w15">
+
+        {{#productList}}
+        <div>
+            <a href="/product/{{id}}" class="swiper-slide card">
+                <img class="card-img-top" src="/upload/{{img}}" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <button class="btn mb-20">상세보기</button>
+                    <h4 class="card-title">{{name}}</h4>
+                    <p class="card-text price fw-600 ft-20 price-class">가격 : {{price}}</p>
+                    <p class="card-text price fw-600 ft-20 price-class">재고 : {{qty}}</p>
+                </div>
+            </a>
+        </div>
+        {{/productList}}
+    </div>
+</section>
+
+<script>
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(".price-class").each(function () {
+        let price = $(this).text();
+        // console.log(price);
+        $(this).text(numberWithCommas(price));
+    });
+
+
+</script>
+
+{{> layout/footer}}
