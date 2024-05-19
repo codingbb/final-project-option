@@ -90,7 +90,7 @@ public class ProductController {
         System.out.println("아이디 " + id);
         productService.deleteProduct(id);
 
-        return "redirect:/";
+        return "/product/product-list";
     }
 
 
