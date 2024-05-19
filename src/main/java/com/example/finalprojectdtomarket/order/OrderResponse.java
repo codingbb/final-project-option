@@ -19,6 +19,7 @@ public class OrderResponse {
         private Integer orderQty;
         private Integer productId;
         private LocalDate createdAt;
+        private String address;
         private String img;
 
         // 주문번호
@@ -56,6 +57,7 @@ public class OrderResponse {
             this.productId = orderItem.getProduct().getId();
             this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
             this.img = orderItem.getProduct().getImg();
+            this.address = orderItem.getOrder().getAddress();
             this.orderNumb = new MakeOrderNum().makeNumb();
         }
 

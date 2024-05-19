@@ -89,11 +89,14 @@
                             <td>1</td>
                             <td>{{pName}}</td>
                             <input type="hidden" name="pName" value="{{pName}}">
-                            <td>{{price}}</td>
+
+                            <td class="price-class" data-price="{{price}}">{{price}}</td>
                             <input type="hidden" name="price" value="{{price}}">
+
                             <td>{{orderQty}}</td>
                             <input type="hidden" name="orderQty" value="{{orderQty}}">
-                            <td>{{sum}}</td>
+
+                            <td class="price-class" data-price="{{sum}}">{{sum}}</td>
                         </tr>
                     {{/cartList}}
                 </table>
@@ -110,7 +113,7 @@
                     <input type="hidden" name="userId" value="{{user.id}}">
                         <tr>
                             <th>배송지</th>
-                            <td><input type="text" id="address" name="address" value="배송지를 입력하세요"> </td>
+                            <td><input type="text" id="address" name="address" placeholder="배송지를 입력하세요"> </td>
                            <input class="btn btn-mint" type="button" onClick="goPopup();" value="도로명주소 검색">
                         </tr>
                     <tr>
@@ -135,7 +138,7 @@
                 <div class="order-R">
                     <dl class="d-flex" style="margin:20px auto; width:300px; justify-content: space-between">
                         <dd style="font-size: 20px">최종 결제금액</dd>
-                        <dt style="font-size: 20px">{{totalSum}}원</dt>
+                        <dt style="font-size: 20px" class="price-class" data-price="{{totalSum}}">{{totalSum}}원</dt>
                         <input type="hidden" name="totalSum" value="{{totalSum}}" readonly>
                     </dl>
                 </div>
@@ -151,7 +154,34 @@
     </form>
 </div>
 
+
+
 <script>
+
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //처음에 들어갔을때 천단위 구분자 나오게
+    $(".price-class").each(function () {
+        let price = $(this).data("price");
+        console.log(price);
+        $(this).text(numberWithCommas(price));
+
+    });
+
+    //폼 제출할땐 text가 아니라 int 로 인식 되어야함
+    $('form').submit(function(e){
+        $(".price-class").each(function(){
+            var price = $(this).val();
+            // 쉼표 제거
+            price = price.replace(/,/g, "");
+            // 쉼표가 제거된 값을 필드에 다시 설정
+            $(this).val(price);
+        });
+    });
+
 <!--    도로명주소 팝업창 -->
     function goPopup(){
         // 현재 화면의 중앙 위치를 계산

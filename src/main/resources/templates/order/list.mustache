@@ -27,6 +27,7 @@
                     <th>주문번호</th>
                     <th>상품명</th>
                     <th>결제금액</th>
+                    <th>배송주소</th>
                     <th>주문날짜</th>
                     <th>주문상태</th>
                     <th>선택하기</th>
@@ -38,10 +39,10 @@
                         <td>
                             {{pName}}
                         </td>
-                        <td>
+                        <td class="price-class" data-price="{{sum}}">
                             {{sum}}
                         </td>
-
+                        <td class="address">{{address}}</td>
                         <td>
                             {{createdAt}}
                         </td>
@@ -49,11 +50,11 @@
                             {{status}}
                         </td>
                         <td>
-                            <input class="form-check-input product-checkbox item-check" type="checkbox"
+                            <input class="form-check-input product-checkbox item-check price-class" type="checkbox"
                                    name="itemCheck orderId"
                                    id="itemCheck-id" value="{{sum}}"
                                    data-order-id="{{orderId}}" data-product-id="{{productId}}"
-                                   data-order-qty="{{orderQty}}"
+                                   data-price="{{sum}}" data-order-qty="{{orderQty}}"
                                    style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
@@ -66,6 +67,7 @@
                     <th>주문수량</th>
                     <th>합계</th>
                     <th>주문상태</th>
+                    <th></th>
                 </tr>
 
                 <!--   슬라이드 쇼 용 -->
@@ -79,16 +81,19 @@
                         </td>
 
                         <td>{{pName}}</td>
-                        <td>{{price}}</td>
+                        <td class="price-class" data-price="{{price}}">{{price}}</td>
                         <td>{{orderQty}}</td>
-                        <td>{{sum}}</td>
+                        <td class="price-class" data-price="{{sum}}">{{sum}}</td>
                         <td>{{status}}</td>
-
+                        <td></td>
                     </tr>
                 {{/orderItemListV2}}
 
+
+
             </table>
 
+            <br>
             <button type="button" class="btn btn-mint" onclick="order()" id="purchaseButton" style="width:300px">주문취소
             </button>
 
@@ -99,7 +104,23 @@
     </div>
 </div>
 
+<br><br><br>
+
 <script>
+
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //처음에 들어갔을때 천단위 구분자 나오게
+    $(".price-class").each(function () {
+        let price = $(this).data("price");
+        console.log(price);
+        $(this).text(numberWithCommas(price));
+
+    });
+
 
     //슬라이드 쇼
     $(".flip").click(function () {
