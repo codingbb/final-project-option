@@ -19,23 +19,48 @@
 <!--section2 상품 리스트-->
 <section class="section2 main_sc2">
     <!--타이틀-->
-    <div class="main_title mt-100 mb-40">등록한 상품 목록</div>
-    <div class="point w15">
 
-        {{#productList}}
-        <div>
-            <a href="/product/{{id}}" class="swiper-slide card">
-                <img class="card-img-top" src="/upload/{{img}}" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <button class="btn mb-20">상세보기</button>
-                    <h4 class="card-title">{{name}}</h4>
-                    <p class="card-text price fw-600 ft-20 price-class">가격 : {{price}}</p>
-                    <p class="card-text price fw-600 ft-20 price-class">재고 : {{qty}}</p>
+
+    {{#sessionUser}}
+
+        {{#isCheck}}
+            <div class="main_title mt-100 mb-40">검색 결과</div>
+        <div class="point w15">
+            {{#keywordList}}
+                <div>
+                    <a href="/product/{{id}}" class="swiper-slide card">
+                        <img class="card-img-top" src="/upload/{{img}}" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <button class="btn mb-20">상세보기</button>
+                            <h4 class="card-title">{{name}}</h4>
+                            <p class="card-text price fw-600 ft-20 price-class">가격 : {{price}}</p>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-        {{/productList}}
-    </div>
+            {{/keywordList}}
+        {{/isCheck}}
+
+        {{^isCheck}}
+            <div class="main_title mt-100 mb-40">등록한 상품 목록</div>
+        <div class="point w15">
+            {{#productList}}
+                <div>
+                    <a href="/product/{{id}}" class="swiper-slide card">
+                        <img class="card-img-top" src="/upload/{{img}}" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <button class="btn mb-20">상세보기</button>
+                            <h4 class="card-title">{{name}}</h4>
+                            <p class="card-text price fw-600 ft-20 price-class">가격 : {{price}}</p>
+                            <p class="card-text price fw-600 ft-20 price-class">재고 : {{qty}}</p>
+                        </div>
+                    </a>
+                </div>
+            {{/productList}}
+        {{/isCheck}}
+
+    {{/sessionUser}}
+
+</div>
 </section>
 
 <script>

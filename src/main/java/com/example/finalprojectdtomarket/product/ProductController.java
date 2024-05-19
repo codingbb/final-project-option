@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,19 +18,25 @@ public class ProductController {
     private final ProductService productService;
     private final HttpSession session;
 
-    @GetMapping("/product-list")
-    public String myList(HttpServletRequest request) {
-        List<Product> productList = productService.findAll();
-        request.setAttribute("productList", productList);
-        return "/product/product-list";
-    }
-
-
     // 상품목록보기
     @GetMapping("/")
-    public String list(HttpServletRequest request) {
+    public String list(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
     List<Product> productList = productService.findAll();
     request.setAttribute("productList", productList);
+
+        if (keyword.isBlank()) {
+            productList = productService.findAll();
+            request.setAttribute("keyword", "");
+            request.setAttribute("keywordList", productList);
+
+        } else {
+            productList = productService.findAll(keyword);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("keywordList", productList);
+//            System.out.println("넘어오나");
+            return "/product/product-list";
+        }
+
         return "product/list";
     }
 

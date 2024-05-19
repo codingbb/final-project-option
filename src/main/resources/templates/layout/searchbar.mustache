@@ -1,9 +1,11 @@
+
+
 <!-- 세션 유저 정보가 있는 경우 -->
 {{#sessionUser}}
     <div class="search-wrap search-bg">
         <div class="search-bg-opcity">
             <form action="/" method="get" class="search-from d-flex" id="search">
-                <input class="form-control me-2" type="text" placeholder="Search" value="" name="keyword"
+                <input class="form-control me-2" type="text" placeholder="Search" value="" id="keyword" name="keyword"
                        required>
                 <button class="btn-m btn-mint form-control" style="width:100px; padding:10px !important;">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -41,4 +43,22 @@
             $("#searchBarContainer").html(rendered);
         });
     });
+
+
+        // URL에서 쿼리 파라미터를 파싱하는 간단한 함수
+        function getQueryParam(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        // 'keyword' 쿼리 파라미터 값을 입력 필드에 설정
+        let keyword = getQueryParam('keyword');
+
+        if(keyword != null) {
+            $("#keyword").val(keyword);
+        }
+
+
 </script>

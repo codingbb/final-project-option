@@ -58,6 +58,12 @@ public class ProductService {
         return productJPARepository.findAll(sort); // return에 sort 객체 안 넣어주면 DESC 안 됨
     }
 
+    //키워드 용
+    public List<Product> findAll(String keyword) {
+        List<Product> products = productJPARepository.findKeyword(keyword);
+        return products;
+    }
+
     // 상품 정보 수정
     @Transactional
     public ProductResponse.UpdateDTO updateProduct(Integer productId, ProductRequest.UpdateDTO reqDTO) {
