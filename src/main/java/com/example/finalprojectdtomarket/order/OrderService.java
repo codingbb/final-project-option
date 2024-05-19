@@ -131,13 +131,16 @@ public class OrderService {
         List<Cart> carts = cartJPARepository.findByUserIdAndCheckedV2(userId, isChecked);
         List<CartResponse.ListDTO> cartList = carts.stream().map(cart -> new CartResponse.ListDTO(cart)).toList();
 
-//        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
+        Integer indexNum = 1;
+        for (CartResponse.ListDTO list : cartList) {
+            list.setIndexNum(indexNum++);
+        }
+
         //카트 롤백
         for (Cart cart : carts) {
             cart.setIsChecked(false);
         }
 
-//        System.out.println("여기선 true인가?" + cartList.get(0).getIsChecked());
         return cartList;
     }
 

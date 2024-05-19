@@ -35,8 +35,8 @@
                                  style="width: 100px; text-align: center; margin:0 auto">
                                 <button type="button" class="decrease-btn" aria-label="수량내리기" style="">-
                                 </button>
-                                <input type="text" class="quantity orderQty orderQty-change" id="orderQty"
-                                       name="orderQty"
+                                <input type="text" class="quantity orderQty orderQty-change orderQty-class" id="orderQty"
+                                       name="orderQty" data-order-qty="{{orderQty}}"
                                        value="{{orderQty}}"
                                        style="text-align: center; ">
                                 <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
@@ -79,24 +79,33 @@
 
 
 <script>
+
+
     <!--    천단위 표시 재사용 해야할 함수 -->
     function numberWithCommas(total) {
         return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    //재사용 함수
+    function updateTotalSum() {
     // 체크박스에서 값 들어오는 jQuery
-    $(".item-check").change(function (e) {
-        // console.log(e);
-        // console.log(this);
         let total = 0;
         $(".item-check:checked").each(function () {
             // let price = $(this).val();
             // console.log(price);
             total = total + parseInt($(this).val());
-            console.log(total);
+            // console.log(total);
         });
         $("#totalSum").text(numberWithCommas(total));
-    });
+    }
+
+    //change 이벤트가 updateTotalSum 함수 내에 있으면 change 이벤트가 일어나야지만 실행이 되어서 빼줬음
+        $(".item-check").change(function () {
+            updateTotalSum();
+        });
+
+    //장바구니에 딱 들어왔을 때부터 총액 계산되어있게 하려고 분리함
+        updateTotalSum()
 
     // 장바구니에 상품가격 콤마 찍기
     $(".price-class").each(function () {
@@ -105,12 +114,20 @@
         $(this).text(numberWithCommas(price));
     });
 
+
+    // $(".orderQty-class").on("input", function () {
+    //     let orderQty = $(this).data("order-qty");
+    //     console.log(orderQty);
+    //     $(this).text(numberWithCommas(orderQty));
+    // });
+
     //장바구니에 구매금액(총액) 콤마 찍기
     $(".sum-class").each(function () {
         let sum = $(this).data("sum");
         console.log(sum);
         $(this).text(numberWithCommas(sum));
     });
+
 
 
 
