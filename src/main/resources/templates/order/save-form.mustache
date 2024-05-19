@@ -50,6 +50,19 @@
         flex: 1;
         margin: 10px;
     }
+
+    .payment-info {
+        text-align: center; /* 텍스트 요소들을 중앙 정렬합니다. */
+        display: flex; /* Flexbox를 사용합니다. */
+        flex-direction: column; /* 자식 요소들을 세로로 배열합니다. */
+        align-items: center; /* 수직 방향으로 중앙 정렬합니다. */
+        justify-content: center; /* 수평 방향으로 중앙 정렬합니다. */
+    }
+    .d-flex {
+        display: flex; /* Flexbox를 적용합니다. */
+        justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분합니다. */
+    }
+
 </style>
 
 
@@ -62,7 +75,7 @@
                 <h2 class="bold-500">주문 상품</h2>
                 <h2></h2>
                 <table class="table table-striped" style="vertical-align: middle;">
-                    <tr>
+                    <tr style="font-weight: bold">
                         <td> NO.</td>
                         <td>상품명</td>
                         <td>가격</td>
@@ -95,6 +108,11 @@
                 <h2 class="bold-500">주문자 정보</h2>
                 <table class="table table-striped">
                     <input type="hidden" name="userId" value="{{user.id}}">
+                        <tr>
+                            <th>배송지</th>
+                            <td><input type="text" id="address" name="address" value="배송지를 입력하세요"> </td>
+                           <input class="btn btn-mint" type="button" onClick="goPopup();" value="도로명주소 검색">
+                        </tr>
                     <tr>
                         <th>받는 분</th>
                         <td>{{user.username}}</td>
@@ -107,11 +125,7 @@
                         <th>이메일</th>
                         <td>{{user.email}}</td>
                     </tr>
-                    <tr>
-                        <th>배송지</th>
-                        <td>배송지 적으세요</td>
-                        <input type="hidden" name="address" value="배송지배송지">
-                    </tr>
+
                 </table>
             </div>
 
@@ -120,8 +134,8 @@
                 <h3>결제 금액</h3>
                 <div class="order-R">
                     <dl class="d-flex" style="margin:20px auto; width:300px; justify-content: space-between">
-                        <dd>최종 결제금액</dd>
-                        <dt>{{totalSum}}원</dt>
+                        <dd style="font-size: 20px">최종 결제금액</dd>
+                        <dt style="font-size: 20px">{{totalSum}}원</dt>
                         <input type="hidden" name="totalSum" value="{{totalSum}}" readonly>
                     </dl>
                 </div>
@@ -136,6 +150,29 @@
 
     </form>
 </div>
+
+<script>
+<!--    도로명주소 팝업창 -->
+    function goPopup(){
+        // 현재 화면의 중앙 위치를 계산
+        var width = 500; // 팝업 창의 너비
+        var height = 480; // 팝업 창의 높이
+        var left = (window.screen.width / 2) - (width / 2);
+        var top = (window.screen.height / 2) - (height / 2);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 주소 검색 결과 처리 로직
+                document.getElementById('address').value = data.roadAddress; // 도로명 주소
+                window.close();
+            },
+            width: width, // 팝업 창의 너비
+            height: height // 팝업 창의 높이
+        }).open({
+            left: left, // 팝업 창을 화면의 가운데로 위치
+            top: top
+        });
+    }
+</script>
 
 
 {{> layout/footer}}
