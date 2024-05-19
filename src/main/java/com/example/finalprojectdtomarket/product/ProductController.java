@@ -18,6 +18,14 @@ public class ProductController {
     private final ProductService productService;
     private final HttpSession session;
 
+    @GetMapping("/product-list")
+    public String productList(HttpServletRequest request) {
+        List<Product> productList = productService.findAll();
+        request.setAttribute("productList", productList);
+
+        return "/product/product-list";
+    }
+
     // 상품목록보기
     @GetMapping("/")
     public String list(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
@@ -34,7 +42,7 @@ public class ProductController {
             request.setAttribute("keyword", keyword);
             request.setAttribute("keywordList", productList);
 //            System.out.println("넘어오나");
-            return "/product/product-list";
+            return "/product/search";
         }
 
         return "product/list";

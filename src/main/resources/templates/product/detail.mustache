@@ -47,17 +47,19 @@
                             <tr>
                                 <th>상품수량</th>
                                 <td colspan="2">
-                                    <!-- 상품의 구매 수량만큼 표시됩니다 value 명에 변수 값만 넣어주세요-->
-                                    <div class="quantity-controls d-flex"
-                                         style="width: 100px; text-align: center; ">
-                                        <button type="button" class="decrease-btn" aria-label="수량내리기" style="">-
-                                        </button>
-                                        <input type="text" class="quantity" name="orderQty" value="1"
-                                               style="text-align: center; ">
-                                        <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
+                                    <div class="quantity-stock-wrapper d-flex" style="align-items: center;">
+                                        <div class="quantity-controls d-flex" style="width: 100px; text-align: center;">
+                                            <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
+                                            <input type="text" class="quantity" name="orderQty" value="1" style="text-align: center; ">
+                                            <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
+                                        </div>
+                                        <div class="stock-info" style="margin-left: 20px; color: gray">
+                                            수량 : <span class="product-qty">{{product.qty}}</span>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
+
                             <!--상품수량-->
                         </table>
                         <!--상품 table-->
