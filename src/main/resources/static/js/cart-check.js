@@ -43,7 +43,15 @@ document.querySelector("#purchaseButton").addEventListener("click", function (e)
         location.href = "/order-save-form"
 
     }).fail((res)=>{
-        alert("실패입니다.");
+        console.log(res);
+
+        if (res.responseJSON.status === 400) {
+            alert(res.responseJSON.msg);
+            location.reload();
+        } else {
+            location.href = "/order-save-form"
+        }
+
     });
 });
 

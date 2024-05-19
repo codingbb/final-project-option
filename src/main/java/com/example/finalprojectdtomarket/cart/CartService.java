@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.cart;
 
+import com.example.finalprojectdtomarket._core.errors.exception.ApiException400;
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.product.Product;
 import com.example.finalprojectdtomarket.product.ProductJPARepository;
@@ -65,8 +66,8 @@ public class CartService {
 
             Cart qty = cartJPARepository.findByQtyWithId(reqDTO.getCartId());
             if (reqDTO.getOrderQty() > qty.getProduct().getQty()) {
-                System.out.println("재고 부족 - 재고 수량: " + qty.getProduct().getQty() + ", 구매 요청 수량: " + reqDTO.getOrderQty());
-                //TODO:여기 나중에 에러처리 해야함
+//                System.out.println("재고 부족 - 재고 수량: " + qty.getProduct().getQty() + ", 구매 요청 수량: " + reqDTO.getOrderQty());
+                throw new ApiException400("재고 부족! 구매 불가");
             }
 
             //카트 수량이랑 isCheckd 업데이트 치기
