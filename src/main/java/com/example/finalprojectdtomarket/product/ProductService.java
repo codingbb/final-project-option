@@ -29,11 +29,9 @@ public class ProductService {
         //orderItem이랑 cart에 있다고 제약조건 걸리는건 좀 이상한듯
         cartJPARepository.deleteByProductId(productId);
         orderItemJPARepository.deleteByProductId(productId);
-        productJPARepository.deleteById(productId);
+        productJPARepository.deleteByProductId(productId);
 
     }
-
-
 
     //상품 상세보기
     public ProductResponse.DetailDTO getDetail(Integer id) {

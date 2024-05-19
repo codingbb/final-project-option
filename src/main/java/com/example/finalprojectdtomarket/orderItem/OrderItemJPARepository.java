@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderItemJPARepository extends JpaRepository<OrderItem, Integer> {
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("delete from OrderItem oi where oi.product.id = :productId")
     void deleteByProductId(@Param("productId") Integer productId);
 
