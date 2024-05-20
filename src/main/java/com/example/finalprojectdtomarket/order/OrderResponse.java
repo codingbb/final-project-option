@@ -20,6 +20,7 @@ public class OrderResponse {
         private Integer productId;
         private LocalDate createdAt;
         private String address;
+        private String personName;    //유저이름
         private String img;
 
         // 주문번호
@@ -60,6 +61,7 @@ public class OrderResponse {
             this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
             this.img = orderItem.getProduct().getImg();
             this.address = orderItem.getOrder().getAddress();
+            this.personName = orderItem.getOrder().getUser().getPersonName();
             this.orderNumb = new MakeOrderNum().makeNumb();
             classChange();
         }
@@ -95,8 +97,21 @@ public class OrderResponse {
         private Integer orderQty;
         private Integer productId;
         private Integer price;
+        private Integer qty;
         private String img;
         private String classChange;
+
+        // 재고처리 - 재고있음, 재고없음
+        private String stock;
+
+        public String stockExist() {
+            if (orderQty > qty) {
+                return "재고없음";
+            } else {
+                return "재고있음";
+            }
+
+        }
 
         public ListDTOV2(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
@@ -106,8 +121,10 @@ public class OrderResponse {
             this.orderQty = orderItem.getOrderQty();
             this.productId = orderItem.getProduct().getId();
             this.price = orderItem.getProduct().getPrice();
+            this.qty = orderItem.getProduct().getQty();
             this.img = orderItem.getProduct().getImg();
             classChange();
+            this.stock = stockExist();
         }
 
         // Lombok에서 생성된 getStatus() 메서드를 오버라이드

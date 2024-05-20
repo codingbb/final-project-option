@@ -11,6 +11,7 @@ import com.example.finalprojectdtomarket.product.ProductJPARepository;
 import com.example.finalprojectdtomarket.user.User;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,6 +95,50 @@ public class OrderService {
         return orderList;
     }
 
+
+
+    public List<OrderResponse.ListDTO> adminOrderList() {
+//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
+        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
+//        System.out.println("아이템 리스트 " + orderItemList);
+
+        List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
+                -> new OrderResponse.ListDTO(orderItem)).toList();
+//        System.out.println("아이고 " + orderList);
+
+        // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
+        Map<Integer, OrderResponse.ListDTO> orderDistinct =
+                orderList.stream().collect(Collectors.toMap(
+                        list -> list.getOrderId(),  //orderId가 키값
+                        list -> list,           // 값
+                        (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
+                ));
+
+        // Map의 values 컬렉션을 List로 변환하여 반환
+        List<OrderResponse.ListDTO> distinctOrderList = new ArrayList<>(orderDistinct.values());
+        // 주문 ID(orderId)를 기준으로 내림차순 정렬
+        distinctOrderList.sort((order1, order2) -> order2.getOrderId().compareTo(order1.getOrderId()));
+
+        return distinctOrderList;
+//        return orderList;
+    }
+
+    //order-list-V2 (토글용 ..)
+    public List<OrderResponse.ListDTOV2> adminOrderListV2() {
+//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
+        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
+//        System.out.println("아이템 리스트 " + orderItemList);
+
+        List<OrderResponse.ListDTOV2> orderList = orderItemList.stream().map(orderItem
+                -> new OrderResponse.ListDTOV2(orderItem)).toList();
+        System.out.println("아이고 " + orderList);
+
+        return orderList;
+    }
+
+
+
+
     //구매하기
     @Transactional
     public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
@@ -176,4 +221,10 @@ public class OrderService {
     }
 
 
+//    public List<OrderItem> adminList() {
+//        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
+//
+//
+//        return orderItemList;
+//    }
 }

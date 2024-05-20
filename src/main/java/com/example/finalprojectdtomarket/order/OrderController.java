@@ -22,6 +22,18 @@ public class OrderController {
     private final UserService userService;
     private final HttpSession session;
 
+    @GetMapping("/admin-list")
+    public String adminList(HttpServletRequest request) {
+
+        List<OrderResponse.ListDTO> orderItemList = orderService.adminOrderList();
+        List<OrderResponse.ListDTOV2> orderItemListV2 = orderService.adminOrderListV2();
+//        System.out.println("orderItemList = " + orderItemList);
+        request.setAttribute("orderItemList", orderItemList);
+        request.setAttribute("orderItemListV2", orderItemListV2);
+        return "/admin/list";
+    }
+
+
     @GetMapping("/order-save-form")
     public String saveForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");

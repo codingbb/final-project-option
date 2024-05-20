@@ -1,0 +1,151 @@
+{{> layout/header}}
+
+<style>
+    .panel {
+        display: none;
+    }
+
+    .panel-title {
+        display: none;
+    }
+
+    .flip:hover {
+        cursor: pointer;
+    }
+
+
+</style>
+
+<div class="container pt-5" style="text-align: center">
+    <br>
+    <br><br><br><br>
+    <div class="row">
+        <!--주문 테이블-->
+        <div>
+            <table class="table table-striped" style="vertical-align: middle">
+                <tr>
+                    <th>주문번호</th>
+                    <th>상품명</th>
+                    <th>주문자명</th>
+                    <th>결제금액</th>
+                    <th>배송주소</th>
+                    <th>주문날짜</th>
+                    <th>주문상태</th>
+                    <th>선택하기</th>
+                </tr>
+
+                {{#orderItemList}}
+                    <tr class="flip" data-order-id="{{orderId}}">
+                        <td>{{orderNumb}}</td>
+                        <td>
+                            {{pName}}
+                        </td>
+                        <td>
+                            {{personName}}
+                        </td>
+                        <td class="price-class" data-price="{{sum}}">
+                            {{sum}}
+                        </td>
+                        <td class="address">{{address}}</td>
+                        <td>
+                            {{createdAt}}
+                        </td>
+                        <td style="{{classChange}}">
+                            {{status}}
+                        </td>
+                        <td>
+                            <input class="form-check-input product-checkbox item-check price-class" type="checkbox"
+                                   name="itemCheck orderId"
+                                   id="itemCheck-id" value="{{sum}}"
+                                   data-order-id="{{orderId}}" data-product-id="{{productId}}"
+                                   data-price="{{sum}}" data-order-qty="{{orderQty}}"
+                                   style="width:20px !important; margin: 0 auto">
+                        </td>
+                    </tr>
+                {{/orderItemList}}
+
+                <tr class="panel-title">
+                    <th></th>
+                    <th>상품명</th>
+                    <th>상품금액</th>
+                    <th>주문수량</th>
+                    <th>합계</th>
+                    <th>주문상태</th>
+                    <th></th>
+                </tr>
+
+                <!--   슬라이드 쇼 용 -->
+                {{#orderItemListV2}}
+                    <tr class="panel" data-order-id="{{orderId}}">
+                        <td></td>
+                        <td>
+                            <div style="width:150px; margin:0 auto;">
+                                <img src="/upload/{{img}}" alt="Product Image"
+                                     style="max-width: 100%; max-height: 100%;">
+                            </div>
+                        </td>
+
+                        <td>{{pName}}</td>
+                        <td class="price-class" data-price="{{price}}">{{price}}</td>
+                        <td>{{orderQty}}</td>
+                        <td class="price-class" data-price="{{sum}}">{{sum}}</td>
+                        <td style="{{classChange}}">{{status}}</td>
+                        <td style="color: blue">{{stock}}<br> (재고 : {{qty}})</td>
+                    </tr>
+                {{/orderItemListV2}}
+
+
+
+            </table>
+
+            <br>
+            <button type="button" class="btn btn-mint" onclick="order()" id="purchaseButton" style="width:300px">주문취소
+            </button>
+
+        </div>
+
+        <br><br><br>
+        <!--주문 테이블-->
+    </div>
+</div>
+
+<br><br><br>
+
+<script>
+
+    <!--    천단위 표시 재사용 해야할 함수 -->
+    function numberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //처음에 들어갔을때 천단위 구분자 나오게
+    $(".price-class").each(function () {
+        let price = $(this).data("price");
+        console.log(price);
+        $(this).text(numberWithCommas(price));
+
+    });
+
+
+    //슬라이드 쇼
+    $(".flip").click(function () {
+        // alert("ㄱㄱ");
+        var orderId = $(this).data("order-id");
+        // 모든 .panel 요소를 숨김
+        $(".panel").slideUp("fast");
+
+        // 동일한 data-order-id를 가진 .panel만 토글
+        setTimeout(() => {
+            // $(".panel-title").slideToggle("fast");
+            $(".panel").each(function () {
+                if ($(this).data("order-id") == orderId) {
+                    $(this).slideToggle("fast");
+                }
+            });
+        }, 200); // slideUp 애니메이션이 완료될 시간을 고려하여 적당한 딜레이를 설정
+    });
+
+
+</script>
+
+{{> layout/footer}}
