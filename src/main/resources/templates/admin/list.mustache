@@ -145,6 +145,46 @@
         }, 200); // slideUp 애니메이션이 완료될 시간을 고려하여 적당한 딜레이를 설정
     });
 
+    // 값 받기
+    let requestBody = [];
+
+    function order() {
+        $(".item-check:checked").each(function () {
+            let orderId = $(this).data("order-id");
+            let productId = $(this).data("product-id");
+            let orderQty = $(this).data("order-qty");
+            // console.log(orderItemId);
+
+            let checkedOrder = {
+                orderId: orderId,
+                productId: productId,
+                orderQty: orderQty
+
+            };    //객체 형식으로 만들어주기
+
+            requestBody.push(checkedOrder); // orderId를 객체로 추가
+        });
+
+        console.log(requestBody);
+        console.log(JSON.stringify(requestBody));
+
+
+        $.ajax({
+            url: '/order/cancel',
+            data: JSON.stringify(requestBody),
+            contentType: 'application/json; charset=utf-8',
+            type: 'POST'
+
+        }).done((res) => {
+            alert("취소가 완료되었습니다!");
+            location.href = "/admin-list"
+
+        }).fail((res) => {
+            alert("통신 오류")
+        });
+
+    }
+
 
 </script>
 

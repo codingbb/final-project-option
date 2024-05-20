@@ -28,28 +28,6 @@ public class OrderResponse {
         // 주문 취소가 잘 안보여서 색 변경
         private String classChange;
 
-        //주문 번호 생성
-        @Data
-        public class MakeOrderNum {
-            private String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            private Random random = new Random();
-
-            public String makeNumb() {
-                // 날짜를 YYMMDD 형식으로 포맷팅
-                String dateFormat = DateTimeFormatter.ofPattern("yyMMdd").format(LocalDate.now());
-                // 랜덤 문자열 생성
-                StringBuilder randomPart = new StringBuilder(5);
-                for (int i = 0; i < 5; i++) {
-                    int index = random.nextInt(Alphabet.length());  //랜덤 인덱스 생성
-                    char randomChar = Alphabet.charAt(index); // 랜덤 문자 선택
-                    randomPart.append(randomChar);
-                }
-
-                //주문 번호 조합
-                return dateFormat + randomPart;
-            }
-
-        }
 
         public ListDTO(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
@@ -62,7 +40,8 @@ public class OrderResponse {
             this.img = orderItem.getProduct().getImg();
             this.address = orderItem.getOrder().getAddress();
             this.personName = orderItem.getOrder().getUser().getPersonName();
-            this.orderNumb = new MakeOrderNum().makeNumb();
+            this.orderNumb = orderItem.getOrder().getOrderNumb();
+
             classChange();
         }
 
