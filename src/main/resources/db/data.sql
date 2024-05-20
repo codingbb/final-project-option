@@ -10,7 +10,7 @@ INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('바나나 실
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('당도선별 천혜향 1kg(4~6입)', 15000, 100, 'prod_1.jpg',NOW());
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('대추 방울 토마토 750g', 9900, 100,'prod_2.jpg', NOW());
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('애플청포도 500g', 11900, 100, 'prod_7.jpg',NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('고랭지 부사 1.3kg(4~5입)', 21900, 100, 'prod_6.jpg',NOW());
+INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('수박 4kg 이상', 28000, 100, 'prod_8.jpg',NOW());
 
 -- cart 정보
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
@@ -22,15 +22,19 @@ INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALU
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (4, 3,  20, false, NOW());
 
 -- order 정보
--- INSERT INTO order_tb(user_id, status, sum, address, created_at) VALUES (2, 'ORDER_COMPLETE', 160000, '부산광역시 진구 부암로' ,NOW());
--- INSERT INTO order_tb(user_id, status, sum, address, created_at) VALUES (3, 'ORDER_CANCEL', 100000,'부산광역시 진구 신암로',  NOW());
--- INSERT INTO order_tb(user_id, status, sum, address, created_at) VALUES (4, 'ORDER_COMPLETE', 106000,'부산광역시 진구 거제대로', NOW());
+-- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (2, '부산광역시 진구 신암로', 119500, 'ORDER_COMPLETE', '240422RVLR4', '2024-04-22 14:00:00');
+-- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (2, '부산광역시 진구 신암로', 129000, 'ORDER_COMPLETE', '240428ESC5R','2024-04-28 15:30:00');
+-- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (3, '서울 강남구 가로수길 10', 99000, 'ORDER_COMPLETE', '240501TKDSD','2024-05-01 09:45:00');
+-- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (4, '서울 신사동 541', 90000, 'ORDER_CANCEL', '240428TKD52','2024-04-28 18:00:00');
 --
--- -- order-item 정보
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (2, 1, 5, 1, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (2, 3, 10, 1, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (2, 4, 7, 1, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (3, 2, 12, 2, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (3, 5, 3, 2, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (4, 2, 5, 3, NOW());
--- INSERT INTO order_item_tb(user_id, product_id, order_qty, order_id, created_at) VALUES (4, 3, 6, 3, NOW());
+--
+-- -- -- order-item 정보
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (1, 5, 1, NOW());
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (3, 2, 1, NOW());
+--
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (4, 7, 2, NOW());
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (2, 5, 2, NOW());
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (5, 3, 2, NOW());
+--
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (4, 10, 3, NOW());
+-- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (3, 6, 4, NOW());

@@ -2,7 +2,7 @@
 
 <style>
     .panel {
-        display: block;
+        display: none;
     }
 
     .panel-title {
@@ -58,38 +58,40 @@
                                    style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
-                {{/orderItemList}}
 
-<!--                <tr class="panel-title">-->
-<!--                    <th></th>-->
-<!--                    <th>상품명</th>-->
-<!--                    <th>상품금액</th>-->
-<!--                    <th>주문수량</th>-->
-<!--                    <th>합계</th>-->
-<!--                    <th>주문상태</th>-->
-<!--                    <th></th>-->
-<!--                </tr>-->
-
-                <!--   슬라이드 쇼 용 -->
-                {{#orderItemListV2}}
-                    <tr class="panel" data-order-id="{{orderId}}">
-                        <td>
-                            <div style="width:150px; margin:0 auto;">
-                                <img src="/upload/{{img}}" alt="Product Image"
-                                     style="max-width: 100%; max-height: 100%;">
-                            </div>
-                        </td>
-
-                        <td>{{pName}}</td>
-                        <td class="price-class" data-price="{{price}}">{{price}}</td>
-                        <td>{{orderQty}}</td>
-                        <td class="price-class" data-price="{{sum}}">{{sum}}</td>
-                        <td style="{{classChange}}">{{status}}</td>
-                        <td></td>
+                    <tr class="panel-title">
+                        <th></th>
+                        <th>상품명</th>
+                        <th>상품금액</th>
+                        <th>주문수량</th>
+                        <th>합계</th>
+                        <th>주문상태</th>
+                        <th></th>
                     </tr>
-                {{/orderItemListV2}}
 
+                    <!--                순회 여러번 도는 애들 -->
+                    {{#items}}
 
+                        <tr class="panel" data-order-id="{{orderId}}" >
+
+                            <td>
+                                <div style="width:150px; margin:0 auto;">
+                                    <img src="/upload/{{img}}" alt="Product Image"
+                                         style="max-width: 100%; max-height: 100%;">
+                                </div>
+                            </td>
+
+                            <td>{{pName}}</td>
+                            <td class="price-class" data-price="{{price}}">{{price}}</td>
+                            <td>{{orderQty}}</td>
+                            <td class="price-class" data-price="{{sum}}">{{sum}}</td>
+                            <td style="{{classChange}}">{{status}}</td>
+                            <td></td>
+
+                        </tr>
+                    {{/items}}
+
+                {{/orderItemList}}
 
             </table>
 
@@ -107,7 +109,6 @@
 <br><br><br>
 
 <script>
-
 
 
     <!--    천단위 표시 재사용 해야할 함수 -->
@@ -129,8 +130,7 @@
         // alert("ㄱㄱ");
         var orderId = $(this).data("order-id");
         // 모든 .panel 요소를 숨김
-
-        $(this).siblings(".panel").slideUp("fast");
+        // $(this).siblings(".panel").slideUp("fast");
 
         // 동일한 data-order-id를 가진 .panel만 토글
         setTimeout(() => {
@@ -138,10 +138,12 @@
             $(".panel").each(function () {
                 if ($(this).data("order-id") == orderId) {
                     $(this).slideToggle("fast");
+                    // $(".panel-title").css('display', 'table-row');
                 }
             });
         }, 200); // slideUp 애니메이션이 완료될 시간을 고려하여 적당한 딜레이를 설정
     });
+
 
 
     // 값 받기

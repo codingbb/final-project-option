@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class OrderResponse {
 
 
     // List<TestDTO> - 2크기
+    @Data
     public static class TestDTO {
         private Integer orderId;    //order PK
         private String pName;
@@ -31,9 +33,31 @@ public class OrderResponse {
         // 주문 취소가 잘 안보여서 색 변경
         private String classChange;
 
-        private List<Item> items; // 2
+        //위에게 한 번 돌때, 밑에는 여러번 (댓글처럼!)
+        private List<ItemDTO> items = new ArrayList<>(); // 2
 
-        public class Item {
+        public TestDTO(OrderItem orderItem, List<OrderItem> items) {
+            this.orderId = orderItem.getOrder().getId();
+            this.pName = orderItem.getProduct().getName(); // lazy 로딩
+            this.sum = orderItem.getOrder().getSum();
+            this.status = orderItem.getOrder().getStatus();
+            this.orderQty = orderItem.getOrderQty();
+            this.productId = orderItem.getProduct().getId();
+            this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
+            this.img = orderItem.getProduct().getImg();
+            this.address = orderItem.getOrder().getAddress();
+            this.personName = orderItem.getOrder().getUser().getPersonName();
+            this.orderNumb = orderItem.getOrder().getOrderNumb();
+            this.classChange = classChange();
+
+            this.items = items.stream().filter(item -> item.getOrder().getId().equals(this.orderId))
+                    .map(item -> new ItemDTO(item)).toList();
+
+        }
+
+
+        @Data
+        public class ItemDTO {
             private Integer orderId;    //order PK
             private String pName;
             private Integer sum;     //order
@@ -45,11 +69,53 @@ public class OrderResponse {
             private String img;
             private String classChange;
 
-            // 재고처리 - 재고있음, 재고없음
-            private String stock;
+            public ItemDTO(OrderItem orderItem) {
+                this.orderId = orderItem.getOrder().getId();
+                this.pName = orderItem.getProduct().getName(); // lazy 로딩
+                this.sum = orderItem.getProduct().getPrice() * orderItem.getOrderQty();
+                this.status = orderItem.getOrder().getStatus();
+                this.orderQty = orderItem.getOrderQty();
+                this.productId = orderItem.getProduct().getId();
+                this.price = orderItem.getProduct().getPrice();
+                this.qty = orderItem.getProduct().getQty();
+                this.img = orderItem.getProduct().getImg();
+                this.classChange = classChange();
+            }
+
+            public String getStatus() {
+                if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                    return "주문완료";
+                }
+                if (OrderStatus.ORDER_CANCEL.equals(status)) {
+                    return "주문취소";
+                }
+                return "다시 확인하세요";
+            }
+
+        }
+
+        public String getStatus() {
+            if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                return "주문완료";
+            }
+            if (OrderStatus.ORDER_CANCEL.equals(status)) {
+                return "주문취소";
+            }
+            return "다시 확인하세요";
+        }
+
+        //색 변경용
+        public String classChange() {
+            if (OrderStatus.ORDER_COMPLETE.equals(status)) {
+                return this.classChange = "color: green";
+            } else {
+                return this.classChange = "color: red";
+            }
         }
 
     }
+
+
 
     @Data
     public static class ListDTO {
@@ -121,17 +187,17 @@ public class OrderResponse {
         private String img;
         private String classChange;
 
-        // 재고처리 - 재고있음, 재고없음
-        private String stock;
-
-        public String stockExist() {
-            if (orderQty > qty) {
-                return "재고없음";
-            } else {
-                return "재고있음";
-            }
-
-        }
+//        // 재고처리 - 재고있음, 재고없음
+//        private String stock;
+//
+//        public String stockExist() {
+//            if (orderQty > qty) {
+//                return "재고없음";
+//            } else {
+//                return "재고있음";
+//            }
+//
+//        }
 
         public ListDTOV2(OrderItem orderItem) {
             this.orderId = orderItem.getOrder().getId();
@@ -144,7 +210,7 @@ public class OrderResponse {
             this.qty = orderItem.getProduct().getQty();
             this.img = orderItem.getProduct().getImg();
             classChange();
-            this.stock = stockExist();
+//            this.stock = stockExist();
         }
 
         // Lombok에서 생성된 getStatus() 메서드를 오버라이드
@@ -200,6 +266,9 @@ public class OrderResponse {
 //            this.status = order.getStatus();
 //        }
 //    }
+
+
+
 
 
 }

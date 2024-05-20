@@ -62,7 +62,7 @@
                                    style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
-                {{/orderItemList}}
+
 
                 <tr class="panel-title">
                     <th></th>
@@ -74,9 +74,10 @@
                     <th></th>
                 </tr>
 
-                <!--   슬라이드 쇼 용 -->
-                {{#orderItemListV2}}
-                    <tr class="panel" data-order-id="{{orderId}}">
+                <!--                순회 여러번 도는 애들 -->
+                {{#items}}
+
+                    <tr class="panel" data-order-id="{{orderId}}" >
                         <td></td>
                         <td>
                             <div style="width:150px; margin:0 auto;">
@@ -90,11 +91,12 @@
                         <td>{{orderQty}}</td>
                         <td class="price-class" data-price="{{sum}}">{{sum}}</td>
                         <td style="{{classChange}}">{{status}}</td>
-                        <td style="color: blue">재고현황<br> (재고 : {{qty}})</td>
+                        <td style="color: blue">재고현황<br> ({{qty}})</td>
+
                     </tr>
-                {{/orderItemListV2}}
+                {{/items}}
 
-
+                {{/orderItemList}}
 
             </table>
 
@@ -132,7 +134,7 @@
         // alert("ㄱㄱ");
         var orderId = $(this).data("order-id");
         // 모든 .panel 요소를 숨김
-        $(".panel").slideUp("fast");
+        // $(this).siblings(".panel").slideUp("fast");
 
         // 동일한 data-order-id를 가진 .panel만 토글
         setTimeout(() => {
@@ -140,6 +142,7 @@
             $(".panel").each(function () {
                 if ($(this).data("order-id") == orderId) {
                     $(this).slideToggle("fast");
+                    // $(".panel-title").css('display', 'table-row');
                 }
             });
         }, 200); // slideUp 애니메이션이 완료될 시간을 고려하여 적당한 딜레이를 설정
