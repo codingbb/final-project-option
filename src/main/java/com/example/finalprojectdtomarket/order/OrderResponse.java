@@ -6,9 +6,50 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 public class OrderResponse {
+
+
+
+    // List<TestDTO> - 2크기
+    public static class TestDTO {
+        private Integer orderId;    //order PK
+        private String pName;
+        private Integer sum;     //order
+        private OrderStatus status; //이거 타입 보류
+        private Integer orderQty;
+        private Integer productId;
+        private LocalDate createdAt;
+        private String address;
+        private String personName;    //유저이름
+        private String img;
+
+        // 주문번호
+        private String orderNumb;
+        // 주문 취소가 잘 안보여서 색 변경
+        private String classChange;
+
+        private List<Item> items; // 2
+
+        public class Item {
+            private Integer orderId;    //order PK
+            private String pName;
+            private Integer sum;     //order
+            private OrderStatus status; //이거 타입 보류
+            private Integer orderQty;
+            private Integer productId;
+            private Integer price;
+            private Integer qty;
+            private String img;
+            private String classChange;
+
+            // 재고처리 - 재고있음, 재고없음
+            private String stock;
+        }
+
+    }
 
     @Data
     public static class ListDTO {

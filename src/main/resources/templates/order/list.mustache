@@ -2,7 +2,7 @@
 
 <style>
     .panel {
-        display: none;
+        display: block;
     }
 
     .panel-title {
@@ -60,15 +60,15 @@
                     </tr>
                 {{/orderItemList}}
 
-                <tr class="panel-title">
-                    <th></th>
-                    <th>상품명</th>
-                    <th>상품금액</th>
-                    <th>주문수량</th>
-                    <th>합계</th>
-                    <th>주문상태</th>
-                    <th></th>
-                </tr>
+<!--                <tr class="panel-title">-->
+<!--                    <th></th>-->
+<!--                    <th>상품명</th>-->
+<!--                    <th>상품금액</th>-->
+<!--                    <th>주문수량</th>-->
+<!--                    <th>합계</th>-->
+<!--                    <th>주문상태</th>-->
+<!--                    <th></th>-->
+<!--                </tr>-->
 
                 <!--   슬라이드 쇼 용 -->
                 {{#orderItemListV2}}
@@ -108,6 +108,8 @@
 
 <script>
 
+
+
     <!--    천단위 표시 재사용 해야할 함수 -->
     function numberWithCommas(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -127,7 +129,8 @@
         // alert("ㄱㄱ");
         var orderId = $(this).data("order-id");
         // 모든 .panel 요소를 숨김
-        $(".panel").slideUp("fast");
+
+        $(this).siblings(".panel").slideUp("fast");
 
         // 동일한 data-order-id를 가진 .panel만 토글
         setTimeout(() => {
