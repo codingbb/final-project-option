@@ -382,6 +382,12 @@ nav{
     background: url(../images/kakao-icon.png) no-repeat;
     background-size: cover;
 }
+.sns-login-w button{
+    border: none;
+    border-radius:10px; width: 100%;
+    vertical-align: middle;
+    padding-top:15px;
+}
 
 /*구매수량 증가버튼*/
 .decrease-btn{
