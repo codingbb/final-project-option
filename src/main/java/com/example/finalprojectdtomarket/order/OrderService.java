@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class OrderService {
-    private final OrderJPARepository orderJPARepository;
-    private final OrderItemJPARepository orderItemJPARepository;
-    private final CartJPARepository cartJPARepository;
-    private final ProductJPARepository productJPARepository;
+    private final OrderJPARepository orderRepo;
+    private final OrderItemJPARepository orderItemRepo;
+    private final CartJPARepository cartRepo;
+    private final ProductJPARepository productRepo;
 
     @Transactional
     public void orderCancel(List<OrderRequest.CancelDTO> requestDTO) {
@@ -35,8 +35,8 @@ public class OrderService {
 
         //값이 1개밖에 안들어오니까 (중복제거 해놔서) 해당 값으로 orderItem을 찾음
         for (int i = 0; i < requestDTO.size(); i++) {
-            List<OrderItem> orderItemList = orderItemJPARepository.findByOrderId(requestDTO.get(i).getOrderId());
-            System.out.println("아이템리스트 " + orderItemList);
+            List<OrderItem> orderItemList = orderItemRepo.findByOrderId(requestDTO.get(i).getOrderId());
+//            System.out.println("아이템리스트 " + orderItemList);
 
             status = OrderStatus.ORDER_CANCEL;
 
@@ -55,155 +55,71 @@ public class OrderService {
     }
 
     // 다시!! order-list
-    public List<OrderResponse.TestDTO> testList(Integer sessionUserId) {
-        //여러번 도는 애 조회
-        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId);
-        System.out.println("test " + orderItemList);
-
-        // 1번 도는 애 조회
-        // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
-        Map<Integer, OrderItem> orderDistinct =
-                orderItemList.stream().collect(Collectors.toMap(
-                        list -> list.getOrder().getId(),  //orderId가 키값
-                        list -> list,           // 값
-                        (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
-                ));
-
-        System.out.println("오더디스팅트" + orderDistinct);
-
-        // Map의 values 컬렉션을 List로 변환하여 반환
-        List<OrderItem> distinctOrderList = new ArrayList<>(orderDistinct.values());
-        // 주문 ID(orderId)를 기준으로 내림차순 정렬
-        distinctOrderList.sort((order1, order2) -> order2.getOrder().getId().compareTo(order1.getOrder().getId()));
-        System.out.println("중복처리 됐니" + distinctOrderList);
-
-        List<OrderResponse.TestDTO> resultList = new ArrayList<>();
-        for (OrderItem orderItem : distinctOrderList) {
-            resultList.add(new OrderResponse.TestDTO(orderItem, orderItemList));
-        }
-
-        System.out.println("리절트" + resultList);
-
-        return resultList;
-
-    }
-
-    public List<OrderResponse.TestDTO> testList() {
-        //여러번 도는 애 조회
-        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
-        System.out.println("test " + orderItemList);
-
-        // 1번 도는 애 조회
-        // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
-        Map<Integer, OrderItem> orderDistinct =
-                orderItemList.stream().collect(Collectors.toMap(
-                        list -> list.getOrder().getId(),  //orderId가 키값
-                        list -> list,           // 값
-                        (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
-                ));
-
-        System.out.println("오더디스팅트" + orderDistinct);
-
-        // Map의 values 컬렉션을 List로 변환하여 반환
-        List<OrderItem> distinctOrderList = new ArrayList<>(orderDistinct.values());
-        // 주문 ID(orderId)를 기준으로 내림차순 정렬
-        distinctOrderList.sort((order1, order2) -> order2.getOrder().getId().compareTo(order1.getOrder().getId()));
-        System.out.println("중복처리 됐니" + distinctOrderList);
-
-        List<OrderResponse.TestDTO> resultList = new ArrayList<>();
-        for (OrderItem orderItem : distinctOrderList) {
-            resultList.add(new OrderResponse.TestDTO(orderItem, orderItemList));
-        }
-
-        System.out.println("리절트" + resultList);
-
-        return resultList;
-
-    }
-
-
-    //order-list
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
-//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
-        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId);
-//        System.out.println("아이템 리스트 " + orderItemList);
+        //여러번 도는 애 조회
+        List<OrderItem> orderItemList = orderRepo.findOrderList(sessionUserId);
+//        System.out.println("test " + orderItemList);
 
-        List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
-                -> new OrderResponse.ListDTO(orderItem)).toList();
-//        System.out.println("아이고 " + orderList);
-
+        // 1번 도는 애 조회
         // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
-        Map<Integer, OrderResponse.ListDTO> orderDistinct =
-                orderList.stream().collect(Collectors.toMap(
-                        list -> list.getOrderId(),  //orderId가 키값
+        Map<Integer, OrderItem> orderDistinct =
+                orderItemList.stream().collect(Collectors.toMap(
+                        list -> list.getOrder().getId(),  //orderId가 키값
                         list -> list,           // 값
                         (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
                 ));
 
+//        System.out.println("오더디스팅트" + orderDistinct);
+
         // Map의 values 컬렉션을 List로 변환하여 반환
-        List<OrderResponse.ListDTO> distinctOrderList = new ArrayList<>(orderDistinct.values());
+        List<OrderItem> distinctOrderList = new ArrayList<>(orderDistinct.values());
         // 주문 ID(orderId)를 기준으로 내림차순 정렬
-        distinctOrderList.sort((order1, order2) -> order2.getOrderId().compareTo(order1.getOrderId()));
+        distinctOrderList.sort((order1, order2) -> order2.getOrder().getId().compareTo(order1.getOrder().getId()));
+//        System.out.println("중복처리 됐니" + distinctOrderList);
 
-        return distinctOrderList;
-//        return orderList;
+        List<OrderResponse.ListDTO> resultList = new ArrayList<>();
+        for (OrderItem orderItem : distinctOrderList) {
+            resultList.add(new OrderResponse.ListDTO(orderItem, orderItemList));
+        }
+
+//        System.out.println("리절트" + resultList);
+
+        return resultList;
+
     }
 
-    //order-list-V2 (토글용 ..)
-    public List<OrderResponse.ListDTOV2> orderListV2(Integer sessionUserId) {
-//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
-        List<OrderItem> orderItemList = orderJPARepository.findOrderList(sessionUserId);
-//        System.out.println("아이템 리스트 " + orderItemList);
+    public List<OrderResponse.ListDTO> orderList() {
+        //여러번 도는 애 조회
+        List<OrderItem> orderItemList = orderItemRepo.findAll();
+        System.out.println("test " + orderItemList);
 
-        List<OrderResponse.ListDTOV2> orderList = orderItemList.stream().map(orderItem
-                -> new OrderResponse.ListDTOV2(orderItem)).toList();
-        System.out.println("아이고 " + orderList);
-
-        return orderList;
-    }
-
-
-
-    public List<OrderResponse.ListDTO> adminOrderList() {
-//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
-        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
-//        System.out.println("아이템 리스트 " + orderItemList);
-
-        List<OrderResponse.ListDTO> orderList = orderItemList.stream().map(orderItem
-                -> new OrderResponse.ListDTO(orderItem)).toList();
-//        System.out.println("아이고 " + orderList);
-
+        // 1번 도는 애 조회
         // orderId가 중복되어서 촤차아악 나오길래 중복제거 (대표 물품만 1개 나오게)
-        Map<Integer, OrderResponse.ListDTO> orderDistinct =
-                orderList.stream().collect(Collectors.toMap(
-                        list -> list.getOrderId(),  //orderId가 키값
+        Map<Integer, OrderItem> orderDistinct =
+                orderItemList.stream().collect(Collectors.toMap(
+                        list -> list.getOrder().getId(),  //orderId가 키값
                         list -> list,           // 값
                         (first, second) -> first    //같은 키를 가진 요소가 있으면 첫번째 값 사용
                 ));
 
+//        System.out.println("오더디스팅트" + orderDistinct);
+
         // Map의 values 컬렉션을 List로 변환하여 반환
-        List<OrderResponse.ListDTO> distinctOrderList = new ArrayList<>(orderDistinct.values());
+        List<OrderItem> distinctOrderList = new ArrayList<>(orderDistinct.values());
         // 주문 ID(orderId)를 기준으로 내림차순 정렬
-        distinctOrderList.sort((order1, order2) -> order2.getOrderId().compareTo(order1.getOrderId()));
+        distinctOrderList.sort((order1, order2) -> order2.getOrder().getId().compareTo(order1.getOrder().getId()));
+//        System.out.println("중복처리 됐니" + distinctOrderList);
 
-        return distinctOrderList;
-//        return orderList;
+        List<OrderResponse.ListDTO> resultList = new ArrayList<>();
+        for (OrderItem orderItem : distinctOrderList) {
+            resultList.add(new OrderResponse.ListDTO(orderItem, orderItemList));
+        }
+
+//        System.out.println("리절트" + resultList);
+
+        return resultList;
+
     }
-
-    //order-list-V2 (토글용 ..)
-    public List<OrderResponse.ListDTOV2> adminOrderListV2() {
-//        OrderStatus status = OrderStatus.ORDER_COMPLETE;
-        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
-//        System.out.println("아이템 리스트 " + orderItemList);
-
-        List<OrderResponse.ListDTOV2> orderList = orderItemList.stream().map(orderItem
-                -> new OrderResponse.ListDTOV2(orderItem)).toList();
-        System.out.println("아이고 " + orderList);
-
-        return orderList;
-    }
-
-
 
 
     //구매하기
@@ -212,16 +128,16 @@ public class OrderService {
         System.out.println("값확인" + requestDTO);
 
         //오더 저장 //TODO : save 부분
-        Order order = orderJPARepository.save(requestDTO.toOrderEntity(user));
+        Order order = orderRepo.save(requestDTO.toOrderEntity(user));
 
         //오더 아이템 저장
         for (int i = 0; i < requestDTO.getProductId().size(); i++) {
-            Product product = productJPARepository.findById(requestDTO.getProductId().get(i))
+            Product product = productRepo.findById(requestDTO.getProductId().get(i))
                     .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
 
             Integer quantity = requestDTO.getOrderQty().get(i);
 
-            orderItemJPARepository.save(requestDTO.toOrderItemEntity(order, product, quantity));
+            orderItemRepo.save(requestDTO.toOrderItemEntity(order, product, quantity));
 
 //            order.addOrderItem(requestDTO.toOrderItemEntity(order, product, quantity));
 
@@ -229,7 +145,7 @@ public class OrderService {
             product.setQty(product.getQty() - quantity);
 
             //선택한 카트 딜리트
-            cartJPARepository.deleteByCartId(requestDTO.getCartId().get(i));
+            cartRepo.deleteByCartId(requestDTO.getCartId().get(i));
 
         }
     }
@@ -240,7 +156,7 @@ public class OrderService {
     public List<CartResponse.ListDTO> orderCartList(Integer userId) {
         Boolean isChecked = true;
         //user는 sessionUser, isChecked는 true인 list 조회
-        List<Cart> carts = cartJPARepository.findByUserIdAndCheckedV2(userId, isChecked);
+        List<Cart> carts = cartRepo.findByUserIdAndCheckedV2(userId, isChecked);
         List<CartResponse.ListDTO> cartList = carts.stream().map(cart -> new CartResponse.ListDTO(cart)).toList();
 
         Integer indexNum = 1;
@@ -271,8 +187,8 @@ public class OrderService {
     @Transactional
     public List<CartResponse.ListDTO> findByUserIdAndChecked(Integer userId, Boolean isChecked) {
         // 저장된 리스트를 사용자 ID와 상태를 기준으로 조회
-        List<CartResponse.ListDTO> cartList = cartJPARepository.findByUserIdAndChecked(userId, isChecked);
-        cartJPARepository.updateCheckedById();
+        List<CartResponse.ListDTO> cartList = cartRepo.findByUserIdAndChecked(userId, isChecked);
+        cartRepo.updateCheckedById();
         // 모든 조회된 항목의 isChecked 상태를 true로 업데이트
 //        for (CartResponse.ListDTO cart : cartList) {
 //            cartJPARepository.updateCheckedById(true, cart.getId());
@@ -288,10 +204,4 @@ public class OrderService {
     }
 
 
-//    public List<OrderItem> adminList() {
-//        List<OrderItem> orderItemList = orderItemJPARepository.findAll();
-//
-//
-//        return orderItemList;
-//    }
 }

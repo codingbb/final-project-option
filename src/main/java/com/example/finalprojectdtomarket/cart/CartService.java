@@ -14,33 +14,30 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CartService {
-    private final CartJPARepository cartJPARepository;
-    private final ProductJPARepository productJPARepository;
-
-
-
+    private final CartJPARepository cartRepo;
+    private final ProductJPARepository productRepo;
 
 
     //cart-save
     @Transactional
     public void cartSave(CartRequest.saveDTO requestDTO, User sessionUser) {
         //장바구니에 존재하지 않는 상품을 넣을 수도 있으니까
-        Product product = productJPARepository.findById(requestDTO.getProductId())
+        Product product = productRepo.findById(requestDTO.getProductId())
                         .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다"));
 
-        Cart cart = cartJPARepository.findByUserAndProduct(sessionUser.getId(), requestDTO.getProductId());
+        Cart cart = cartRepo.findByUserAndProduct(sessionUser.getId(), requestDTO.getProductId());
 
         if (cart != null) {
             cart.setOrderQty(cart.getOrderQty() + requestDTO.getOrderQty());
         } else {
-            cartJPARepository.save(requestDTO.toEntity(sessionUser, product));
+            cartRepo.save(requestDTO.toEntity(sessionUser, product));
         }
     }
 
 
     //cart-list용
     public List<CartResponse.ListDTO> getCartList(Integer userId) {
-        List<Cart> carts = cartJPARepository.findByCartUserId(userId);
+        List<Cart> carts = cartRepo.findByCartUserId(userId);
         
         List<CartResponse.ListDTO> cartList = carts.stream().map(cart -> new CartResponse.ListDTO(cart)).toList();
 //        System.out.println("respDTO = " + respDTO);
@@ -61,10 +58,10 @@ public class CartService {
     public void updateCart(List<CartRequest.UpdateDTO> reqDTOs) {
         //cart id 검증
         for (CartRequest.UpdateDTO reqDTO : reqDTOs) {
-            Cart cart = cartJPARepository.findById(reqDTO.getCartId())
+            Cart cart = cartRepo.findById(reqDTO.getCartId())
                     .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
 
-            Cart qty = cartJPARepository.findByQtyWithId(reqDTO.getCartId());
+            Cart qty = cartRepo.findByQtyWithId(reqDTO.getCartId());
             if (reqDTO.getOrderQty() > qty.getProduct().getQty()) {
 //                System.out.println("재고 부족 - 재고 수량: " + qty.getProduct().getQty() + ", 구매 요청 수량: " + reqDTO.getOrderQty());
                 throw new ApiException400("재고 부족! 구매 불가");

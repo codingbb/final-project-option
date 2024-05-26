@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class OrderItemService {
-    private final OrderItemJPARepository orderItemJPARepository;
+    private final OrderItemJPARepository orderItemRepo;
 
 }

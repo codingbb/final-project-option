@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -62,26 +68,30 @@ public class ProductController {
         return "product/save-form";
     }
 
+
+    // 상품 save
     @PostMapping("/product/save")
     public String save(ProductRequest.SaveDTO reqDTO) {
-        System.out.println("dd" + reqDTO);
+//        System.out.println("dd" + reqDTO);
         productService.save(reqDTO);
         return "redirect:/";
     }
 
-    // 상품 수정하기
-    @GetMapping("/product/{id}/update-form")
-    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-        ProductResponse.DetailDTO product = productService.getDetail(id);
-        request.setAttribute("product", product);
-        return "product/update-form";
-    }
 
-    @PostMapping("/product/{id}/update")
-    public String update(@PathVariable Integer id, ProductRequest.UpdateDTO reqDTO) {
-        productService.updateProduct(id, reqDTO);
-        return "redirect:/product/" + id;
-    }
+
+//    // 상품 수정하기
+//    @GetMapping("/product/{id}/update-form")
+//    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+//        ProductResponse.DetailDTO product = productService.getDetail(id);
+//        request.setAttribute("product", product);
+//        return "product/update-form";
+//    }
+//
+//    @PostMapping("/product/{id}/update")
+//    public String update(@PathVariable Integer id, ProductRequest.UpdateDTO reqDTO) {
+//        productService.updateProduct(id, reqDTO);
+//        return "redirect:/product/" + id;
+//    }
 
     // 상품 삭제하기
     @PostMapping("/product/{id}/delete")

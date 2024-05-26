@@ -17,7 +17,6 @@ import java.util.List;
 @Controller
 public class CartController {
     private final CartService cartService;
-    private final CartJPARepository cartJPARepository;
     private final HttpSession session;
 
 
@@ -45,21 +44,11 @@ public class CartController {
 
     @PostMapping("/cart/update")
     public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> reqDTOs) {
-        System.out.println("장바구니 값 받니? : " + reqDTOs);
+//        System.out.println("장바구니 값 받니? : " + reqDTOs);
         cartService.updateCart(reqDTOs);
 
         return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
     }
 
-//    @PostMapping("/cart/update")
-//    public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> reqDTO) {
-//        System.out.println("장바구니 값 받니? : " + reqDTO);
-//        cartJPARepository.updateCheckedById();
-//
-//        return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
-//    }
 
-//    public @ResponseBody String update() {
-//        return "구매를 진행하겠습니다.";
-//    }
 }

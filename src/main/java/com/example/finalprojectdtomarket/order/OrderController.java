@@ -26,7 +26,7 @@ public class OrderController {
     @GetMapping("/admin-list")
     public String adminList(HttpServletRequest request) {
 
-        List<OrderResponse.TestDTO> orderItemList = orderService.testList();
+        List<OrderResponse.ListDTO> orderItemList = orderService.orderList();
 //        System.out.println("ffdd = " + orderItemList);
         request.setAttribute("orderItemList", orderItemList);
         return "/admin/list";
@@ -38,7 +38,7 @@ public class OrderController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
-        List<OrderResponse.TestDTO> orderItemList = orderService.testList(user.getId());
+        List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
 //        System.out.println("ffdd = " + orderItemList);
         request.setAttribute("orderItemList", orderItemList);
         return "/order/list";
