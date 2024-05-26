@@ -16,18 +16,9 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c JOIN FETCH c.product p JOIN FETCH c.user u WHERE u.id = :userId and c.isChecked = :isChecked")
     List<CartResponse.ListDTO> findByUserIdAndChecked(@Param("userId") int userId, @Param("isChecked") boolean isChecked);
 
-    //dto로 못쓸걸요!?
+
     @Query("select c from Cart c JOIN FETCH c.product p JOIN FETCH c.user u WHERE u.id = :userId and c.isChecked = :isChecked")
     List<Cart> findByUserIdAndCheckedV2(@Param("userId") int userId, @Param("isChecked") boolean isChecked);
-
-
-
-    @Modifying
-    @Query("update Cart c set c.isChecked = :isChecked where c.id = :id")
-    int updateCheckedById();
-
-
-    //cart-save 용
 
 
     //cart-list 용

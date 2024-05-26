@@ -97,10 +97,10 @@ public class ProductController {
     @PostMapping("/product/{id}/delete")
     public String delete(@PathVariable Integer id) {
 
-        System.out.println("아이디 " + id);
+//        System.out.println("아이디 " + id);
         productService.deleteProduct(id);
 
-        return "/product/product-list";
+        return "redirect:/product-list";
     }
 
 
