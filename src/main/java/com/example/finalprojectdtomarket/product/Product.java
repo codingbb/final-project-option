@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.product;
 
+import com.example.finalprojectdtomarket.code.Code;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -29,16 +30,21 @@ public class Product {
     @Column(nullable = false)
     private String img;              // 상품이미지
 
+    //code 추가
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Code code;
+
     @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, Integer price, Integer qty, String img, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, Integer qty, String img, Code code, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.qty = qty;
         this.img = img;
+        this.code = code;
         this.createdAt = createdAt;
     }
 }

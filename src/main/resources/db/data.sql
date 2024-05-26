@@ -4,6 +4,11 @@ insert into user_tb(role, username, password, person_name, phone, birth, email, 
 insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'cos', '1234', '심유주', '010-3333-3333', '1988-09-22','cos@nate.com', now());
 insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'love', '1234', '이소연', '010-4444-4444', '1999-01-26','love@nate.com', now());
 
+-- 카테고리
+INSERT INTO code_tb(code_id, code_name, created_at) VALUES ('A01', '과일', NOW());
+INSERT INTO code_tb(code_id, code_name, created_at) VALUES ('A02', '채소', NOW());
+INSERT INTO code_tb(code_id, code_name, created_at) VALUES ('A03', '유제품', NOW());
+
 -- product 정보
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('성주 참외 1.5kg(4~7입)', 17900, 100, 'prod_3.jpg' ,NOW());
 INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('바나나 실속 2종', 4800, 100, 'prod_4.jpg', NOW());
@@ -38,3 +43,4 @@ INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALU
 --
 -- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (4, 10, 3, NOW());
 -- INSERT INTO order_item_tb(product_id, order_qty, order_id, created_at) VALUES (3, 6, 4, NOW());
+
