@@ -77,21 +77,43 @@ public class ProductController {
         return "redirect:/";
     }
 
+    //상품 수정
+    @GetMapping("/product/{id}/update-form")
+    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+        ProductResponse.UpdateDTO product = productService.findByIdUpdate(id);
+        request.setAttribute("product", product);
+        return "product/update-form";
+    }
 
+    @PostMapping("/product/{id}/update")
+    public String update(@PathVariable Integer id, ProductRequest.UpdateDTO requestDTO) {
+        String imgFileName;
 
-//    // 상품 수정하기
-//    @GetMapping("/product/{id}/update-form")
-//    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-//        ProductResponse.DetailDTO product = productService.getDetail(id);
-//        request.setAttribute("product", product);
-//        return "product/update-form";
-//    }
-//
-//    @PostMapping("/product/{id}/update")
-//    public String update(@PathVariable Integer id, ProductRequest.UpdateDTO reqDTO) {
-//        productService.updateProduct(id, reqDTO);
-//        return "redirect:/product/" + id;
-//    }
+        // 이미지 파일이 존재할 경우, 새 파일명 생성 및 파일 저장
+        if (!requestDTO.getImg().isEmpty()) {
+            MultipartFile imgFile = requestDTO.getImg();
+            imgFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+
+            Path imgPath = Paths.get("./upload/" + imgFileName);
+
+            try {
+                Files.write(imgPath, imgFile.getBytes());
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            // 이미지 파일이 없을 경우, 기존 파일명 유지
+            ProductResponse.UpdateDTO existImg = productService.findByIdUpdate(id);
+            imgFileName = existImg.getImg(); // 기존의 imgFileName을 가져와서 사용
+
+        }
+
+        productService.updateProduct(id, requestDTO, imgFileName);
+        return "redirect:/product/" + id;
+    }
+
 
     // 상품 삭제하기
     @PostMapping("/product/{id}/delete")

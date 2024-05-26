@@ -23,7 +23,7 @@ public class ImgSaveUtil {
 
 
         } catch (IOException e) {
-            throw new RuntimeException("이미지 오류",e);
+            throw new RuntimeException("이미지 오류", e);
         }
         return profileFilename;
     }

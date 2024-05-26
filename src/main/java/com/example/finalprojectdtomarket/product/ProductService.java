@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -62,17 +63,27 @@ public class ProductService {
         return products;
     }
 
-    // 상품 정보 수정
-    @Transactional
-    public ProductResponse.UpdateDTO updateProduct(Integer productId, ProductRequest.UpdateDTO reqDTO) {
-        Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
+    //상품 업데이트폼 줘
+    public ProductResponse.UpdateDTO findByIdUpdate(Integer id) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
-        String imgName = ImgSaveUtil.save(reqDTO.getImg());
-        product.setImg(imgName);
-        product.setPrice(reqDTO.getPrice());
-        product.setQty(reqDTO.getQty());
-        productRepo.save(product);
         return new ProductResponse.UpdateDTO(product);
+
     }
+
+    //업데이트
+    @Transactional
+    public void updateProduct(Integer id, ProductRequest.UpdateDTO requestDTO, String imgFileName) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
+
+        // TODO: set으로 말고 의미있는 메소드 만들어서 하는건?
+        product.setName(requestDTO.getName());
+        product.setQty(requestDTO.getQty());
+        product.setPrice(requestDTO.getPrice());
+        product.setImg(imgFileName);
+
+    }
+
 }
