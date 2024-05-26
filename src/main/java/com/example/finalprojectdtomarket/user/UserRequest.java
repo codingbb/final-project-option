@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class UserRequest {
 
@@ -30,7 +31,8 @@ public class UserRequest {
         private String phone;
         private String email;
         private String personName;
-        private Date birth;
+        private String gender;
+        private LocalDate birth;
         private Integer role;
         public User toEntity(){
             return User.builder()
@@ -40,6 +42,7 @@ public class UserRequest {
                     .birth(birth)
                     .email(email)
                     .personName(personName)
+                    .gender(gender)
                     .role(role)
                     .build();
         }

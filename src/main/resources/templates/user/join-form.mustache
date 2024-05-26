@@ -1,5 +1,18 @@
 {{> layout/header}}
 
+<style>
+    td label {
+        margin-right: 50px; /* 라벨 사이의 간격 조정 */
+        display: inline-flex; /* 인라인 플렉스 디스플레이 설정 */
+        align-items: center; /* 라디오 버튼과 텍스트를 수직으로 중앙 정렬 */
+    }
+
+    input[type="radio"] {
+        margin-right: 15px; /* 라디오 버튼과 텍스트 사이의 간격 조정 */
+    }
+</style>
+
+
 <div class="container sub-page">
 
     <!-- 요청을 하면 localhost:8080/join POST로 요청됨
@@ -76,6 +89,20 @@
                         </td>
                     </tr>
                     <!--생년월일 입력-->
+                    <!--성별 입력-->
+                    <tr>
+                        <th>성별<span class="point-color">*</span></th>
+                        <td colspan="2">
+                            <label for="male">
+                                <input type="radio" id="male" name="gender" value="male"> 남
+                            </label>
+                            <label for="female">
+                                <input type="radio" id="female" name="gender" value="female"> 여
+                            </label>
+                        </td>
+                    </tr>
+
+                    <!--성별 입력-->
 
                 </table>
                 <!--가입하기버튼-->
@@ -86,6 +113,9 @@
         <!--가입하기 폼 박스-->
     </div>
 </div>
+
+
+
 <script>
     let isSameCheck = false; // 중복 확인 여부를 저장하는 변수
 

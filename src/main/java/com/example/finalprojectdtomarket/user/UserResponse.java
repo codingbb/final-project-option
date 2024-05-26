@@ -3,6 +3,7 @@ package com.example.finalprojectdtomarket.user;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class UserResponse {
 
@@ -28,7 +29,7 @@ public class UserResponse {
         private String username;
         private String phone;
         private String email;
-        private Date birth;
+        private LocalDate birth;
         private Integer role;
 
         public JoinDTO(User user) {

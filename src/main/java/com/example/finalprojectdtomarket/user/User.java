@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
@@ -34,16 +35,19 @@ public class User {
     private String email;     //이메일
 
     @Column(nullable = false)
-    private Date birth;       //생년월일
+    private LocalDate birth;       //생년월일
 
     @Column
     private Integer role;     // 1 -> admin, 2 -> user
+
+    @Column
+    private String gender;  // male / female
 
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
     @Builder
-    public User(Integer id, String password, String username, String phone, String email, Date birth, Integer role, String personName, Timestamp createdAt) {
+    public User(Integer id, String password, String username, String phone, String email, LocalDate birth, Integer role, String personName, String gender, Timestamp createdAt) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -52,6 +56,7 @@ public class User {
         this.birth = birth;
         this.role = role;
         this.personName = personName;
+        this.gender = gender;
         this.createdAt = createdAt;
     }
 }
