@@ -1,4 +1,4 @@
-package com.example.finalprojectdtomarket.code;
+package com.example.finalprojectdtomarket.category;
 
 import jakarta.persistence.*;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.example.finalprojectdtomarket.product;
 
-import com.example.finalprojectdtomarket.code.Category;
+import com.example.finalprojectdtomarket.category.Category;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;

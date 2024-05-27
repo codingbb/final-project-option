@@ -3,8 +3,8 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
-import com.example.finalprojectdtomarket.code.Category;
-import com.example.finalprojectdtomarket.code.CategoryJPARepository;
+import com.example.finalprojectdtomarket.category.Category;
+import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +50,7 @@ public class ProductService {
     // 상품 등록하기
     @Transactional
     public void save(ProductRequest.SaveDTO reqDTO) {
-        Category category = categoryJPARepository.findByCodeName(reqDTO.getCategoryCode()).orElseThrow(() ->
-                new Exception404("카테고리를 찾을 수 없습니다. "));
-
-        productRepo.save(reqDTO.toEntity(category));
+        productRepo.save(reqDTO.toEntity());
     }
 
 

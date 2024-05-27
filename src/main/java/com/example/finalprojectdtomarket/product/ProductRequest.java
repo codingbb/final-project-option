@@ -1,7 +1,6 @@
 package com.example.finalprojectdtomarket.product;
 
-import com.example.finalprojectdtomarket.code.Category;
-import jakarta.persistence.Column;
+import com.example.finalprojectdtomarket.category.Category;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,18 +23,18 @@ public class ProductRequest {
         private String name;
         private Integer price;
         private Integer qty;
-        private String categoryCode;
+
         private MultipartFile img;
 
 
-        public Product toEntity(Category category){
+        public Product toEntity(){
             String imgFileName = ImgSaveUtil.save(img);
             return Product.builder()
                     .img(imgFileName)
                     .name(name)
                     .price(price)
                     .qty(qty)
-                    .category(category)
+
                     .build();
         }
     }
