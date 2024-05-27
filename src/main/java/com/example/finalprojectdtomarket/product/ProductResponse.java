@@ -52,6 +52,8 @@ public class ProductResponse {
         private String categoryName;
         private String img;
 
+
+
         public UpdateDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();

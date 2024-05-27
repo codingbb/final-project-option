@@ -58,7 +58,7 @@
                             <td colspan="2">
                                 <select class="" name="categoryId" id="category">
                                     {{#categoryList}}
-                                        <option value="{{id}}">{{product.categoryName}}</option>
+                                        <option value="{{id}}" {{#isSelected}}selected{{/isSelected}}>{{categoryName}}</option>
                                     {{/categoryList}}
                                 </select>
                             </td>
