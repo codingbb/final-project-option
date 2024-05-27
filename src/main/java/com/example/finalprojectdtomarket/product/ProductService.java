@@ -71,10 +71,7 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
-        //카테고리까지 같이 조회 (join)
-        Product newProduct = productRepo.findByIdWithCategory(product.getId());
-
-        return new ProductResponse.UpdateDTO(newProduct);
+        return new ProductResponse.UpdateDTO(product);
 
     }
 
@@ -88,7 +85,7 @@ public class ProductService {
         product.setName(requestDTO.getName());
         product.setQty(requestDTO.getQty());
         product.setPrice(requestDTO.getPrice());
-        product.getCategory().setCategoryCode(requestDTO.getCategoryCode());
+
         product.setImg(imgFileName);
 
     }

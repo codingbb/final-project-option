@@ -13,7 +13,7 @@ public class ProductRequest {
         private String name;
         private Integer price;
         private Integer qty;
-        private String categoryCode;
+
         private MultipartFile img;
     }
 
