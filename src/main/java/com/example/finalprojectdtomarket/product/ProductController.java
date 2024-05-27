@@ -71,9 +71,9 @@ public class ProductController {
 
     // 상품 save
     @PostMapping("/product/save")
-    public String save(ProductRequest.SaveDTO reqDTO) {
-//        System.out.println("dd" + reqDTO);
-        productService.save(reqDTO);
+    public String save(ProductRequest.SaveDTO requestDTO) {
+        System.out.println("save 확인" + requestDTO);
+        productService.save(requestDTO);
         return "redirect:/";
     }
 

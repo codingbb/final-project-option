@@ -1,6 +1,6 @@
 package com.example.finalprojectdtomarket.product;
 
-import com.example.finalprojectdtomarket.code.Code;
+import com.example.finalprojectdtomarket.code.Category;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -32,19 +32,19 @@ public class Product {
 
     //code 추가
     @ManyToOne(fetch = FetchType.LAZY)
-    private Code code;
+    private Category category;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, Integer price, Integer qty, String img, Code code, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, Integer qty, String img, Category category, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.qty = qty;
         this.img = img;
-        this.code = code;
+        this.category = category;
         this.createdAt = createdAt;
     }
 }

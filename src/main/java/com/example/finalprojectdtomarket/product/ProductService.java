@@ -3,12 +3,15 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
+import com.example.finalprojectdtomarket.code.Category;
+import com.example.finalprojectdtomarket.code.CategoryJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import com.example.finalprojectdtomarket._core.common.ImgSaveUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,8 @@ public class ProductService {
     private final ProductJPARepository productRepo;
     private final OrderItemJPARepository orderItemRepo;
     private final CartJPARepository cartRepo;
+    private final CategoryJPARepository cartegoryRepo;
+    private final CategoryJPARepository categoryJPARepository;
 
     //상품 삭제하기
     @Transactional
@@ -47,7 +52,10 @@ public class ProductService {
     // 상품 등록하기
     @Transactional
     public void save(ProductRequest.SaveDTO reqDTO) {
-        productRepo.save(reqDTO.toEntity());
+        Category category = categoryJPARepository.findByCodeName(reqDTO.getCategoryCode()).orElseThrow(() ->
+                new Exception404("카테고리를 찾을 수 없습니다. "));
+
+        productRepo.save(reqDTO.toEntity(category));
     }
 
 

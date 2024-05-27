@@ -1,7 +1,5 @@
 package com.example.finalprojectdtomarket.code;
 
-import com.example.finalprojectdtomarket.order.OrderStatus;
-import com.example.finalprojectdtomarket.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -12,25 +10,25 @@ import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Data
-@Table(name = "code_tb")
+@Table(name = "category_tb")
 @Entity
-public class Code {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String codeId; //과일(A01) 채소(A02) 유제품(A03)
+    private String categoryCode; //과일(A01) 채소(A02) 유제품(A03)
 
-    private String codeName;    //과일 채소 유제품
+    private String categoryName;    //과일 채소 유제품
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Code(Integer id, String codeId, String codeName, Timestamp createdAt) {
+    public Category(Integer id, String categoryCode, String categoryName, Timestamp createdAt) {
         this.id = id;
-        this.codeId = codeId;
-        this.codeName = codeName;
+        this.categoryCode = categoryCode;
+        this.categoryName = categoryName;
         this.createdAt = createdAt;
     }
 }
