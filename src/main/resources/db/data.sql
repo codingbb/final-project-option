@@ -10,12 +10,12 @@ INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A02',
 INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A03', '유제품', NOW());
 
 -- product 정보
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('성주 참외 1.5kg(4~7입)', 17900, 100, 'prod_3.jpg' ,NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('바나나 실속 2종', 4800, 100, 'prod_4.jpg', NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('당도선별 천혜향 1kg(4~6입)', 15000, 100, 'prod_1.jpg',NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('대추 방울 토마토 750g', 9900, 100,'prod_2.jpg', NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('애플청포도 500g', 11900, 100, 'prod_7.jpg',NOW());
-INSERT INTO product_tb(name, price, qty, img, created_at) VALUES ('수박 4kg 이상', 28000, 100, 'prod_8.jpg',NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('성주 참외 1.5kg(4~7입)', 17900, 100, 'prod_3.jpg', 1, NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('바나나 실속 2종', 4800, 100, 'prod_4.jpg', 1, NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('당도선별 천혜향 1kg(4~6입)', 15000, 100, 'prod_1.jpg', 1, NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('대추 방울 토마토 750g', 9900, 100,'prod_2.jpg', 2, NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('애플청포도 500g', 11900, 100, 'prod_7.jpg', 3, NOW());
+INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('수박 4kg 이상', 28000, 100, 'prod_8.jpg', 3, NOW());
 
 -- cart 정보
 INSERT INTO cart_tb(user_id, product_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());

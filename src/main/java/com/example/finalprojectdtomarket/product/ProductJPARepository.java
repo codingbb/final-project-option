@@ -16,4 +16,7 @@ public interface ProductJPARepository extends JpaRepository<Product, Integer> {
     @Modifying(clearAutomatically = true)
     @Query("delete from Product p where p.id = :productId")
     void deleteByProductId(@Param("productId") Integer productId);
+
+    @Query("select p from Product p join fetch p.category c where p.id = :productId")
+    Product findByIdWithCategory(@Param("productId") Integer productId);
 }

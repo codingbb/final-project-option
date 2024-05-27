@@ -6,14 +6,12 @@ import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.code.Category;
 import com.example.finalprojectdtomarket.code.CategoryJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
-import com.example.finalprojectdtomarket._core.common.ImgSaveUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -76,7 +74,10 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
-        return new ProductResponse.UpdateDTO(product);
+        //카테고리까지 같이 조회 (join)
+        Product newProduct = productRepo.findByIdWithCategory(product.getId());
+
+        return new ProductResponse.UpdateDTO(newProduct);
 
     }
 
@@ -90,6 +91,7 @@ public class ProductService {
         product.setName(requestDTO.getName());
         product.setQty(requestDTO.getQty());
         product.setPrice(requestDTO.getPrice());
+        product.getCategory().setCategoryCode(requestDTO.getCategoryCode());
         product.setImg(imgFileName);
 
     }

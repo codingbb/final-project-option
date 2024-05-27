@@ -14,6 +14,7 @@ public class ProductRequest {
         private String name;
         private Integer price;
         private Integer qty;
+        private String categoryCode;
         private MultipartFile img;
     }
 
@@ -26,13 +27,6 @@ public class ProductRequest {
         private String categoryCode;
         private MultipartFile img;
 
-        public SaveDTO(String name, Integer price, Integer qty, String categoryCode, MultipartFile img) {
-            this.name = name;
-            this.price = price;
-            this.qty = qty;
-            this.categoryCode = categoryCode;
-            this.img = img;
-        }
 
         public Product toEntity(Category category){
             String imgFileName = ImgSaveUtil.save(img);
