@@ -23,18 +23,18 @@ public class ProductRequest {
         private String name;
         private Integer price;
         private Integer qty;
-
+        private Integer categoryId;
         private MultipartFile img;
 
 
-        public Product toEntity(){
+        public Product toEntity(Category category){
             String imgFileName = ImgSaveUtil.save(img);
             return Product.builder()
                     .img(imgFileName)
                     .name(name)
                     .price(price)
                     .qty(qty)
-
+                    .category(category)
                     .build();
         }
     }

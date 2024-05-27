@@ -1,5 +1,7 @@
 package com.example.finalprojectdtomarket.product;
 
+import com.example.finalprojectdtomarket.category.Category;
+import com.example.finalprojectdtomarket.category.CategoryService;
 import com.example.finalprojectdtomarket.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @Controller
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
     private final HttpSession session;
 
     @GetMapping("/product-list")
@@ -64,7 +67,9 @@ public class ProductController {
 
     // 상품 등록하기
     @GetMapping("/product/save-form")
-    public String saveForm() {
+    public String saveForm(HttpServletRequest request) {
+        List<Category> categoryList = categoryService.categoryList();
+        request.setAttribute("categoryList", categoryList);
         return "product/save-form";
     }
 
@@ -80,7 +85,11 @@ public class ProductController {
     //상품 수정
     @GetMapping("/product/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+        List<Category> categoryList = categoryService.categoryList();
         ProductResponse.UpdateDTO product = productService.findByIdUpdate(id);
+
+//      TODO: 하나로 넣었으면 ...
+        request.setAttribute("categoryList", categoryList);
         request.setAttribute("product", product);
         return "product/update-form";
     }

@@ -19,8 +19,8 @@ public class ProductService {
     private final ProductJPARepository productRepo;
     private final OrderItemJPARepository orderItemRepo;
     private final CartJPARepository cartRepo;
-    private final CategoryJPARepository cartegoryRepo;
-    private final CategoryJPARepository categoryJPARepository;
+    private final CategoryJPARepository categoryRepo;
+
 
     //상품 삭제하기
     @Transactional
@@ -50,7 +50,10 @@ public class ProductService {
     // 상품 등록하기
     @Transactional
     public void save(ProductRequest.SaveDTO reqDTO) {
-        productRepo.save(reqDTO.toEntity());
+        Category category = categoryRepo.findById(reqDTO.getCategoryId())
+                        .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
+
+        productRepo.save(reqDTO.toEntity(category));
     }
 
 
@@ -71,7 +74,9 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
-        return new ProductResponse.UpdateDTO(product);
+        Product newProduct = productRepo.findByIdWithCategory(product.getId());
+
+        return new ProductResponse.UpdateDTO(newProduct);
 
     }
 
