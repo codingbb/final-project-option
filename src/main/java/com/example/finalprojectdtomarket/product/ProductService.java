@@ -74,7 +74,9 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
-        return new ProductResponse.UpdateDTO(product);
+        Product newProduct = productRepo.findByIdWithCategory(product.getId());
+
+        return new ProductResponse.UpdateDTO(newProduct);
 
     }
 
