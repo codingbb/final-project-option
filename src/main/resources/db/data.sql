@@ -5,9 +5,9 @@ insert into user_tb(role, username, password, person_name, phone, birth, email, 
 insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'love', '1234', '김하형', '010-4444-4444', '1999-01-26','love@nate.com', now());
 
 -- 카테고리
-INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A01', '과일', NOW());
-INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A02', '채소', NOW());
-INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A03', '유제품', NOW());
+INSERT INTO category_tb(category_name, created_at) VALUES ('과일', NOW());
+INSERT INTO category_tb(category_name, created_at) VALUES ('채소', NOW());
+INSERT INTO category_tb(category_name, created_at) VALUES ('유제품', NOW());
 
 -- product 정보
 INSERT INTO product_tb(name, price, qty, img, category_id, created_at) VALUES ('성주 참외 1.5kg(4~7입)', 17900, 100, 'prod_3.jpg', 1, NOW());

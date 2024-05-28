@@ -17,7 +17,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String categoryCode; //과일(A01) 채소(A02) 유제품(A03)
+//    private String categoryCode; //과일(A01) 채소(A02) 유제품(A03)
 
     private String categoryName;    //과일 채소 유제품
 
@@ -25,9 +25,8 @@ public class Category {
     private Timestamp createdAt;
 
     @Builder
-    public Category(Integer id, String categoryCode, String categoryName, Timestamp createdAt) {
+    public Category(Integer id, String categoryName, Timestamp createdAt) {
         this.id = id;
-        this.categoryCode = categoryCode;
         this.categoryName = categoryName;
         this.createdAt = createdAt;
     }
