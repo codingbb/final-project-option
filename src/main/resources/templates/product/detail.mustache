@@ -1,4 +1,43 @@
 {{> layout/header}}
+
+<style>
+    .list-group-item {
+        cursor: pointer; /* 마우스를 가져다대면 손가락 모양으로 변경 */
+        transition: background-color 0.3s, color 0.3s; /* 색깔 변화 애니메이션 */
+    }
+
+    .list-group-item:hover {
+        background-color: #E9E3EF; /* 마우스를 가져다댔을 때 배경색 */
+        color: black; /* 마우스를 가져다댔을 때 글자색 */
+    }
+
+    .option-container {
+        position: relative;
+        /* 필요한 경우 추가 스타일 */
+    }
+
+    #selectedOptions {
+        display: none;
+        position: absolute;
+        top: 150px;
+        right: 0px;
+        width: 300px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .selected-item {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+
+</style>
+
 <div class="container w14 sub-page" style="margin: 0 auto;">
 
     <!--상품 상세보기 페이지 시작-->
@@ -75,9 +114,39 @@
                             </button>
                         </div>
                         <!--장바구니 btn-->
+
                     </div>
                     <!--구매정보 체크-->
+
+                <!--    옵션 선택 -->
+                    <div class="option-container">
+                        <ul class="list-group" style="margin-left: 50px; width: 300px; margin-top: -140px; border-radius: 10px">
+                            <b>옵션선택</b>
+                            <li class="list-group-item flip" style="background-color: #2BB457; color: white">상품명 ▼</li>
+                            <li class="list-group-item panel">애플청포도 500g</li>
+                            <li class="list-group-item panel">애플청포도 1kg (+5,000원)</li>
+                            <li class="list-group-item panel">애플청포도 2kg (+10,000원)</li>
+                            <li class="list-group-item panel">애플청포도 3kg (+15,000원)</li>
+                        </ul>
+
+                        <div id="selectedOptions"></div>
+
+                    </div>
+                    <!--    옵션 선택 -->
+
+
+                    <script>
+                        $(".panel").click(function () {
+                            $("#selectedOptions").append(("<div class='selected-item'>Appended item</div>"));
+                            $("#selectedOptions").show();
+                        });
+                    </script>
+
                 </div>
+
+                <!-- 선택한 옵션이 표시될 곳 -->
+
+
             </form>
     {{/isCheck}}
         <!--개인 로그인시-->
@@ -262,6 +331,12 @@
     });
 
 
+    //옵션 slideToggle 이벤트
+    $(".flip").click(function () {
+        $(".panel").each(function () {
+            $(this).slideToggle("fast");
+        });
+    });
 
 
 
