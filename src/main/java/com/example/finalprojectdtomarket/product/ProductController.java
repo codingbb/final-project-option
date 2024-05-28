@@ -85,8 +85,9 @@ public class ProductController {
     //상품 수정
     @GetMapping("/product/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-        List<Category> categoryList = categoryService.categoryList();
         ProductResponse.UpdateDTO product = productService.findByIdUpdate(id);
+        List<ProductResponse.CategoryDTO> categoryList = categoryService.categoryList(product.getCategoryId());
+
 
 //      TODO: 하나로 넣었으면 ...
         request.setAttribute("categoryList", categoryList);

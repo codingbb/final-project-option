@@ -57,9 +57,8 @@
                             <th>종류</th>
                             <td colspan="2">
                                 <select class="" name="categoryId" id="category">
-                                    <option selected disabled>{{product.categoryName}}</option>
                                     {{#categoryList}}
-                                        <option value="{{id}}">{{categoryName}}</option>
+                                        <option value="{{id}}" {{#isSelected}}selected{{/isSelected}}>{{categoryName}}</option>
                                     {{/categoryList}}
                                 </select>
                             </td>

@@ -1,9 +1,30 @@
 package com.example.finalprojectdtomarket.product;
 
+import com.example.finalprojectdtomarket.category.Category;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
+
 public class ProductResponse {
+
+
+    @Data
+    public static class CategoryDTO {
+        private Integer id;
+        private String categoryName;    //과일 채소 유제품
+        private Boolean isSelected;
+
+        public CategoryDTO(Category category, Integer selectedCategoryId) {
+            this.id = category.getId();
+            this.categoryName = category.getCategoryName();
+            this.isSelected = selectedCategoryId.equals(category.getId()) ? true : false;
+        }
+    }
 
     //상품 상세보기
     @Data
