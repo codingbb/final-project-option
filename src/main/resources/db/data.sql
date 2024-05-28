@@ -1,8 +1,8 @@
 -- user 정보
 insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(1, 'admin', '1234', '최주호', '010-1234-5678', '1970-12-03','admin@nate.com', now());
-insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'ssar', '1234', '이서현', '010-2222-2222', '1980-03-21','ssar@nate.com', now());
+insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'ssar', '1234', '이소연', '010-2222-2222', '1980-03-21','ssar@nate.com', now());
 insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'cos', '1234', '심유주', '010-3333-3333', '1988-09-22','cos@nate.com', now());
-insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'love', '1234', '이소연', '010-4444-4444', '1999-01-26','love@nate.com', now());
+insert into user_tb(role, username, password, person_name, phone, birth, email, created_at) values(2, 'love', '1234', '김하형', '010-4444-4444', '1999-01-26','love@nate.com', now());
 
 -- 카테고리
 INSERT INTO category_tb(category_code, category_name, created_at) VALUES ('A01', '과일', NOW());
