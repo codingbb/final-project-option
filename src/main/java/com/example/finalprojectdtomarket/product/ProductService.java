@@ -42,8 +42,10 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
+        Product newProduct = productRepo.findByIdWithCategory(product.getId());
+
 //        System.out.println("dto확인 " + product);
-        return new ProductResponse.DetailDTO(product);
+        return new ProductResponse.DetailDTO(newProduct);
 
     }
 
@@ -86,11 +88,15 @@ public class ProductService {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
+        //카테고리를 한번 조회하고 들어와야함
+        Category category = categoryRepo.findById(requestDTO.getCategoryId())
+                .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다"));
+
         // TODO: set으로 말고 의미있는 메소드 만들어서 하는건?
         product.setName(requestDTO.getName());
         product.setQty(requestDTO.getQty());
+        product.setCategory(category);
         product.setPrice(requestDTO.getPrice());
-
         product.setImg(imgFileName);
 
     }

@@ -12,6 +12,7 @@ public class ProductResponse {
         private String name;
         private Integer price;
         private Integer qty;
+        private String categoryName;
         private String img;
 
         public DetailDTO(Product product) {
@@ -19,6 +20,7 @@ public class ProductResponse {
             this.name = product.getName();
             this.price = product.getPrice();
             this.qty = product.getQty();
+            this.categoryName = product.getCategory().getCategoryName();
             this.img = product.getImg();
         }
     }
