@@ -21,10 +21,14 @@ public class Option {
     private Integer id;
 
     private String optionName;
-    private Integer orderQty;
+    private Integer qty;    // 이쪽에 재고가 있어야하지 않을까
+//    private Integer orderQty;
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
+
+    @CreationTimestamp
+    private Timestamp createdAt;
 
 }

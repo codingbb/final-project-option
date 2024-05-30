@@ -25,8 +25,8 @@ public class Cart {
     private User user;
 
     // 여러번 상품을 주문할 수 있다.
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Option option;  //이제 product 대신 option
@@ -44,10 +44,9 @@ public class Cart {
     private Integer indexNum;   //index 가공용!! db에는 안넣게 했어요
 
     @Builder
-    public Cart(Integer id, User user, Product product, Option option, Integer orderQty, Boolean isChecked, Timestamp createdAt, Integer indexNum) {
+    public Cart(Integer id, User user, Option option, Integer orderQty, Boolean isChecked, Timestamp createdAt, Integer indexNum) {
         this.id = id;
         this.user = user;
-        this.product = product;
         this.option = option;
         this.orderQty = orderQty;
         this.isChecked = isChecked;
