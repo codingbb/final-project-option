@@ -167,7 +167,7 @@
                                 // console.log("주문수량 " + orderQty);
 
                                 let price = $(`.${optionId}price-class`).data("price");
-                                // console.log("가격 " + price);
+                                console.log("가격 " + price);
 
                                 let total = orderQty * price;
                                 $(`#${optionId}price-class`).text(total);
@@ -176,7 +176,16 @@
                                 // 선택된 아이템을 기준으로 합계를 계산해야함
                                 let allTotal = 0;
                                 $(`.price-class`).each(function () {
-                                    let priceTotal = parseInt($(this).text());
+                                    console.log("변환 전 텍스트: ", $(this).text());
+
+                                    let priceText = $(this).text().trim();
+                                    // 숫자로 시작하는 부분을 찾아서 변환합니다.
+                                    let matches = priceText.match(/\d+/);
+                                    let priceTotal = 0;
+                                    if (matches) {
+                                        priceTotal = parseInt(matches[0], 10); // 10진수로 변환
+                                    }
+
                                     console.log("낱개토탈 " + priceTotal);
                                     allTotal += priceTotal;
                                 });
