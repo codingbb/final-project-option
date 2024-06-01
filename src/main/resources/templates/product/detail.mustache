@@ -109,7 +109,7 @@
                             <li class="list-group-item flip" style="background-color: #2BB457; color: white">상품명 ▼</li>
                             {{#optionList}}
                                 <li class="list-group-item panel" id="options{{id}}">
-                                    {{optionName}} <span class="options{{id}}price-class" data-price="{{price}}">({{price}}원)</span>
+                                    {{optionName}} <span class="options{{id}}price-class" data-price="{{price}}">({{price}})</span>
                                 </li>
                             {{/optionList}}
                         </ul>
@@ -127,7 +127,8 @@
                             console.log(optionId);
                             let optionName = $(this).text().split(" (")[0];
                             // console.log(optionName);
-                            let price = $(this).text().split(" (")[1].slice(0, -2);
+                            // span 안에 있어서 data("price")로 못찾아왔었음
+                            let price = $(this).find("span").data("price");
                             // console.log(price);
 
                             let isOptionSelected = false;
@@ -141,7 +142,7 @@
 
                             if (!isOptionSelected) {
                                 let newElement = $(`<div class='selected-item' id='${optionId}'>
-                                                    ${optionName} - <span id="${optionId}price-class">${price}</span>
+                                                    ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class">${price}</span>
 
                                                      <div class="quantity-controls d-flex"
                                                       style="width: 100px; text-align: center; margin:0 auto">
@@ -163,16 +164,23 @@
                             $(document).on("input", `.${optionId}orderQty`, function () {
                                 // alert("이벤트 발생");
                                 let orderQty = $(`.${optionId}orderQty`).val();
-                                console.log("주문수량 " + orderQty);
+                                // console.log("주문수량 " + orderQty);
 
                                 let price = $(`.${optionId}price-class`).data("price");
-                                console.log("가격 " + price);
+                                // console.log("가격 " + price);
 
                                 let total = orderQty * price;
-                                $(`#${optionId}price-class`).text(total + ` 원`);
-                                console.log("토탈" + total)
+                                $(`#${optionId}price-class`).text(total);
+                                // console.log("토탈" + total)
 
-                                $("#allTotal").text();
+                                // 선택된 아이템을 기준으로 합계를 계산해야함
+                                let allTotal = 0;
+                                $(`.price-class`).each(function () {
+                                    let priceTotal = parseInt($(this).text());
+                                    console.log("낱개토탈 " + priceTotal);
+                                    allTotal += priceTotal;
+                                });
+                                $("#allTotal").val(allTotal);
                             });
                         });
 
