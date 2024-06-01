@@ -1,6 +1,5 @@
 package com.example.finalprojectdtomarket.order;
 
-import com.example.finalprojectdtomarket.cart.CartResponse;
 import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

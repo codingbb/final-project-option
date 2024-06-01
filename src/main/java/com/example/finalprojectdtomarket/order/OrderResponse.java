@@ -72,12 +72,11 @@ public class OrderResponse {
             public ItemDTO(OrderItem orderItem) {
                 this.orderId = orderItem.getOrder().getId();
                 this.pName = orderItem.getProduct().getName(); // lazy 로딩
-                this.sum = orderItem.getProduct().getPrice() * orderItem.getOrderQty();
+
                 this.status = orderItem.getOrder().getStatus();
                 this.orderQty = orderItem.getOrderQty();
                 this.productId = orderItem.getProduct().getId();
-                this.price = orderItem.getProduct().getPrice();
-                this.qty = orderItem.getProduct().getQty();
+
                 this.img = orderItem.getProduct().getImg();
                 this.classChange = classChange();
             }

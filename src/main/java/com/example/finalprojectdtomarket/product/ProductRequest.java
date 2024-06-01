@@ -32,8 +32,7 @@ public class ProductRequest {
             return Product.builder()
                     .img(imgFileName)
                     .name(name)
-                    .price(price)
-                    .qty(qty)
+
                     .category(category)
                     .build();
         }

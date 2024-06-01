@@ -77,7 +77,7 @@
                                 <th>상품가격</th>
                                 <td colspan="2">
                                     <input name="price" type="text" class="form-control price price-class"
-                                           value="{{product.price}}" disabled style="width: 100%">
+                                           value="price" disabled style="width: 100%">
                                 </td>
                             </tr>
                             <!--상품가격-->
@@ -93,7 +93,7 @@
                                             <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
                                         </div>
                                         <div class="stock-info" style="margin-left: 20px; color: gray">
-                                            수량 : <span class="product-qty">{{product.qty}}</span>
+                                            수량 : <span class="product-qty">qty</span>
                                         </div>
                                     </div>
                                 </td>
@@ -185,7 +185,7 @@
                                 <th>상품가격</th>
                                 <td colspan="2">
                                     <input name="price" type="text" class="form-control price price-class"
-                                           value="{{product.price}}" disabled
+                                           value="price" disabled
                                            style="width: 100%">
                                 </td>
                             </tr>
@@ -196,7 +196,7 @@
                                 <th>상품수량</th>
                                 <td colspan="2">
                                     <input name="qty" type="number" class="form-control col ml-5"
-                                           value="{{product.qty}}" disabled>
+                                           value="qty" disabled>
                                 </td>
                             </tr>
                             <!--상품수량-->
@@ -265,7 +265,7 @@
                         <th>상품가격</th>
                         <td colspan="2">
                             <input name="price" type="text" class="form-control price price-class"
-                                   value="{{product.price}}" disabled style="width: 100%">
+                                   value="price" disabled style="width: 100%">
                         </td>
                     </tr>
                     <!--상품가격-->
@@ -363,7 +363,7 @@
         });
 
         // 재고 수량 계산하여 표시
-        var productQty = parseInt("{{product.qty}}");
+        var productQty = parseInt("product.qty");
         var orderQty = parseInt($(".quantity").val());
         var remainingQty = productQty - orderQty;
         $(".remaining-qty").text("재고 수량: " + remainingQty);

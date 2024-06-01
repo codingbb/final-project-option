@@ -2,7 +2,6 @@ package com.example.finalprojectdtomarket.product;
 
 
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
-import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
@@ -18,7 +17,6 @@ import java.util.List;
 public class ProductService {
     private final ProductJPARepository productRepo;
     private final OrderItemJPARepository orderItemRepo;
-    private final CartJPARepository cartRepo;
     private final CategoryJPARepository categoryRepo;
 
 
@@ -31,7 +29,7 @@ public class ProductService {
         //근데 admin 1명 밖에 없어서 삭제 권한 여부 확인할 필요 없지않나? -> 생략함
 
         //orderItem이랑 cart에 있다고 제약조건 걸리는건 좀 이상한듯
-        cartRepo.deleteByProductId(productId);
+//        cartRepo.deleteByProductId(productId);
         orderItemRepo.deleteByProductId(productId);
         productRepo.deleteByProductId(productId);
 
@@ -94,9 +92,9 @@ public class ProductService {
 
         // TODO: set으로 말고 의미있는 메소드 만들어서 하는건?
         product.setName(requestDTO.getName());
-        product.setQty(requestDTO.getQty());
+
         product.setCategory(category);
-        product.setPrice(requestDTO.getPrice());
+
         product.setImg(imgFileName);
 
     }

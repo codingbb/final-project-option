@@ -2,16 +2,12 @@ package com.example.finalprojectdtomarket.order;
 
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.cart.Cart;
-import com.example.finalprojectdtomarket.cart.CartJPARepository;
-import com.example.finalprojectdtomarket.cart.CartResponse;
 import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import com.example.finalprojectdtomarket.product.Product;
 import com.example.finalprojectdtomarket.product.ProductJPARepository;
 import com.example.finalprojectdtomarket.user.User;
-import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,33 +22,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderJPARepository orderRepo;
     private final OrderItemJPARepository orderItemRepo;
-    private final CartJPARepository cartRepo;
     private final ProductJPARepository productRepo;
-
-    @Transactional
-    public void orderCancel(List<OrderRequest.CancelDTO> requestDTO) {
-        OrderStatus status;
-
-        //값이 1개밖에 안들어오니까 (중복제거 해놔서) 해당 값으로 orderItem을 찾음
-        for (int i = 0; i < requestDTO.size(); i++) {
-            List<OrderItem> orderItemList = orderItemRepo.findByOrderId(requestDTO.get(i).getOrderId());
-//            System.out.println("아이템리스트 " + orderItemList);
-
-            status = OrderStatus.ORDER_CANCEL;
-
-            //안쪽에서 for문 돌려야함
-            for (OrderItem orderItem : orderItemList) {
-                // order 테이블 상태변경
-                orderItem.getOrder().setStatus(status);
-
-                // product 테이블 재고 변경
-                Integer productQty = orderItem.getProduct().getQty();
-//                System.out.println("재고" + productQty);
-                orderItem.getProduct().setQty(productQty + orderItem.getOrderQty());
-            }
-
-        }
-    }
 
     // 다시!! order-list
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
@@ -119,57 +89,6 @@ public class OrderService {
 
         return resultList;
 
-    }
-
-
-    //구매하기
-    @Transactional
-    public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
-        System.out.println("값확인" + requestDTO);
-
-        //오더 저장 //TODO : save 부분
-        Order order = orderRepo.save(requestDTO.toOrderEntity(user));
-
-        //오더 아이템 저장
-        for (int i = 0; i < requestDTO.getProductId().size(); i++) {
-            Product product = productRepo.findById(requestDTO.getProductId().get(i))
-                    .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
-
-            Integer quantity = requestDTO.getOrderQty().get(i);
-
-            orderItemRepo.save(requestDTO.toOrderItemEntity(order, product, quantity));
-
-//            order.addOrderItem(requestDTO.toOrderItemEntity(order, product, quantity));
-
-            //상품 수량 변경 //더티체킹
-            product.setQty(product.getQty() - quantity);
-
-            //선택한 카트 딜리트
-            cartRepo.deleteByCartId(requestDTO.getCartId().get(i));
-
-        }
-    }
-
-
-    //order-save-form
-    @Transactional
-    public List<CartResponse.ListDTO> orderCartList(Integer userId) {
-        Boolean isChecked = true;
-        //user는 sessionUser, isChecked는 true인 list 조회
-        List<Cart> carts = cartRepo.findByUserIdAndCheckedV2(userId, isChecked);
-        List<CartResponse.ListDTO> cartList = carts.stream().map(cart -> new CartResponse.ListDTO(cart)).toList();
-
-        Integer indexNum = 1;
-        for (CartResponse.ListDTO list : cartList) {
-            list.setIndexNum(indexNum++);
-        }
-
-        //카트 롤백
-        for (Cart cart : carts) {
-            cart.setIsChecked(false);
-        }
-
-        return cartList;
     }
 
 

@@ -39,8 +39,7 @@ public class ProductResponse {
         public DetailDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-            this.price = product.getPrice();
-            this.qty = product.getQty();
+
             this.categoryName = product.getCategory().getCategoryName();
             this.img = product.getImg();
         }
@@ -58,8 +57,7 @@ public class ProductResponse {
         public SaveDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-            this.price = product.getPrice();
-            this.qty = product.getQty();
+
             this.img = product.getImg();
         }
     }
@@ -78,8 +76,7 @@ public class ProductResponse {
         public UpdateDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-            this.price = product.getPrice();
-            this.qty = product.getQty();
+
             this.categoryId = product.getCategory().getId();
             this.categoryName = product.getCategory().getCategoryName();
             this.img = product.getImg();
@@ -98,8 +95,7 @@ public class ProductResponse {
         public ListDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-            this.price = product.getPrice();
-            this.qty = product.getQty();
+
             this.img = product.getImg();
         }
     }

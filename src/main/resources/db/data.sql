@@ -9,10 +9,21 @@ INSERT INTO category_tb(category_name, created_at) VALUES ('과일', NOW());
 INSERT INTO category_tb(category_name, created_at) VALUES ('채소', NOW());
 INSERT INTO category_tb(category_name, created_at) VALUES ('유제품', NOW());
 
+-- product 정보
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('당도선별 천혜향', 'prod_1.jpg', 1, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('우유오리지널', 'milk.jpg', 3, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('성주 참외', 'prod_3.jpg', 1, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('바나나', 'prod_4.jpg', 1, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('햇당근', 'carrot.jpeg', 2, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('오이지 오이','oi.jpeg', 2, NOW());
+INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('애플청포도', 'prod_7.jpg', 1, NOW());
+
+
+
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 1.5kg', 10, 17900, 1, NOW());
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 3kg (+8,000원)', 20, 25900, 1, NOW());
-INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 4.5kg (+12,000원)', 30, 29,900, 1, NOW());
+INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 4.5kg (+12,000원)', 30, 29900, 1, NOW());
 
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('바나나 실속 2종', 50, 4800, 2, NOW());
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('바나나 실속 4종 (+3,000원)', 50, 7800, 2, NOW());
@@ -42,23 +53,15 @@ INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 24입 (+45,000원)', 80, 60000, 7, NOW());
 
 
--- product 정보
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('성주 참외', 'prod_3.jpg', 1, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('바나나', 'prod_4.jpg', 1, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('당도선별 천혜향', 'prod_1.jpg', 1, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('햇당근', 'prod_2.jpg', 2, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('오이지 오이','prod_2.jpg', 2, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('애플청포도', 'prod_7.jpg', 1, NOW());
-INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('우유오리지널', 'prod_8.jpg', 3, NOW());
 
 -- cart 정보
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 4,  5, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 5, 10, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 3,  20, false, NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 2,  3, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 4,  5, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 5, 10, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 3,  20, false, NOW());
+-- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 2,  3, false, NOW());
 
 -- order 정보
 -- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (2, '부산광역시 진구 신암로', 119500, 'ORDER_COMPLETE', '240422RVLR4', '2024-04-22 14:00:00');

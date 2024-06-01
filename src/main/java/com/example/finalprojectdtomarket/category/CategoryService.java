@@ -1,16 +1,8 @@
 package com.example.finalprojectdtomarket.category;
 
 
-import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
-import com.example.finalprojectdtomarket.cart.CartJPARepository;
-import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
-import com.example.finalprojectdtomarket.product.Product;
-import com.example.finalprojectdtomarket.product.ProductJPARepository;
-import com.example.finalprojectdtomarket.product.ProductRequest;
 import com.example.finalprojectdtomarket.product.ProductResponse;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

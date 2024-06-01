@@ -2,7 +2,6 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryService;
-import com.example.finalprojectdtomarket.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +53,7 @@ public class ProductController {
             return "/product/search";
         }
 
-        return "product/list";
+        return "index";
     }
 
     // 상품 상세보기
