@@ -109,7 +109,7 @@
                             <li class="list-group-item flip" style="background-color: #2BB457; color: white">상품명 ▼</li>
                             {{#optionList}}
                                 <li class="list-group-item panel" id="options{{id}}">
-                                    {{optionName}} <span class="options{{id}}price-class" data-price="{{price}}">({{price}})</span>
+                                    {{optionName}} <span class="options{{id}}price-class" data-price="{{price}}">({{price}}원)</span>
                                 </li>
                             {{/optionList}}
                         </ul>
@@ -169,8 +169,8 @@
                                 console.log("가격 " + price);
 
                                 let total = orderQty * price;
-                                $(`#${optionId}price-class`).text(total);
-
+                                $(`#${optionId}price-class`).text(total + ` 원`);
+                                console.log("토탈" + total)
 
                                 $("#allTotal").text();
                             });
