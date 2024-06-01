@@ -18,8 +18,6 @@ INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('햇당근', 
 INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('오이지 오이','oi.jpeg', 2, NOW());
 INSERT INTO product_tb(name, img, category_id, created_at) VALUES ('애플청포도', 'prod_7.jpg', 1, NOW());
 
-
-
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 1.5kg', 10, 17900, 1, NOW());
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('성주 참외 3kg (+8,000원)', 20, 25900, 1, NOW());
