@@ -2,6 +2,8 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryService;
+import com.example.finalprojectdtomarket.option.Option;
+import com.example.finalprojectdtomarket.option.OptionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final HttpSession session;
+    private final OptionService optionService;
 
     @GetMapping("/product-list")
     public String productList(HttpServletRequest request) {
@@ -61,6 +64,10 @@ public class ProductController {
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
         ProductResponse.DetailDTO product = productService.getDetail(id);
         request.setAttribute("product", product);
+
+        List<Option> optionList = optionService.findOption(id);
+        request.setAttribute("optionList", optionList);
+
         return "product/detail";
     }
 

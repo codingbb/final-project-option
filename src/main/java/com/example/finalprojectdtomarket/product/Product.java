@@ -21,8 +21,8 @@ public class Product {
     @Column(unique = true, length = 20, nullable = false)
     private String name;             // 상품명
 
-//    @Column(nullable = false)
-//    private Integer price;           // 상품 가격
+    @Column(nullable = false)
+    private Integer price;           // 기본 상품 가격만 나옴
 
 //    @Column(nullable = false)
 //    private Integer qty;             // 상품 재고
@@ -38,9 +38,10 @@ public class Product {
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, String img, Category category, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, String img, Category category, Timestamp createdAt) {
         this.id = id;
         this.name = name;
+        this.price = price;
         this.img = img;
         this.category = category;
         this.createdAt = createdAt;

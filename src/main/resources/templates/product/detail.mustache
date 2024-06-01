@@ -27,6 +27,7 @@
         border-radius: 10px;
         padding: 10px;
     }
+
     .selected-item {
         margin-bottom: 10px;
         padding: 10px;
@@ -82,27 +83,12 @@
                             </tr>
                             <!--상품가격-->
 
-                            <!--상품수량-->
-                            <tr>
-                                <th>상품수량</th>
-                                <td colspan="2">
-                                    <div class="quantity-stock-wrapper d-flex" style="align-items: center;">
-                                        <div class="quantity-controls d-flex" style="width: 100px; text-align: center;">
-                                            <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
-                                            <input type="text" class="quantity" name="orderQty" value="1" style="text-align: center; ">
-                                            <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!--상품수량-->
                         </table>
                         <!--상품 table-->
 
-                            <div class="stock-info" style="margin-left: 120px; color: gray">
-                                #<span class="product-qty">{{product.categoryName}}</span>
-                            </div>
+                        <div class="stock-info" style="margin-left: 120px; color: gray">
+                            #<span class="product-qty">{{product.categoryName}}</span>
+                        </div>
 
                         <!--장바구니 btn-->
                         <div class="row pr-5 pt-5" style="">
@@ -115,21 +101,65 @@
                     </div>
                     <!--구매정보 체크-->
 
-                <!--    옵션 선택 -->
+                    <!--    옵션 선택 -->
                     <div class="option-container">
-                        <ul class="list-group" style="margin-left: 50px; width: 300px; margin-top: -140px; border-radius: 10px">
+                        <ul class="list-group"
+                            style="margin-left: 50px; width: 300px; margin-top: -140px; border-radius: 10px">
                             <b>옵션선택</b>
                             <li class="list-group-item flip" style="background-color: #2BB457; color: white">상품명 ▼</li>
-                            <li class="list-group-item panel">애플청포도 500g</li>
-                            <li class="list-group-item panel">애플청포도 1kg (+5,000원)</li>
-                            <li class="list-group-item panel">애플청포도 2kg (+10,000원)</li>
-                            <li class="list-group-item panel">애플청포도 3kg (+15,000원)</li>
+                            {{#optionList}}
+                                <li class="list-group-item panel" id="options{{id}}">
+                                    {{optionName}} ({{price}}원)
+                                </li>
+                            {{/optionList}}
                         </ul>
 
                         <div id="selectedOptions"></div>
 
                     </div>
                     <!--    옵션 선택 -->
+
+                    <script>
+                        $(".panel").click(function () {
+                            console.log(this);
+
+                            let optionId = $(this).attr('id');
+                            console.log(optionId);
+                            let optionName = $(this).text().split(" (")[0];
+                            // console.log(optionName);
+                            let price = $(this).text().split(" (")[1].slice(0, -2);
+                            // console.log(price);
+
+                            let isOptionSelected = false;
+
+                            $("#selectedOptions .selected-item").each(function () {
+                                if (optionId === $(this).attr('id')) {
+                                    isOptionSelected = true;
+                                    return false;
+                                }
+                            });
+
+                            if (!isOptionSelected) {
+                                let newElement = $(`<div class='selected-item' id='${optionId}'>${optionName} - ${price}
+
+                                                     <div class="quantity-controls d-flex"
+                                                      style="width: 100px; text-align: center; margin:0 auto">
+                                                     <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
+
+                                                   <input type="text" class="quantity" id="orderQty" name="orderQty"
+                                                        data-order-qty="" value="1" style="text-align: center;">
+
+                                                     <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
+                                                     </div></div>`);
+
+                                $("#selectedOptions").append(newElement);
+                            }
+
+
+                            $("#selectedOptions").show();
+                        });
+
+                    </script>
 
                 </div>
 
@@ -169,11 +199,11 @@
                                            value="{{product.name}}" disabled
                                            style="width: 98%">
                                 </td>
-<!--                                <td>-->
-<!--                                    <button type="button" onclick="nameSameCheck()"-->
-<!--                                            class="btn btn-outline-mint ml-10">상품중복체크-->
-<!--                                    </button>-->
-<!--                                </td>-->
+                                <!--                                <td>-->
+                                <!--                                    <button type="button" onclick="nameSameCheck()"-->
+                                <!--                                            class="btn btn-outline-mint ml-10">상품중복체크-->
+                                <!--                                    </button>-->
+                                <!--                                </td>-->
                             </tr>
                             <!--상품명-->
 
@@ -336,36 +366,28 @@
     });
 
 
-    $(".panel").click(function () {
-        $("#selectedOptions").append(("<div class='selected-item'>Appended item</div>"));
-        $("#selectedOptions").show();
+    $(document).on('click', '.increase-btn', function () {
+        var $quantityInput = $(this).siblings(".quantity");
+        var currentQuantity = parseInt($quantityInput.val());
+        $quantityInput.val(currentQuantity + 1);
     });
 
-
-    $(document).ready(function () {
-        // 수량 증가 버튼 클릭 이벤트
-        $(".increase-btn").click(function () {
-            var $quantityInput = $(this).siblings(".quantity");
-            var currentQuantity = parseInt($quantityInput.val());
-            $quantityInput.val(currentQuantity + 1);
-        });
-
-        // 수량 감소 버튼 클릭 이벤트
-        $(".decrease-btn").click(function () {
-            var $quantityInput = $(this).siblings(".quantity");
-            var currentQuantity = parseInt($quantityInput.val());
-            if (currentQuantity > 1) {
-                $quantityInput.val(currentQuantity - 1);
-            }
-        });
-
-        // 재고 수량 계산하여 표시
-        var productQty = parseInt("product.qty");
-        var orderQty = parseInt($(".quantity").val());
-        var remainingQty = productQty - orderQty;
-        $(".remaining-qty").text("재고 수량: " + remainingQty);
+    // 수량 감소 버튼 클릭 이벤트
+    $(document).on('click', '.decrease-btn', function () {
+        var $quantityInput = $(this).siblings(".quantity");
+        var currentQuantity = parseInt($quantityInput.val());
+        if (currentQuantity > 1) {
+            $quantityInput.val(currentQuantity - 1);
+        }
     });
 
+    // 재고 수량 계산하여 표시
+    var productQty = parseInt("product.qty");
+    var orderQty = parseInt($(".quantity").val());
+    var remainingQty = productQty - orderQty;
+    $(".remaining-qty").text("재고 수량: " + remainingQty);
+    })
+    ;
 
 
 </script>

@@ -1,6 +1,5 @@
 package com.example.finalprojectdtomarket.product;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +18,5 @@ public interface ProductJPARepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p join fetch p.category c where p.id = :productId")
     Product findByIdWithCategory(@Param("productId") Integer productId);
+
 }

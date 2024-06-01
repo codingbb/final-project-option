@@ -60,7 +60,8 @@ public class ProductService {
     //상품 목록보기
     public List<Product> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        return productRepo.findAll(sort); // return에 sort 객체 안 넣어주면 DESC 안 됨
+        List<Product> productList = productRepo.findAll(sort);
+        return productList;
     }
 
     //키워드 용

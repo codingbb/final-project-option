@@ -22,7 +22,7 @@ public class Option {
 
     private String optionName;
     private Integer qty;    // 이쪽에 재고가 있어야하지 않을까
-//    private Integer orderQty;
+    private Integer orderQty;
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)

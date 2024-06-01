@@ -115,11 +115,11 @@
     });
 
 
-    // $(".orderQty-class").on("input", function () {
-    //     let orderQty = $(this).data("order-qty");
-    //     console.log(orderQty);
-    //     $(this).text(numberWithCommas(orderQty));
-    // });
+    $(".orderQty-class").on("input", function () {
+        let orderQty = $(this).data("order-qty");
+        console.log(orderQty);
+        $(this).text(numberWithCommas(orderQty));
+    });
 
     //장바구니에 구매금액(총액) 콤마 찍기
     $(".sum-class").each(function () {
