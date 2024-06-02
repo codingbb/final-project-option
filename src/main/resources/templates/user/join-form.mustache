@@ -86,6 +86,7 @@
                         <th>생년월일<span class="point-color">*</span>
                             <br>
                             <span id="age-display" class="mt-2"></span>
+                            <input type="hidden" id="age" name="age" value="">
                         </th>
                         <td colspan="2">
                             <input id="birth" name="birth" type="date" class="form-control" placeholder="생년월일을 선택하세요">
@@ -138,6 +139,7 @@
         }
 
         $('#age-display').text(`${age}세`);
+        $('#age').val(age);
 
     });
 
