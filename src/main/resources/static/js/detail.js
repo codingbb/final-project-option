@@ -22,18 +22,21 @@ $(".panel").click(function () {
 
     //디자인 넣기
     if (!isOptionSelected) {
-        let newElement = $(`<div class='selected-item' id='${optionId}'>
-                                                    ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-option-id="${optionId}" data-price="${price}">${price}</span>
+        let newElement = $(`<div class='selected-item' id='${optionId}' style="position: relative; padding-right: 30px;">
+                        ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-option-id="${optionId}" data-price="${price}">${price}</span>
 
-                                                     <div class="quantity-controls d-flex"
-                                                      style="width: 100px; text-align: center; margin:0 auto">
-                                                     <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
+                        <button type="button" class="remove-option" aria-label="옵션 삭제" style="position: absolute; top: 0; right: 15px; background-color: transparent; border: none; cursor: pointer; color: black; font-size: 20px;">x</button>
 
-                                                   <input type="text" class="quantity ${optionId}orderQty" id="orderQty" name="orderQty"
-                                                        data-order-qty="" value="1" style="text-align: center;">
+                        <div class="quantity-controls d-flex" style="width: 100px; text-align: center; margin:0 auto">
+                        <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
 
-                                                     <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
-                                                     </div></div>`);
+                        <input type="text" class="quantity ${optionId}orderQty" id="orderQty" name="orderQty"
+                        data-order-qty="" value="1" style="text-align: center;">
+
+                        <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
+                        </div>
+
+                        </div>`);
 
         $("#selectedOptions").append(newElement);
 
@@ -58,6 +61,14 @@ $(".panel").click(function () {
 
             updateTotal();
         });
+
+
+        $(document).on("click", `#${optionId} .remove-option`, function () {
+            console.log(this);
+            $(this).closest('.selected-item').remove();
+            updateTotal();
+        });
+
     }
     $("#selectedOptions").show();
 

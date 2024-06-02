@@ -38,6 +38,9 @@ public class User {
     private LocalDate birth;       //생년월일
 
     @Column
+    private Integer age;
+
+    @Column
     private Integer role;     // 1 -> admin, 2 -> user
 
     @Column
@@ -47,12 +50,13 @@ public class User {
     private Timestamp createdAt;
 
     @Builder
-    public User(Integer id, String password, String username, String phone, String email, LocalDate birth, Integer role, String personName, String gender, Timestamp createdAt) {
+    public User(Integer id, String password, String username, String phone, String email, Integer age, LocalDate birth, Integer role, String personName, String gender, Timestamp createdAt) {
         this.id = id;
         this.password = password;
         this.username = username;
         this.phone = phone;
         this.email = email;
+        this.age = age;
         this.birth = birth;
         this.role = role;
         this.personName = personName;
