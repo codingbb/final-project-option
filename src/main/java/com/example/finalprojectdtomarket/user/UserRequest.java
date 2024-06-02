@@ -29,16 +29,19 @@ public class UserRequest {
         private String password;
         private String username;
         private String phone;
+        private Integer age;
         private String email;
         private String personName;
         private String gender;
         private LocalDate birth;
         private Integer role;
+
         public User toEntity(){
             return User.builder()
                     .username(username)
                     .password(password)
                     .phone(phone)
+                    .age(age)
                     .birth(birth)
                     .email(email)
                     .personName(personName)

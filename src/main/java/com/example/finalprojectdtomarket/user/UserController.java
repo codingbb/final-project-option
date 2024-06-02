@@ -21,6 +21,7 @@ public class UserController {
     // 회원가입
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
+        System.out.println("age 받나요? " + reqDTO);
         userService.joinUser(reqDTO);
         return "redirect:/login-form";
     }
