@@ -8,10 +8,7 @@ import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
-import com.example.finalprojectdtomarket.product.Product;
-import com.example.finalprojectdtomarket.product.ProductJPARepository;
 import com.example.finalprojectdtomarket.user.User;
-import com.example.finalprojectdtomarket.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional(readOnly = true) // lazy 로딩하려면 붙이기
@@ -135,7 +131,7 @@ public class OrderService {
 
                 // product 테이블 재고 변경
                 Integer productQty = orderItem.getOption().getQty();
-//                System.out.println("재고" + productQty);
+                System.out.println("재고" + productQty);
                 orderItem.getOption().setQty(productQty + orderItem.getOrderQty());
             }
 

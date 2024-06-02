@@ -1,10 +1,7 @@
 package com.example.finalprojectdtomarket.option;
 
-import com.example.finalprojectdtomarket.order.OrderStatus;
 import com.example.finalprojectdtomarket.product.Product;
-import com.example.finalprojectdtomarket.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

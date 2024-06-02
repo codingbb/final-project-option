@@ -42,7 +42,6 @@ public class OrderResponse {
             this.orderQty = orderItem.getOrderQty();
             this.optionId = orderItem.getOption().getId();
             this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
-            //TODO : 이거 맞나? 확인 필요
             this.img = orderItem.getOption().getProduct().getImg();
             this.address = orderItem.getOrder().getAddress();
             this.personName = orderItem.getOrder().getUser().getPersonName();
@@ -75,7 +74,6 @@ public class OrderResponse {
                 this.status = orderItem.getOrder().getStatus();
                 this.orderQty = orderItem.getOrderQty();
                 this.optionId = orderItem.getOption().getId();
-                //TODO : 이거 맞나? 확인 필요
                 this.price = orderItem.getOption().getPrice();
                 this.qty = orderItem.getOption().getQty();
                 this.img = orderItem.getOption().getProduct().getImg();
