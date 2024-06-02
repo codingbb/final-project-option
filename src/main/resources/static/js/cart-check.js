@@ -14,7 +14,7 @@ document.querySelector("#purchaseButton").addEventListener("click", function (e)
         if(checkBox.checked){
             let cartId = value.querySelector(".cartId").value; // 수정된 부분
             let optionId = value.querySelector(".optionId").value; // 수정된 부분
-            let orderQty = value.querySelector(".orderQty-class").getAttribute("data-order-qty"); // 수정된 부분
+            let orderQty = value.querySelector(".orderQty-class").value; // 수정된 부분
 
             //console.log(cartId);
             //console.log(buyQty);
