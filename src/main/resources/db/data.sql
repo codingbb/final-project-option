@@ -53,13 +53,13 @@ INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('
 
 
 -- cart 정보
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 4,  5, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 5, 10, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 3,  20, false, NOW());
--- INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 2,  3, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 1, 20, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 3, 10, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (2, 4, 5, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 2, 15, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (3, 5, 10, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 3, 20, false, NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, is_checked, created_at) VALUES (4, 2, 3, false, NOW());
 
 -- order 정보
 -- INSERT INTO order_tb(user_id, address, sum, status, orderNumb, created_at) VALUES (2, '부산광역시 진구 신암로', 119500, 'ORDER_COMPLETE', '240422RVLR4', '2024-04-22 14:00:00');

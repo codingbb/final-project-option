@@ -19,11 +19,11 @@
                     <tr class="cart-table my-cart-list" id="cart-{{id}}">
                         <td>{{indexNum}}</td>
                         <input type="hidden" name="cartId" value="{{id}}">
-                        <input type="hidden" name="productId" value="{{productId}}">
+
                         <span class="notVisible">{{id}}</span>
                         <td>
                             <div style="width:150px; margin:0 auto;">
-                                <img src="/upload/{{img}}" alt="Product Image"
+                                <img src="/upload/img" alt="Product Image"
                                      style="max-width: 100%; max-height: 100%;">
                             </div>
                             {{pName}}
@@ -86,6 +86,22 @@
         return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+
+    // 수량 변경하면 가격 변경되게
+    $(".orderQty-class").on("input", function () {
+        // alert("변경 감지");
+        let orderQty = $(this).val();
+        console.log("주문 수량 " + orderQty);
+        let price = $(this).closest(`tr`).find(`.price-class`).data("price");
+        console.log("단가 " + price);
+
+        let total = orderQty * price;
+        console.log("합계 " + total);
+
+        $(this).closest(`tr`).find(`.sum-class`).text(numberWithCommas(total));
+    });
+
+
     //재사용 함수
     function updateTotalSum() {
     // 체크박스에서 값 들어오는 jQuery
@@ -115,11 +131,11 @@
     });
 
 
-    $(".orderQty-class").on("input", function () {
-        let orderQty = $(this).data("order-qty");
-        console.log(orderQty);
-        $(this).text(numberWithCommas(orderQty));
-    });
+    // $(".orderQty-class").on("input", function () {
+    //     let orderQty = $(this).data("order-qty");
+    //     console.log(orderQty);
+    //     $(this).text(numberWithCommas(orderQty));
+    // });
 
     //장바구니에 구매금액(총액) 콤마 찍기
     $(".sum-class").each(function () {
