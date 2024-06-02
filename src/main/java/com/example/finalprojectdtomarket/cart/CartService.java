@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.cart;
 
+import com.example.finalprojectdtomarket._core.errors.exception.ApiException400;
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
@@ -51,6 +52,25 @@ public class CartService {
             } else {
                 cartRepo.save(requestDTO.toEntity(sessionUser, option, status));
             }
+
+        }
+
+    }
+
+    @Transactional
+    public void updateCart(List<CartRequest.UpdateDTO> requestDTOs) {
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            Cart cart = cartRepo.findById(requestDTO.getCartId())
+                    .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
+
+            Cart qty = cartRepo.findByQty(requestDTO.getCartId());
+            if (requestDTO.getOrderQty() > qty.getOption().getQty()) {
+                throw new ApiException400("재고 부족! 구매 불가");
+            }
+
+            // 카트 수량이랑 status 업데이트
+            cart.setOrderQty(requestDTO.getOrderQty());
+            cart.setStatus(requestDTO.getStatus());
 
         }
 

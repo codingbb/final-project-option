@@ -2,6 +2,7 @@ package com.example.finalprojectdtomarket.cart;
 
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.product.Product;
+import com.example.finalprojectdtomarket.user.User;
 import lombok.Data;
 
 public class CartResponse {
@@ -35,4 +36,31 @@ public class CartResponse {
     }
 
 
+    @Data
+    public static class saveFormList {
+        private Integer id;          //cartId
+        private Integer orderQty;       //구매수량
+
+        private Integer optionId;
+        private String pName;       //상품명
+        private Integer price;      //상품단가
+
+        private Integer sum;        //가공하기
+        private Integer totalSum;
+        private Integer indexNum;   //번호 이쁘게 가공용
+
+        private Boolean status;
+
+        public saveFormList(Cart cart) {
+            this.id = cart.getId();
+            this.orderQty = cart.getOrderQty();
+            this.optionId = cart.getOption().getId();
+            this.pName = cart.getOption().getOptionName();
+            this.price = cart.getOption().getPrice();
+            this.status = cart.getStatus();
+            this.sum = cart.getOrderQty() * cart.getOption().getPrice();
+        }
+
+
+    }
 }

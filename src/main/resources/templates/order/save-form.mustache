@@ -67,7 +67,7 @@
 
 
 <div class="container sub-page">
-    <form action="/order/save" method="post" class="needs-validation" novalidate="">
+    <form action="/order-save" method="post" class="needs-validation" novalidate="">
 
         <div class="order-container">
             <!--주문 테이블-->
@@ -82,9 +82,9 @@
                         <td>구매수량</td>
                         <td>합계</td>
                     </tr>
-                    {{#cartList}}
+                        {{#saveFormLists}}
                         <input type="hidden" name="cartId" value="{{id}}">
-                        <input type="hidden" name="productId" value="{{productId}}">
+                        <input type="hidden" name="optionId" value="{{optionId}}">
                         <tr>
                             <td>{{indexNum}}</td>
                             <td>{{pName}}</td>
@@ -98,7 +98,7 @@
 
                             <td class="price-class" data-price="{{sum}}">{{sum}}</td>
                         </tr>
-                    {{/cartList}}
+                        {{/saveFormLists}}
                 </table>
             </div>
         </div>

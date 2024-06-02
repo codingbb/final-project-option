@@ -30,7 +30,8 @@ public class ProductService {
 
         //orderItem이랑 cart에 있다고 제약조건 걸리는건 좀 이상한듯
 //        cartRepo.deleteByProductId(productId);
-        orderItemRepo.deleteByProductId(productId);
+        //TODO : 이거 다시 터짐
+//        orderItemRepo.deleteByProductId(productId);
         productRepo.deleteByProductId(productId);
 
     }

@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.order;
 
+import com.example.finalprojectdtomarket.cart.CartResponse;
 import com.example.finalprojectdtomarket.user.User;
 import com.example.finalprojectdtomarket.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,26 +21,38 @@ public class OrderController {
     private final UserService userService;
     private final HttpSession session;
 
-    // 관리자 확인 용
-    @GetMapping("/admin-list")
-    public String adminList(HttpServletRequest request) {
+    @PostMapping("/order-save")
+    public String orderSave(OrderRequest.SaveDTO requestDTO) {
 
-        List<OrderResponse.ListDTO> orderItemList = orderService.orderList();
-//        System.out.println("ffdd = " + orderItemList);
-        request.setAttribute("orderItemList", orderItemList);
-        return "/admin/list";
-    }
-
-    // 주문 목록
-    @GetMapping({"/order-list"})
-    public String list(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
-        List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
-//        System.out.println("ffdd = " + orderItemList);
-        request.setAttribute("orderItemList", orderItemList);
-        return "/order/list";
+        //Enum 쓰기!!
+        requestDTO.setStatus(OrderStatus.ORDER_COMPLETE);
+        //구매하기 로직
+        orderService.saveOrder(requestDTO, user);
+
+        return "redirect:/order-list";
+
+    }
+
+    @GetMapping("/order-save-form")
+    public String saveForm(HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.findUserId(sessionUser.getId());
+
+        List<CartResponse.saveFormList> saveFormLists = orderService.orderCartList(user.getId());
+
+        Integer totalSum = saveFormLists.stream().mapToInt(value -> value.getSum()).sum();
+//        System.out.println("totalSum = " + totalSum);
+//        System.out.println("saveFormLists = " + saveFormLists);
+
+        //TODO: 한번에 어떻게 담나요
+        request.setAttribute("saveFormLists", saveFormLists);
+        request.setAttribute("user", user);
+        request.setAttribute("totalSum", totalSum);
+
+        return "/order/save-form";
     }
 
 }

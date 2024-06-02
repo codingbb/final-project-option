@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.order;
 
+import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.orderItem.OrderItem;
 import com.example.finalprojectdtomarket.orderItem.OrderItemRequest;
 import com.example.finalprojectdtomarket.product.Product;
@@ -15,22 +16,14 @@ import java.util.Random;
 public class OrderRequest {
 
     @Data
-    public static class CancelDTO {
-        private Integer orderId;
-        private Integer productId;
-        private Integer orderQty;
-    }
-
-
-    @Data
     public static class SaveDTO {
-        //order에 넣는 부분
         private String address;
+
         private Integer totalSum; //총합계
         private OrderStatus status;
         private String orderNumb;
 
-        private List<Integer> productId;
+        private List<Integer> optionId;
         private List<String> pName;
         private List<Integer> price;  //계산된 가격
 
@@ -39,7 +32,6 @@ public class OrderRequest {
         private List<Integer> orderQty;    //선택한 수량
         //?
         private List<Integer> orderId;
-
 
         //주문 번호 생성
         @Data
@@ -76,39 +68,14 @@ public class OrderRequest {
                     .build();
         }
 
-        public OrderItem toOrderItemEntity(Order order, Product product, Integer quantity) {
+        public OrderItem toOrderItemEntity(Order order, Option option, Integer quantity) {
             return OrderItem.builder()
                     .order(order)
-                    .product(product)
+                    .option(option)
                     .orderQty(quantity)
                     .build();
 
         }
+
     }
-
-//    @Data
-//    public static class OrderItemDTO {
-//        //product 들고 오는 부분
-//        private Integer productId;
-//        private String pName;
-//        private Integer price;  //계산된 가격
-//
-//        //cart 부분
-//        private Integer cartId;
-//        private Integer orderQty;    //선택한 수량
-//        //?
-//        private Integer orderId;
-//
-//        public OrderItem toOrderItemEntity(Order order, Product product) {
-//            return OrderItem.builder()
-//                    .order(order)
-//                    .product(product)
-//                    .orderQty(orderQty)
-//                    .build();
-//
-//        }
-//
-//    }
-
-
 }

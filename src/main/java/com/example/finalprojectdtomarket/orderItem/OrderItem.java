@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.orderItem;
 
+import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.order.Order;
 import com.example.finalprojectdtomarket.product.Product;
 import com.example.finalprojectdtomarket.user.User;
@@ -24,7 +25,7 @@ public class OrderItem {
 //    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private Option option;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
@@ -37,9 +38,9 @@ public class OrderItem {
     private Timestamp createdAt;
 
     @Builder
-    public OrderItem(Integer id, Product product, Order order, Integer orderQty, Timestamp createdAt) {
+    public OrderItem(Integer id, Option option, Order order, Integer orderQty, Timestamp createdAt) {
         this.id = id;
-        this.product = product;
+        this.option = option;
         this.order = order;
         this.orderQty = orderQty;
         this.createdAt = createdAt;
