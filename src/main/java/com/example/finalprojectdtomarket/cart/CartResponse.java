@@ -24,8 +24,8 @@ public class CartResponse {
         public ListDTO(Cart cart) {
             this.id = cart.getId();
             this.orderQty = cart.getOrderQty();
-            //TODO: 이미지는 product에서 값 넘겨받은 후 하자
-//            this.img = cart.get.getImg();
+            // product나 option 어떻게 해야할지 몰라서 join fetch c.option o join fetch o.product p 로 들고옴
+            this.img = cart.getOption().getProduct().getImg();
             this.optionId = cart.getOption().getId();
             this.pName = cart.getOption().getOptionName();
             this.price = cart.getOption().getPrice();

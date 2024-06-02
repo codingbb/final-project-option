@@ -5,6 +5,7 @@ import com.example.finalprojectdtomarket.product.Product;
 import com.example.finalprojectdtomarket.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
