@@ -53,7 +53,7 @@
                             <input class="form-check-input product-checkbox item-check price-class" type="checkbox"
                                    name="itemCheck orderId"
                                    id="itemCheck-id" value="{{sum}}"
-                                   data-order-id="{{orderId}}" data-product-id="{{productId}}"
+                                   data-order-id="{{orderId}}" data-option-id="{{optionId}}"
                                    data-price="{{sum}}" data-order-qty="{{orderQty}}"
                                    style="width:20px !important; margin: 0 auto">
                         </td>
@@ -152,13 +152,13 @@
     function order() {
         $(".item-check:checked").each(function () {
             let orderId = $(this).data("order-id");
-            let productId = $(this).data("product-id");
+            let optionId = $(this).data("option-id");
             let orderQty = $(this).data("order-qty");
             // console.log(orderItemId);
 
             let checkedOrder = {
                 orderId: orderId,
-                productId: productId,
+                optionId: optionId,
                 orderQty: orderQty
 
             };    //객체 형식으로 만들어주기
@@ -171,7 +171,7 @@
 
 
         $.ajax({
-            url: '/order/cancel',
+            url: '/order-cancel',
             data: JSON.stringify(requestBody),
             contentType: 'application/json; charset=utf-8',
             type: 'POST'

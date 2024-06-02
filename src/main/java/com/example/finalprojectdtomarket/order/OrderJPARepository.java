@@ -10,6 +10,10 @@ import java.util.List;
 
 public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 
-
+    @Query("select oi from OrderItem oi " +
+            "join fetch oi.order o " +
+            "join fetch oi.option p " +
+            "where o.user.id = :sessionUserId order by o.id desc")
+    List<OrderItem> findOrderList(@Param("sessionUserId") Integer sessionUserId);
 
 }

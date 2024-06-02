@@ -21,6 +21,26 @@ public class OrderController {
     private final UserService userService;
     private final HttpSession session;
 
+    // 주문취소
+    @PostMapping("/order-cancel")
+    public String orderCancel() {
+        
+    }
+
+
+    // 주문 목록
+    @GetMapping("/order-list")
+    public String list(HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.findUserId(sessionUser.getId());
+
+        List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
+//        System.out.println("ffdd = " + orderItemList);
+        request.setAttribute("orderItemList", orderItemList);
+        return "/order/list";
+    }
+
+
     @PostMapping("/order-save")
     public String orderSave(OrderRequest.SaveDTO requestDTO) {
 
