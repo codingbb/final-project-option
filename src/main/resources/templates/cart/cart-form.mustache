@@ -91,14 +91,22 @@
     $(".orderQty-class").on("input", function () {
         // alert("변경 감지");
         let orderQty = $(this).val();
-        console.log("주문 수량 " + orderQty);
+        // console.log("주문 수량 " + orderQty);
         let price = $(this).closest(`tr`).find(`.price-class`).data("price");
-        console.log("단가 " + price);
-
+        // console.log("단가 " + price);
         let total = orderQty * price;
-        console.log("합계 " + total);
+        // console.log("합계 " + total);
 
+        // 수량이 변경되면 구매금액 반영
         $(this).closest(`tr`).find(`.sum-class`).text(numberWithCommas(total));
+
+        // 수량이 변경되면 총합계 (총금액) 도 반영
+        let totalSum = 0;
+        $(".sum-class").each(function() {
+            let sum = parseInt($(this).text().replace(/,/g, '')) || 0;
+            totalSum += sum;
+        });
+        $("#totalSum").text(numberWithCommas(totalSum));
     });
 
 
