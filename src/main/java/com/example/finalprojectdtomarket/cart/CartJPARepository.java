@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
-    @Query("select c from Cart c join fetch c.option o where c.user.id = :sessionUserId")
+    @Query("select c from Cart c join fetch c.option o where c.user.id = :sessionUserId order by c.id desc")
     List<Cart> findByCartUserId(@Param("sessionUserId") Integer sessionUserId);
+
+    @Query("select c from Cart c where c.user.id = :sessionUserId and c.option.id = :optionId")
+    Cart findByUserAndOption(@Param("sessionUserId") Integer sessionUserId, @Param("optionId") Integer optionId);
 }

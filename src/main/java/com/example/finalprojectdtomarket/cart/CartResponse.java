@@ -19,7 +19,7 @@ public class CartResponse {
         private Integer sum;        //가공하기
         private Integer indexNum;   //번호 이쁘게 가공용
 
-        private Boolean isChecked;
+        private Boolean status;
 
         public ListDTO(Cart cart) {
             this.id = cart.getId();
@@ -29,7 +29,7 @@ public class CartResponse {
             this.optionId = cart.getOption().getId();
             this.pName = cart.getOption().getOptionName();
             this.price = cart.getOption().getPrice();
-            this.isChecked = cart.getIsChecked();
+            this.status = cart.getStatus();
             this.sum = cart.getOrderQty() * cart.getOption().getPrice();
         }
     }

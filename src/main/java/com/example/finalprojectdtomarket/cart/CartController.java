@@ -6,8 +6,11 @@ import com.example.finalprojectdtomarket.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -17,6 +20,19 @@ public class CartController {
     private final CartService cartService;
     private final HttpSession session;
 
+    // 장바구니 담기
+    @PostMapping("/cart/save")
+    public ResponseEntity<?> saveCart(@RequestBody List<CartRequest.saveDTO> requestDTO) {
+//        System.out.println("cart 확인 : " + requestDTO);
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        cartService.cartSave(requestDTO, sessionUser);
+
+        return ResponseEntity.ok().body("장바구니에 담겼습니다");
+    }
+
+
+    // 장바구니 리스트
     @GetMapping("/cart-list")
     public String cartList(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");

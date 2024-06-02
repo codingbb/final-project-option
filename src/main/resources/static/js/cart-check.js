@@ -23,7 +23,7 @@ document.querySelector("#purchaseButton").addEventListener("click", function (e)
                 cartId: cartId,
                 productId: productId,
                 orderQty: orderQty,
-                isChecked: checkBox.checked ? true : false
+                status: checkBox.checked ? true : false
             };
 
             cartList.push(checkedCart);

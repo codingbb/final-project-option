@@ -23,7 +23,7 @@ $(".panel").click(function () {
     //디자인 넣기
     if (!isOptionSelected) {
         let newElement = $(`<div class='selected-item' id='${optionId}'>
-                                                    ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-price="${price}">${price}</span>
+                                                    ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-option-id="${optionId}" data-price="${price}">${price}</span>
 
                                                      <div class="quantity-controls d-flex"
                                                       style="width: 100px; text-align: center; margin:0 auto">
@@ -84,3 +84,46 @@ function updateTotal() {
     $("#allTotal").val(allTotal);
 
 }
+
+
+// 값 납치
+let requestBody = [];
+
+function checkList() {
+    $(".selected-item").each(function () {
+        let productId = $('input[name="productId"]').val();
+        let orderQty = $(this).find(".quantity").val();
+        let optionIdNumber = $(this).attr('id');
+        let optionId = optionIdNumber.match(/\d+/)[0];
+
+        let checkedList = {
+            productId: productId,
+            optionId: optionId,
+            orderQty: orderQty
+
+        };    //객체 형식으로 만들어주기
+
+        requestBody.push(checkedList); // orderId를 객체로 추가
+    });
+
+    console.log(requestBody);
+    console.log(JSON.stringify(requestBody));
+
+
+    $.ajax({
+        url: '/cart/save',
+        data: JSON.stringify(requestBody),
+        contentType: 'application/json; charset=utf-8',
+        type: 'POST'
+
+    }).done((res) => {
+        alert("장바구니에 담겼습니다");
+        location.href = "/cart-list"
+
+    }).fail((res) => {
+        alert("통신 오류")
+    });
+
+}
+
+

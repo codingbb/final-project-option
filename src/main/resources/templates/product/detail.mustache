@@ -45,9 +45,9 @@
 {{#sessionUser}}
     {{#isCheck}}
             <!--개인 로그인시-->
-            <form action="/cart/save" method="post">
+
                 <input type="hidden" name="productId" value="{{product.id}}">
-                <input type="hidden" name="isChecked" value="0">
+                <input type="hidden" name="status" value="0">
                 <div class="d-flex prodsav-W">
                     <!--상품이미지-->
                     <div class="prodsave-L">
@@ -92,7 +92,7 @@
 
                         <!--장바구니 btn-->
                         <div class="row pr-5 pt-5" style="">
-                            <button class="btn btn-mint" type="submit" height="36" radius="3">
+                            <button class="btn btn-mint" onclick="checkList()" type="submit" height="36" radius="3">
                                 <span class="">장바구니 담기</span>
                             </button>
                         </div>
@@ -124,8 +124,6 @@
 
                 <!-- 선택한 옵션이 표시될 곳 -->
 
-
-            </form>
     {{/isCheck}}
         <!--개인 로그인시-->
 
@@ -277,7 +275,7 @@
 
                 <!--장바구니 btn-->
                 <div class="row pr-5 pt-5" style="">
-                    <button class="btn btn-mint" type="submit" height="36" radius="3">
+                    <button class="btn btn-mint" onclick="checkList()" type="submit" height="36" radius="3">
                         <span class="">장바구니 담기</span>
                     </button>
                 </div>
@@ -295,7 +293,7 @@
 
 <!--지우면 구매수량 안올라 갑니다. 구매 수량만 올리는 이벤트일뿐 변수 값 해당 머스태치에 뿌려야 됩니다.-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="/js/detail.js"></script>
 
 <script>
 
@@ -354,6 +352,6 @@
 
 </script>
 
-<script src="/js/detail.js"></script>
+
 
 {{> layout/footer}}
