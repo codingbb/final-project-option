@@ -116,4 +116,30 @@ public class OrderService {
         return resultList;
 
     }
+
+    @Transactional
+    public void orderCancel(List<OrderRequest.CancelDTO> requestDTO) {
+        OrderStatus status;
+
+        //값이 1개밖에 안들어오니까 (중복제거 해놔서) 해당 값으로 orderItem을 찾음
+        for (int i = 0; i < requestDTO.size(); i++) {
+            List<OrderItem> orderItemList = orderItemRepo.findByOrderId(requestDTO.get(i).getOrderId());
+//            System.out.println("아이템리스트 " + orderItemList);
+
+            status = OrderStatus.ORDER_CANCEL;
+
+            //안쪽에서 for문 돌려야함
+            for (OrderItem orderItem : orderItemList) {
+                // order 테이블 상태변경
+                orderItem.getOrder().setStatus(status);
+
+                // product 테이블 재고 변경
+                Integer productQty = orderItem.getOption().getQty();
+//                System.out.println("재고" + productQty);
+                orderItem.getOption().setQty(productQty + orderItem.getOrderQty());
+            }
+
+        }
+
+    }
 }

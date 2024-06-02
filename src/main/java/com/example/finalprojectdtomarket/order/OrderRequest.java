@@ -78,4 +78,11 @@ public class OrderRequest {
         }
 
     }
+
+    @Data
+    public static class CancelDTO {
+        private Integer orderId;
+        private Integer optionId;
+        private Integer orderQty;
+    }
 }

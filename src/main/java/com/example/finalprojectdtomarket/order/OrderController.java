@@ -23,8 +23,12 @@ public class OrderController {
 
     // 주문취소
     @PostMapping("/order-cancel")
-    public String orderCancel() {
-        
+    public @ResponseBody String cancel(@RequestBody List<OrderRequest.CancelDTO> requestDTO) {
+//        System.out.println("받는지 확인 " + requestDTO);
+        orderService.orderCancel(requestDTO);
+
+        return "redirect:/order-list";
+
     }
 
 

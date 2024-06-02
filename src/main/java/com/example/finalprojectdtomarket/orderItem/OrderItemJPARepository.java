@@ -11,4 +11,8 @@ import java.util.List;
 public interface OrderItemJPARepository extends JpaRepository<OrderItem, Integer> {
 
 
+    @Query("select oi from OrderItem oi where oi.order.id = :orderId")
+    List<OrderItem> findByOrderId(@Param("orderId") Integer orderId);
+
+
 }
