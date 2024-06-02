@@ -11,13 +11,24 @@ public class CartRequest {
         private Integer optionId;
         private Integer orderQty;
 
-        public Cart toEntity(User sessionUser, Option option) {
+        public Cart toEntity(User sessionUser, Option option, Boolean status) {
             return Cart.builder()
                     .option(option)
                     .orderQty(orderQty)
+                    .status(status)
                     .user(sessionUser)
                     .build();
 
         }
+    }
+
+    @Data
+    public static class UpdateDTO {
+        private Integer cartId;
+        private Integer optionId;
+        private Integer orderQty;
+        private Boolean status;
+
+
     }
 }

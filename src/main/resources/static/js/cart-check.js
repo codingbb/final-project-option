@@ -12,16 +12,16 @@ document.querySelector("#purchaseButton").addEventListener("click", function (e)
         let checkBox = value.querySelector(".item-check");
 
         if(checkBox.checked){
-            let cartId = value.querySelector("input[name='cartId']").value; // cartId 가져오는 방식 수정
-            let orderQty = value.querySelector(".orderQty").value; // orderQty 가져오는 방식 수정
-            let productId = value.querySelector("input[name='productId']").value;
+            let cartId = value.querySelector(".cartId").value; // 수정된 부분
+            let optionId = value.querySelector(".optionId").value; // 수정된 부분
+            let orderQty = value.querySelector(".orderQty-class").getAttribute("data-order-qty"); // 수정된 부분
 
             //console.log(cartId);
             //console.log(buyQty);
 
             let checkedCart = {
                 cartId: cartId,
-                productId: productId,
+                optionId: optionId,
                 orderQty: orderQty,
                 status: checkBox.checked ? true : false
             };

@@ -44,10 +44,12 @@ public class CartService {
 
             Cart cart = cartRepo.findByUserAndOption(sessionUser.getId(), requestDTO.getOptionId());
 
+            Boolean status = false;
+
             if (cart != null) {
                 cart.setOrderQty(cart.getOrderQty() + requestDTO.getOrderQty());
             } else {
-                cartRepo.save(requestDTO.toEntity(sessionUser, option));
+                cartRepo.save(requestDTO.toEntity(sessionUser, option, status));
             }
 
         }

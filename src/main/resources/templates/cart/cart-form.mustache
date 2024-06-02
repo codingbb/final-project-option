@@ -18,8 +18,8 @@
                 {{#cartList}}
                     <tr class="cart-table my-cart-list" id="cart-{{id}}">
                         <td>{{indexNum}}</td>
-                        <input type="hidden" name="cartId" value="{{id}}">
-
+                        <input type="hidden" class="cartId" name="cartId" value="{{id}}">
+                        <input type="hidden" class="optionId" name="optionId" value="{{optionId}}">
                         <span class="notVisible">{{id}}</span>
                         <td>
                             <div style="width:150px; margin:0 auto;">

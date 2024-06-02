@@ -21,6 +21,15 @@ public class CartController {
     private final CartService cartService;
     private final HttpSession session;
 
+    @PostMapping("/cart/update")
+    public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> reqDTOs) {
+        System.out.println("장바구니 값 받니? : " + reqDTOs);
+//        cartService.updateCart(reqDTOs);
+
+        return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
+    }
+
+
     // 장바구니 담기
     @PostMapping("/cart/save")
     public ResponseEntity<?> saveCart(@RequestBody List<CartRequest.saveDTO> requestDTO) {
