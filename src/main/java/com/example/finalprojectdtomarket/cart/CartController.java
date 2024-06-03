@@ -70,7 +70,7 @@ public class CartController {
     public ResponseEntity<?> listUpdate(@RequestBody CartRequest.ListUpdateDTO requestDTO) {
         System.out.println("장바구니 값 받니? : " + requestDTO);
         cartService.cartListUpdate(requestDTO);
-        return ResponseEntity.ok().body("CART_BEFORE");
+        return ResponseEntity.ok().body("CART_ING");
     }
 
 
