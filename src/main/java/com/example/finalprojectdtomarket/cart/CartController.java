@@ -25,7 +25,7 @@ public class CartController {
     public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> requestDTOs) {
 //        System.out.println("장바구니 값 받니? : " + requestDTOs);
         cartService.updateCart(requestDTOs);
-
+        System.out.println("2.............");
         return ResponseEntity.ok().body("선택한 상품의 구매를 진행 하시겠습니까?");
     }
 

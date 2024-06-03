@@ -59,6 +59,7 @@ public class CartService {
 
     @Transactional
     public void updateCart(List<CartRequest.UpdateDTO> requestDTOs) {
+        System.out.println("1...................");
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             Cart cart = cartRepo.findById(requestDTO.getCartId())
                     .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
@@ -73,6 +74,7 @@ public class CartService {
             cart.setStatus(requestDTO.getStatus());
 
         }
+
 
     }
 }

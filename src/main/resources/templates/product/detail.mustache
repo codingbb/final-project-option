@@ -287,13 +287,11 @@
 {{/sessionUser}}
 <!--비회원 로그인시-->
 
-
 </div>
 <!--상품 상세보기 페이지 완료-->
 
 <!--지우면 구매수량 안올라 갑니다. 구매 수량만 올리는 이벤트일뿐 변수 값 해당 머스태치에 뿌려야 됩니다.-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/detail.js"></script>
+
 
 <script>
 
@@ -312,7 +310,6 @@
 
     //옵션 slideToggle 이벤트
     $(".flip").click(function () {
-        alert("안되는데");
         $(".panel").each(function () {
             $(this).slideToggle("fast", function () {
                 if ($(this).is(":visible")) {
@@ -347,11 +344,11 @@
     var orderQty = parseInt($(".quantity").val());
     var remainingQty = productQty - orderQty;
     $(".remaining-qty").text("재고 수량: " + remainingQty);
-    });
 
 
 </script>
 
 
+<script src="/js/detail.js"></script>
 
 {{> layout/footer}}
