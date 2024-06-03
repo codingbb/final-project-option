@@ -4,6 +4,7 @@ import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.cart.Cart;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.cart.CartResponse;
+import com.example.finalprojectdtomarket.cart.CartStatus;
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItem;
@@ -29,7 +30,7 @@ public class OrderService {
 
     @Transactional
     public List<CartResponse.saveFormList> orderCartList(Integer sessionUserId) {
-        Boolean status = true;
+        CartStatus status = CartStatus.CART_ING;
         List<Cart> carts = cartRepo.findByUserIdAndStatus(sessionUserId, status);
 //        System.out.println("carts = " + carts);
         
