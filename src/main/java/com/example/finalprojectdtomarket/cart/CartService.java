@@ -45,7 +45,7 @@ public class CartService {
 
             Cart cart = cartRepo.findByUserAndOption(sessionUser.getId(), requestDTO.getOptionId());
 
-            Boolean status = false;
+            CartStatus status = CartStatus.CART_BEFORE;
 
             if (cart != null) {
                 cart.setOrderQty(cart.getOrderQty() + requestDTO.getOrderQty());

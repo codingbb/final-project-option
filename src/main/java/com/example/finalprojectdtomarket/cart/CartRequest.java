@@ -11,7 +11,7 @@ public class CartRequest {
         private Integer optionId;
         private Integer orderQty;
 
-        public Cart toEntity(User sessionUser, Option option, Boolean status) {
+        public Cart toEntity(User sessionUser, Option option, CartStatus status) {
             return Cart.builder()
                     .option(option)
                     .orderQty(orderQty)
@@ -27,7 +27,7 @@ public class CartRequest {
         private Integer cartId;
         private Integer optionId;
         private Integer orderQty;
-        private Boolean status;
+        private CartStatus status;
 
 
     }

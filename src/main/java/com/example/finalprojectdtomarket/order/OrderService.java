@@ -43,9 +43,9 @@ public class OrderService {
         }
 
         // 카트 수동 롤백
-        for (Cart cart : carts) {
-            cart.setStatus(false);
-        }
+//        for (Cart cart : carts) {
+//            cart.setStatus(false);
+//        }
 
         return saveFormList;
 

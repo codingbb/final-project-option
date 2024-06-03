@@ -20,7 +20,7 @@ public class CartResponse {
         private Integer sum;        //가공하기
         private Integer indexNum;   //번호 이쁘게 가공용
 
-        private Boolean status;
+        private CartStatus status;
 
         public ListDTO(Cart cart) {
             this.id = cart.getId();
@@ -49,7 +49,7 @@ public class CartResponse {
         private Integer totalSum;
         private Integer indexNum;   //번호 이쁘게 가공용
 
-        private Boolean status;
+        private CartStatus status;
 
         public saveFormList(Cart cart) {
             this.id = cart.getId();

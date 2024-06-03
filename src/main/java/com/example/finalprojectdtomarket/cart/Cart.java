@@ -34,8 +34,12 @@ public class Cart {
     @Column(nullable = false)
     private Integer orderQty;   // 주문 수량
 
+//    @Column
+//    private Boolean status;  //장바구니 선택 됐나요? 0 -> false, 1 -> true
+
     @Column
-    private Boolean status;  //장바구니 선택 됐나요? 0 -> false, 1 -> true
+    @Enumerated(EnumType.STRING)
+    private CartStatus status;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -44,7 +48,7 @@ public class Cart {
     private Integer indexNum;   //index 가공용!! db에는 안넣게 했어요
 
     @Builder
-    public Cart(Integer id, User user, Option option, Integer orderQty, Boolean status, Timestamp createdAt, Integer indexNum) {
+    public Cart(Integer id, User user, Option option, Integer orderQty, CartStatus status, Timestamp createdAt, Integer indexNum) {
         this.id = id;
         this.user = user;
         this.option = option;
