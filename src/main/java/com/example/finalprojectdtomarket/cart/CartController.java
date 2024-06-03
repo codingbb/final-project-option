@@ -48,6 +48,7 @@ public class CartController {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
         String status = cartService.findCartStatus();
+//        System.out.println("status 확인" + status);
 
         if (status.equals("CART_ING")) {
             return "redirect:/order-save-form";

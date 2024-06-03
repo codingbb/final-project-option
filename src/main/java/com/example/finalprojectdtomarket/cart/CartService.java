@@ -24,13 +24,17 @@ public class CartService {
         CartStatus cartStatus = CartStatus.CART_ING;
         List<Cart> cartList = cartRepo.findByCartStatus(cartStatus);
 
+        List<CartResponse.StatusDTO> statuses = cartList.stream().map(cart
+                -> new CartResponse.StatusDTO(cart)).toList();
+
+//        System.out.println("statuses = " + statuses);
+
         String status = "CART_BEFORE";
 
-        List<CartResponse.StatusDTO> statuses = cartList.stream().map(cart -> new CartResponse.StatusDTO(cart)).toList();
-
         for (CartResponse.StatusDTO statusDTO : statuses) {
-            if (statusDTO.equals("CART_ING")) {
+            if (statusDTO.getStatus().equals(CartStatus.CART_ING)) {
                 status = "CART_ING";
+                break;
             }
         }
 
