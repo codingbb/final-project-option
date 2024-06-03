@@ -23,6 +23,11 @@ public class CartRequest {
     }
 
     @Data
+    public static class ListUpdateDTO {
+        private CartStatus status;
+    }
+
+    @Data
     public static class UpdateDTO {
         private Integer cartId;
         private Integer optionId;

@@ -99,4 +99,15 @@ public class CartService {
 
 
     }
+
+    @Transactional
+    public void cartListUpdate(CartRequest.ListUpdateDTO requestDTO) {
+        List<Cart> cartList = cartRepo.findByCartStatus(requestDTO.getStatus());
+//        System.out.println("cartList = " + cartList);
+
+        for (Cart cart : cartList) {
+            cart.setStatus(CartStatus.CART_BEFORE);
+        }
+
+    }
 }

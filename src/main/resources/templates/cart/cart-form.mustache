@@ -81,6 +81,29 @@
 
 <script>
 
+    // cart-list 꺼
+        let confirmOrder = {{confirmOrder}}; // 서버로부터 받은 confirmOrder 변수    //request에 담은거 ㅇㅇ
+        if (confirmOrder) {
+            let userResponse = confirm("기존 주문 내역이 있습니다. 마저 주문을 진행하시겠습니까?");
+            if (userResponse) {
+                window.location.href = "/order-save-form";
+            } else {
+                $.ajax({
+                    url: '/cart-list-update',
+                    data: JSON.stringify({status: "CART_ING"}),
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST'
+
+                }).done((res)=>{
+                    console.log(res);
+                    window.location.href = "/cart-list";
+
+                }).fail((res)=>{
+
+                });
+            }
+        }
+
 
     <!--    천단위 표시 재사용 해야할 함수 -->
     function numberWithCommas(total) {

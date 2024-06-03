@@ -30,4 +30,5 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     @Query("select c from Cart c where c.status = :status")
     List<Cart> findByCartStatus(@Param("status") CartStatus status);
+
 }

@@ -51,15 +51,33 @@ public class CartController {
 //        System.out.println("status 확인" + status);
 
         if (status.equals("CART_ING")) {
-            return "redirect:/order-save-form";
+            request.setAttribute("confirmOrder", true);
+//            return "redirect:/order-save-form";
 
         } else {
             List<CartResponse.ListDTO> cartList = cartService.cartList(sessionUser.getId());
 //            System.out.println("cartList = " + cartList);
+            request.setAttribute("confirmOrder", false);
             request.setAttribute("cartList", cartList);
 
         }
         return "/cart/cart-form";
     }
+
+
+    // confirm 취소 누르면 이쪽으로 갈거임..
+    @PostMapping("/cart-list-update")
+    public ResponseEntity<?> listUpdate(@RequestBody CartRequest.ListUpdateDTO requestDTO) {
+        System.out.println("장바구니 값 받니? : " + requestDTO);
+        cartService.cartListUpdate(requestDTO);
+        return ResponseEntity.ok().body("CART_BEFORE");
+    }
+
+
+    @GetMapping("/cart-form")
+    public String cartForm() {
+        return "cart-form";
+    }
+
 
 }
