@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
@@ -26,4 +27,7 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Modifying
     @Query("delete from Cart c where c.id = :cartId")
     void deleteByCartId(@Param("cartId") Integer cartId);
+
+    @Query("select c from Cart c where c.status = :status")
+    List<Cart> findByCartStatus(@Param("status") CartStatus status);
 }

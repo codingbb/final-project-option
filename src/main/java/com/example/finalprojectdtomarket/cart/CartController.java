@@ -46,10 +46,18 @@ public class CartController {
     @GetMapping("/cart-list")
     public String cartList(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        List<CartResponse.ListDTO> cartList = cartService.cartList(sessionUser.getId());
-        System.out.println("cartList = " + cartList);
-        request.setAttribute("cartList", cartList);
 
+        String status = cartService.findCartStatus();
+
+        if (status.equals("CART_ING")) {
+            return "redirect:/order-save-form";
+
+        } else {
+            List<CartResponse.ListDTO> cartList = cartService.cartList(sessionUser.getId());
+//            System.out.println("cartList = " + cartList);
+            request.setAttribute("cartList", cartList);
+
+        }
         return "/cart/cart-form";
     }
 

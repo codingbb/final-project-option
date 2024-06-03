@@ -8,6 +8,17 @@ import lombok.Data;
 public class CartResponse {
 
     @Data
+    public static class StatusDTO {
+        private CartStatus status;
+
+        public StatusDTO(Cart cart) {
+            this.status = cart.getStatus();
+        }
+    }
+
+
+
+    @Data
     public static class ListDTO {
         private Integer id;     //cartId
         private Integer orderQty;       //구매수량
