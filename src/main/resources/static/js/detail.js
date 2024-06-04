@@ -49,8 +49,17 @@ $(".panel").click(function () {
             // 수량이랑 값 추출해서 합계 금액 넣을라고
 
             // alert("이벤트 발생");
+            calculator();
+        });
+
+        $(document).on("click", `.increase-btn, .decrease-btn`, function () {
+            calculator();
+        });
+
+        // 합계 계산 재사용 함수
+        function calculator() {
             let orderQty = $(`.${optionId}orderQty`).val();
-            // console.log("주문수량 " + orderQty);
+            console.log("주문수량 " + orderQty);
 
             let price = $(`.${optionId}price-class`).data("price");
             // console.log("가격 " + price);
@@ -60,9 +69,10 @@ $(".panel").click(function () {
             // console.log("토탈" + total)
 
             updateTotal();
-        });
+        }
 
 
+        // x표시로 옵션 삭제하는거
         $(document).on("click", `#${optionId} .remove-option`, function () {
             console.log(this);
             $(this).closest('.selected-item').remove();

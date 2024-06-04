@@ -54,8 +54,8 @@ INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('
 
 -- cart 정보
 INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (2, 1, 20, 'CART_BEFORE', NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (2, 3, 10, 'CART_ING', NOW());
-INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (2, 4, 5, 'CART_ING', NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (2, 3, 10, 'CART_BEFORE', NOW());
+INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (2, 4, 5, 'CART_BEFORE', NOW());
 INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (3, 2, 15, 'CART_BEFORE', NOW());
 INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (3, 5, 10, 'CART_BEFORE', NOW());
 INSERT INTO cart_tb(user_id, option_id, order_qty, status, created_at) VALUES (4, 3, 20, 'CART_BEFORE', NOW());
