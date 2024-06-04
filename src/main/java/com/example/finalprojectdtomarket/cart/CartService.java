@@ -86,7 +86,6 @@ public class CartService {
         List<Integer> cartIds = requestDTOs.stream().mapToInt(value -> value.getCartId()).boxed().toList();
 
         List<Cart> cartList = cartRepo.findByIds(cartIds);
-        int i = cartList.size();
 
         for(Cart cart : cartList){
             Option option = cart.getOption();
@@ -96,8 +95,14 @@ public class CartService {
             }
 
             // 카트 수량이랑 status 업데이트
-            cart.setOrderQty(requestDTOs.get(i).getOrderQty());
-            cart.setStatus(requestDTOs.get(i).getStatus());
+            for (int i = 0; i < requestDTOs.size(); i++) {
+                if (cart.getId() == requestDTOs.get(i).getCartId()){
+                    cart.setOrderQty(requestDTOs.get(i).getOrderQty());
+                    cart.setStatus(requestDTOs.get(i).getStatus());
+                }
+
+            }
+
         }
 
         System.out.println("Jooho 1 : in query 발동");
