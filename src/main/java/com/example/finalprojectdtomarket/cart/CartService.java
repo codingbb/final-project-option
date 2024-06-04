@@ -81,20 +81,29 @@ public class CartService {
 
     @Transactional
     public void updateCart(List<CartRequest.UpdateDTO> requestDTOs) {
-        System.out.println("1...................");
+        System.out.println("1. @PostMapping(/cart/update) 메소드. " +
+                "(cartId, optionId, orderQty, status)를 ajax로 받아옴 " +
+                "체크한 값만큼 update 쳐서 order-save-form 에 가져옴");
+
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             Cart cart = cartRepo.findById(requestDTO.getCartId())
                     .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
 
-            Cart qty = cartRepo.findByQty(requestDTO.getCartId());
-            if (requestDTO.getOrderQty() > qty.getOption().getQty()) {
+            System.out.println("2. cart pk가 장바구니에 존재하는지 먼저 확인 끝!!");
+
+            Option option = cart.getOption();
+            System.out.println("3. 여기서 option 재고가 있는지 확인");
+
+            if (requestDTO.getOrderQty() > option.getQty()) {
+
+                System.out.println("3-1. 재고가 있는지 확인 끝!!!");
+
                 throw new ApiException400("재고 부족! 구매 불가");
             }
-
+            
             // 카트 수량이랑 status 업데이트
             cart.setOrderQty(requestDTO.getOrderQty());
             cart.setStatus(requestDTO.getStatus());
-
         }
 
 

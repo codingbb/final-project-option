@@ -48,6 +48,9 @@ public class UserService {
     }
 
     public User findUserId(Integer id) {
+
+        System.out.println("10. UserService에 findUserId 실행함");
+
         //TODO: 이거 404 맞는지?
         User user = userRepo.findById(id)
                 .orElseThrow(() -> new Exception404("존재하지 않는 사용자 입니다"));

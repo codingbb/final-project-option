@@ -48,6 +48,8 @@ public class OrderController {
     @PostMapping("/order-save")
     public String orderSave(OrderRequest.SaveDTO requestDTO) {
 
+        System.out.println("9. /order-save 메소드 실행 시작!!");
+
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
@@ -62,6 +64,9 @@ public class OrderController {
 
     @GetMapping("/order-save-form")
     public String saveForm(HttpServletRequest request) {
+
+        System.out.println("6. OrderController 에 order-save-form 으로 넘어왔습니다");
+
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
@@ -70,6 +75,8 @@ public class OrderController {
         Integer totalSum = saveFormLists.stream().mapToInt(value -> value.getSum()).sum();
 //        System.out.println("totalSum = " + totalSum);
 //        System.out.println("saveFormLists = " + saveFormLists);
+
+        System.out.println("8. orderCartList 메소드 실행 종료, order-save-form 끝");
 
         //TODO: 한번에 어떻게 담나요
         request.setAttribute("saveFormLists", saveFormLists);

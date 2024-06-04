@@ -30,6 +30,9 @@ public class OrderService {
 
     @Transactional
     public List<CartResponse.saveFormList> orderCartList(Integer sessionUserId) {
+
+        System.out.println("7. orderCartList 메소드 실행 중");
+
         CartStatus status = CartStatus.CART_ING;
         List<Cart> carts = cartRepo.findByUserIdAndStatus(sessionUserId, status);
 //        System.out.println("carts = " + carts);
@@ -55,27 +58,35 @@ public class OrderService {
     @Transactional
     public void saveOrder(OrderRequest.SaveDTO requestDTO, User user) {
 
-        System.out.println("값확인" + requestDTO);
+        System.out.println("11. OrderService의 saveOrder 시작");
+//        System.out.println("값확인" + requestDTO);
 
         //오더 저장
         Order order = orderRepo.save(requestDTO.toOrderEntity(user));
+        System.out.println("12. 일단 order를 저장함");
 
         //오더 아이템 저장
         for (int i = 0; i < requestDTO.getOptionId().size(); i++) {
             Option option = optionRepo.findById(requestDTO.getOptionId().get(i))
                     .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
 
+            System.out.println("13. 없는 상품을 저장하려고 할 수도 있으니까 option을 findById 해주기");
+
             Integer quantity = requestDTO.getOrderQty().get(i);
 
             orderItemRepo.save(requestDTO.toOrderItemEntity(order, option, quantity));
+
+            System.out.println("14. 여기서 orderItem을 save!!");
 
 //            order.addOrderItem(requestDTO.toOrderItemEntity(order, product, quantity));
 
             //상품 수량 변경 //더티체킹
             option.setQty(option.getQty() - quantity);
+            System.out.println("15. option.setQty 해서 구매한만큼 상품 수량 변경! 더티체킹");
 
             //선택한 카트 딜리트
             cartRepo.deleteByCartId(requestDTO.getCartId().get(i));
+            System.out.println("16. 구매 완료한 cart 삭제하기");
 
         }
 
