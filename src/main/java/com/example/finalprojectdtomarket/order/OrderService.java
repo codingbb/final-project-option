@@ -31,7 +31,7 @@ public class OrderService {
     @Transactional
     public List<CartResponse.saveFormList> orderCartList(Integer sessionUserId) {
 
-        System.out.println("7. orderCartList 메소드 실행 중");
+        System.out.println("7. OrderService의 orderCartList 메소드 실행 중");
 
         CartStatus status = CartStatus.CART_ING;
         List<Cart> carts = cartRepo.findByUserIdAndStatus(sessionUserId, status);
@@ -63,7 +63,7 @@ public class OrderService {
 
         //오더 저장
         Order order = orderRepo.save(requestDTO.toOrderEntity(user));
-        System.out.println("12. 일단 order를 저장함");
+        System.out.println("12. 일단 order를 저장함 (완료)");
 
         //오더 아이템 저장
         for (int i = 0; i < requestDTO.getOptionId().size(); i++) {
@@ -76,7 +76,7 @@ public class OrderService {
 
             orderItemRepo.save(requestDTO.toOrderItemEntity(order, option, quantity));
 
-            System.out.println("14. 여기서 orderItem을 save!!");
+            System.out.println("14. 여기서 orderItem을 save 해줌 ");
 
 //            order.addOrderItem(requestDTO.toOrderItemEntity(order, product, quantity));
 
@@ -94,6 +94,9 @@ public class OrderService {
 
     // order-list
     public List<OrderResponse.ListDTO> orderList(Integer sessionUserId) {
+
+        System.out.println("19. OrderService의 orderList 메소드 시작");
+
         List<OrderItem> orderItemList = orderRepo.findOrderList(sessionUserId);
 //        System.out.println("test " + orderItemList);
 

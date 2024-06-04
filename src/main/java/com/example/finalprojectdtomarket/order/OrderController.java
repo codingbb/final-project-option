@@ -35,12 +35,18 @@ public class OrderController {
     // 주문 목록
     @GetMapping("/order-list")
     public String list(HttpServletRequest request) {
+
+        System.out.println("18. order-list (내구매목록) 실행 시작");
+
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.findUserId(sessionUser.getId());
 
         List<OrderResponse.ListDTO> orderItemList = orderService.orderList(user.getId());
 //        System.out.println("ffdd = " + orderItemList);
         request.setAttribute("orderItemList", orderItemList);
+
+        System.out.println("20. order-list 메소드 끝!");
+
         return "/order/list";
     }
 
@@ -57,6 +63,8 @@ public class OrderController {
         requestDTO.setStatus(OrderStatus.ORDER_COMPLETE);
         //구매하기 로직
         orderService.saveOrder(requestDTO, user);
+
+        System.out.println("17. order-save 메소드 끝");
 
         return "redirect:/order-list";
 

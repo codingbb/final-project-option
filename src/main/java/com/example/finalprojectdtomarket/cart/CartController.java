@@ -49,10 +49,10 @@ public class CartController {
     public String cartList(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        String status = cartService.findCartStatus();
+        CartStatus cartStatus = cartService.findCartStatus();
 //        System.out.println("status 확인" + status);
 
-        if (status.equals("CART_ING")) {
+        if (cartStatus == CartStatus.CART_ING) {
             request.setAttribute("confirmOrder", true);
 //            return "redirect:/order-save-form";
 

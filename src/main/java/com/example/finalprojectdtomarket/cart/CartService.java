@@ -20,7 +20,7 @@ public class CartService {
     private final OptionJPARepository optionRepo;
 
     // cart status 조회
-    public String findCartStatus() {
+    public CartStatus findCartStatus() {
         CartStatus cartStatus = CartStatus.CART_ING;
         List<Cart> cartList = cartRepo.findByCartStatus(cartStatus);
 
@@ -38,7 +38,7 @@ public class CartService {
             }
         }
 
-        return status;
+        return CartStatus.valueOf(status);
     }
 
 
@@ -85,26 +85,49 @@ public class CartService {
                 "(cartId, optionId, orderQty, status)를 ajax로 받아옴 " +
                 "체크한 값만큼 update 쳐서 order-save-form 에 가져옴");
 
-        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
-            Cart cart = cartRepo.findById(requestDTO.getCartId())
-                    .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
 
-            System.out.println("2. cart pk가 장바구니에 존재하는지 먼저 확인 끝!!");
+        List<Integer> cartIds = requestDTOs.stream().mapToInt(value -> value.getCartId()).boxed().toList();
 
+        List<Cart> cartListJooho = cartRepo.findByIds(cartIds);
+
+        for(Cart cart : cartListJooho){
             Option option = cart.getOption();
             System.out.println("3. 여기서 option 재고가 있는지 확인");
 
-            if (requestDTO.getOrderQty() > option.getQty()) {
+            if (cart.getOrderQty() > option.getQty()) {
 
                 System.out.println("3-1. 재고가 있는지 확인 끝!!!");
 
                 throw new ApiException400("재고 부족! 구매 불가");
             }
-            
+
             // 카트 수량이랑 status 업데이트
-            cart.setOrderQty(requestDTO.getOrderQty());
-            cart.setStatus(requestDTO.getStatus());
+            cart.setOrderQty(cart.getOrderQty());
+            cart.setStatus(cart.getStatus());
         }
+
+        System.out.println("Jooho 1 : in query 발동");
+
+//        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+//            Cart cart = cartRepo.findById(requestDTO.getCartId())
+//                    .orElseThrow(() -> new Exception404("장바구니에 존재하지 않습니다."));
+//
+//            System.out.println("2. cart pk가 장바구니에 존재하는지 먼저 확인 끝!!");
+//
+//            Option option = cart.getOption();
+//            System.out.println("3. 여기서 option 재고가 있는지 확인");
+//
+//            if (requestDTO.getOrderQty() > option.getQty()) {
+//
+//                System.out.println("3-1. 재고가 있는지 확인 끝!!!");
+//
+//                throw new ApiException400("재고 부족! 구매 불가");
+//            }
+//
+//            // 카트 수량이랑 status 업데이트
+//            cart.setOrderQty(requestDTO.getOrderQty());
+//            cart.setStatus(requestDTO.getStatus());
+//        }
 
 
     }
