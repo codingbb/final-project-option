@@ -127,13 +127,13 @@
 
     function calculator(element) {
         let orderQty = $(element).val();
-        console.log("주문 수량 " + orderQty);
+        // console.log("주문 수량 " + orderQty);
 
         let price = $(element).closest(`tr`).find(`.price-class`).data("price");
-        console.log("단가 " + price);
+        // console.log("단가 " + price);
 
         let total = orderQty * price;
-        console.log("합계 " + total);
+        // console.log("합계 " + total);
 
         // 수량이 변경되면 구매금액 반영
         $(element).closest(`tr`).find(`.sum-class`).text(numberWithCommas(total));
@@ -146,11 +146,11 @@
 
         $(".item-check:checked").each(function () {
             let sum = parseInt($(this).closest(`tr`).find(`.sum-class`).text().replace(/,/g, '')) || 0;
-            console.log("sum " + sum)
+            // console.log("sum " + sum)
             totalSum += sum;
         });
 
-        console.log("totalSum " + totalSum);
+        // console.log("totalSum " + totalSum);
 
         $("#totalSum").text(numberWithCommas(totalSum));
 
