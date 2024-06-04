@@ -35,7 +35,8 @@
                                  style="width: 100px; text-align: center; margin:0 auto">
                                 <button type="button" class="decrease-btn" aria-label="수량내리기" style="">-
                                 </button>
-                                <input type="text" class="quantity orderQty orderQty-change orderQty-class" id="orderQty"
+                                <input type="text" class="quantity orderQty orderQty-change orderQty-class"
+                                       id="orderQty"
                                        name="orderQty" data-order-qty="{{orderQty}}"
                                        value="{{orderQty}}"
                                        style="text-align: center; ">
@@ -49,7 +50,8 @@
 
                         <td>
                             <input class="form-check-input product-checkbox item-check" type="checkbox" name="itemCheck"
-                                   id="itemCheck-id" value="{{sum}}" checked style="width:20px !important; margin: 0 auto">
+                                   id="itemCheck-id" value="{{sum}}" checked
+                                   style="width:20px !important; margin: 0 auto">
                         </td>
                     </tr>
                 {{/cartList}}
@@ -82,27 +84,27 @@
 <script>
 
     // cart-list 꺼
-        let confirmOrder = {{confirmOrder}}; // 서버로부터 받은 confirmOrder 변수    //request에 담은거 ㅇㅇ
-        if (confirmOrder) {
-            let userResponse = confirm("기존 주문 내역이 있습니다. 마저 주문을 진행하시겠습니까?");
-            if (userResponse) {
-                window.location.href = "/order-save-form";
-            } else {
-                $.ajax({
-                    url: '/cart-list-update',
-                    data: JSON.stringify({status: "CART_ING"}),
-                    contentType: 'application/json; charset=utf-8',
-                    type: 'POST'
+    let confirmOrder = {{confirmOrder}}; // 서버로부터 받은 confirmOrder 변수    //request에 담은거 ㅇㅇ
+    if (confirmOrder) {
+        let userResponse = confirm("기존 주문 내역이 있습니다. 마저 주문을 진행하시겠습니까?");
+        if (userResponse) {
+            window.location.href = "/order-save-form";
+        } else {
+            $.ajax({
+                url: '/cart-list-update',
+                data: JSON.stringify({status: "CART_ING"}),
+                contentType: 'application/json; charset=utf-8',
+                type: 'POST'
 
-                }).done((res)=>{
-                    console.log(res);
-                    window.location.href = "/cart-list";
+            }).done((res) => {
+                console.log(res);
+                window.location.href = "/cart-list";
 
-                }).fail((res)=>{
+            }).fail((res) => {
 
-                });
-            }
+            });
         }
+    }
 
 
     <!--    천단위 표시 재사용 해야할 함수 -->
@@ -125,21 +127,31 @@
 
     function calculator(element) {
         let orderQty = $(element).val();
-        // console.log("주문 수량 " + orderQty);
+        console.log("주문 수량 " + orderQty);
+
         let price = $(element).closest(`tr`).find(`.price-class`).data("price");
-        // console.log("단가 " + price);
+        console.log("단가 " + price);
+
         let total = orderQty * price;
-        // console.log("합계 " + total);
+        console.log("합계 " + total);
 
         // 수량이 변경되면 구매금액 반영
         $(element).closest(`tr`).find(`.sum-class`).text(numberWithCommas(total));
 
+        // 체크박스 value 업데이트
+        $(element).closest(`tr`).find(`.item-check`).val(total);
+
         // 수량이 변경되면 총합계 (총금액) 도 반영
         let totalSum = 0;
-        $(".sum-class").each(function() {
-            let sum = parseInt($(this).text().replace(/,/g, '')) || 0;
+
+        $(".item-check:checked").each(function () {
+            let sum = parseInt($(this).closest(`tr`).find(`.sum-class`).text().replace(/,/g, '')) || 0;
+            console.log("sum " + sum)
             totalSum += sum;
         });
+
+        console.log("totalSum " + totalSum);
+
         $("#totalSum").text(numberWithCommas(totalSum));
 
     }
@@ -147,7 +159,7 @@
 
     //재사용 함수
     function updateTotalSum() {
-    // 체크박스에서 값 들어오는 jQuery
+        // 체크박스에서 값 들어오는 jQuery
         let total = 0;
         $(".item-check:checked").each(function () {
             // let price = $(this).val();
@@ -159,12 +171,12 @@
     }
 
     //change 이벤트가 updateTotalSum 함수 내에 있으면 change 이벤트가 일어나야지만 실행이 되어서 빼줬음
-        $(".item-check").change(function () {
-            updateTotalSum();
-        });
+    $(".item-check").change(function () {
+        updateTotalSum();
+    });
 
     //장바구니에 딱 들어왔을 때부터 총액 계산되어있게 하려고 분리함
-        updateTotalSum()
+    updateTotalSum()
 
     // 장바구니에 상품가격 콤마 찍기
     $(".price-class").each(function () {
@@ -186,8 +198,6 @@
         console.log(sum);
         $(this).text(numberWithCommas(sum));
     });
-
-
 
 
 </script>
