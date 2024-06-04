@@ -91,9 +91,8 @@ public class CartService {
         for(Cart cart : cartList){
             Option option = cart.getOption();
 
-            if (cart.getOrderQty() > option.getQty()) {
-                throw new ApiException400("재고 부족! 구매 불가");
-            }
+//            System.out.println("오더 큐티와이 1 " + cart.getOrderQty());
+//            System.out.println("옵션 재고 1 " + option.getQty());
 
             // 카트 수량이랑 status 업데이트... requestDTOs 가져오려고
             CartRequest.UpdateDTO cartMatching = requestDTOs.stream().filter(updateDTO ->
@@ -103,6 +102,13 @@ public class CartService {
 
             cart.setOrderQty(cartMatching.getOrderQty());
             cart.setStatus(cartMatching.getStatus());
+
+            if (cart.getOrderQty() > option.getQty()) {
+                throw new ApiException400("재고 부족! 구매 불가");
+            }
+
+//            System.out.println("오더 큐티와이 2 " + cart.getOrderQty());
+//            System.out.println("옵션 재고 2 " + option.getQty());
 
         }
 

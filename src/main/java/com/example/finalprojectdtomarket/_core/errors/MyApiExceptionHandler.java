@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class MyApiExceptionHandler {
     @ExceptionHandler(ApiException400.class)
     public ResponseEntity<?> exApi400(ApiException400 e) {
-        System.out.println(e.getMessage() + "잘 들어오나요??");
+//        System.out.println(e.getMessage() + "잘 들어오나요??");
         ApiUtil<?> apiUtil = new ApiUtil<>(400, e.getMessage());
         return new ResponseEntity<>(apiUtil, HttpStatus.BAD_REQUEST);
     }
