@@ -23,7 +23,7 @@ public class CartController {
 
     @PostMapping("/cart/update")
     public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> requestDTOs) {
-//        System.out.println("장바구니 값 받니? : " + requestDTOs);
+        System.out.println("장바구니 값 받니? : " + requestDTOs);
         cartService.updateCart(requestDTOs);
 
         System.out.println("4. 카트 수량이랑 status 업데이트 끝남!! cart/update 끝");

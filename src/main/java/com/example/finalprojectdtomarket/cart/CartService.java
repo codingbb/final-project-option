@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.cart;
 
 import com.example.finalprojectdtomarket._core.errors.exception.ApiException400;
+import com.example.finalprojectdtomarket._core.errors.exception.Exception400;
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
@@ -81,7 +82,7 @@ public class CartService {
 
     @Transactional
     public void updateCart(List<CartRequest.UpdateDTO> requestDTOs) {
-        System.out.println("requestDTOs = " + requestDTOs);
+//        System.out.println("requestDTOs = " + requestDTOs);
         
         List<Integer> cartIds = requestDTOs.stream().mapToInt(value -> value.getCartId()).boxed().toList();
 
@@ -94,18 +95,18 @@ public class CartService {
                 throw new ApiException400("재고 부족! 구매 불가");
             }
 
-            // 카트 수량이랑 status 업데이트
-            for (int i = 0; i < requestDTOs.size(); i++) {
-                if (cart.getId() == requestDTOs.get(i).getCartId()){
-                    cart.setOrderQty(requestDTOs.get(i).getOrderQty());
-                    cart.setStatus(requestDTOs.get(i).getStatus());
-                }
+            // 카트 수량이랑 status 업데이트... requestDTOs 가져오려고
+            CartRequest.UpdateDTO cartMatching = requestDTOs.stream().filter(updateDTO ->
+                    updateDTO.getCartId().equals(cart.getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new Exception400("장바구니 에러"));
 
-            }
+            cart.setOrderQty(cartMatching.getOrderQty());
+            cart.setStatus(cartMatching.getStatus());
 
         }
 
-        System.out.println("Jooho 1 : in query 발동");
+//        System.out.println("Jooho 1 : in query 발동");
 
     }
 
