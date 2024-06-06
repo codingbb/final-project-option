@@ -31,13 +31,42 @@
                         <input type="file" id="imageUpload" name="img"
                                class="real-upload mx-auto d-block mt-2 w-50 h-50" accept="upload/*" required
                                multiple>
-                        <span style="font-size:10px; color: gray;">※첨부파일은 최대 4개까지 등록이 가능합니다.</span>
+                        <span style="font-size:20px; color: gray;">※첨부파일은 최대 4개까지 등록이 가능합니다.</span>
                     </div>
                 </div>
             </div>
             <!--상품 이미지 등록-->
 
             <script>
+                function previewImages() {
+                    let imgUpload = $("#imageUpload")[0];
+                    let previewContainer = $(".profilePreview");
+                    if (imgUpload.files) {
+                        let files = imgUpload.files;
+                        let maxFiles = 4;
+                        previewContainer.empty(); // 미리보기 컨테이너를 비웁니다.
+
+                        for (let i = 0; i < files.length && i < maxFiles; i++) {
+                            let file = files[i];
+                            let reader = new FileReader();
+
+                            reader.onload = function(e) {
+                                console.log("여기에 이벤트 " + e.target.result);
+                                // 이미지 미리보기를 생성합니다.
+                                let imgPreview = $('<div class="save-img d-flex justify-content-center align-items-center" style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px">' +
+                                        '<img src="' + e.target.result + '" style="width: 100%; height: 100%; object-fit: cover;"></div>');
+                                previewContainer.eq(i).html(imgPreview); // 새 미리보기를 추가합니다.
+                            };
+
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                }
+
+                $("#imageUpload").change(function() {
+                    previewImages(); // 파일이 변경될 때마다 미리보기를 업데이트합니다.
+                });
+
                 $("#imageUploadForm").on("submit", function (e) {
                     e.preventDefault();
 

@@ -97,7 +97,7 @@ public class ProductService {
 
         product.setCategory(category);
 
-        product.setImg(imgFileName);
+//        product.setImg(imgFileName);
 
     }
 

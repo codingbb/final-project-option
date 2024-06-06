@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.finalprojectdtomarket._core.common.ImgSaveUtil;
 
+import java.util.List;
+
 public class ProductRequest {
 
     @Data
@@ -24,13 +26,13 @@ public class ProductRequest {
         private Integer price;
         private Integer qty;
         private Integer categoryId;
-        private MultipartFile img;
+        private List<MultipartFile> img;
 
 
         public Product toEntity(Category category){
-            String imgFileName = ImgSaveUtil.save(img);
+            List<String> imgFileName = ImgSaveUtil.save(img);
             return Product.builder()
-                    .img(imgFileName)
+//                    .img(imgFileName)
                     .name(name)
 
                     .category(category)
