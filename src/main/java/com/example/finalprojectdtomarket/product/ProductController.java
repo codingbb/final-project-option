@@ -7,11 +7,9 @@ import com.example.finalprojectdtomarket.option.OptionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -82,9 +80,10 @@ public class ProductController {
 
     // 상품 save
     @PostMapping("/product/save")
-    public String save(ProductRequest.SaveDTO requestDTO) {
+    public String save(@ModelAttribute ProductRequest.SaveDTO requestDTO) {
         System.out.println("save 확인" + requestDTO);
         productService.save(requestDTO);
+
         return "redirect:/";
     }
 

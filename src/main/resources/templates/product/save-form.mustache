@@ -1,7 +1,7 @@
 {{> layout/header}}
 
 <div class="container sub-page w14" style="margin: 0 auto;">
-    <form action="/product/save" id="imageUploadForm" method="post" enctype="multipart/form-data">
+    <form id="saveForm" method="post" enctype="multipart/form-data">
 
         <div class="d-flex prodsav-W">
             <!--상품 이미지 등록-->
@@ -36,66 +36,6 @@
                 </div>
             </div>
             <!--상품 이미지 등록-->
-
-            <script>
-                function previewImages() {
-                    let imgUpload = $("#imageUpload")[0];
-                    let previewContainer = $(".profilePreview");
-                    if (imgUpload.files) {
-                        let files = imgUpload.files;
-                        let maxFiles = 4;
-                        previewContainer.empty(); // 미리보기 컨테이너를 비웁니다.
-
-                        for (let i = 0; i < files.length && i < maxFiles; i++) {
-                            let file = files[i];
-                            let reader = new FileReader();
-
-                            reader.onload = function(e) {
-                                console.log("여기에 이벤트 " + e.target.result);
-                                // 이미지 미리보기를 생성합니다.
-                                let imgPreview = $('<div class="save-img d-flex justify-content-center align-items-center" style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px">' +
-                                        '<img src="' + e.target.result + '" style="width: 100%; height: 100%; object-fit: cover;"></div>');
-                                previewContainer.eq(i).html(imgPreview); // 새 미리보기를 추가합니다.
-                            };
-
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                }
-
-                $("#imageUpload").change(function() {
-                    previewImages(); // 파일이 변경될 때마다 미리보기를 업데이트합니다.
-                });
-
-                $("#imageUploadForm").on("submit", function (e) {
-                    e.preventDefault();
-
-                    let check = $(this).find("#imageUpload");
-                    let formData = new FormData();
-                    let files = check[0].files;
-
-                    for (let i = 0; i < files.length; i++) {
-                        formData.append(`files`, files[i]);
-                    }
-
-                    $.ajax({
-                        url: "/product/save",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        type: 'POST'
-
-                    }).done((res)=>{
-                        alert("이미지 업로드 성공")
-
-                    }).fail((res)=>{
-                        alert("이미지 업로드 실패")
-
-                    });
-
-                });
-
-            </script>
 
             <!--상품등록-->
             <div class="prodsave-R ml-10">
@@ -154,7 +94,7 @@
                     </table>
 
                     <div class="line" style="border-bottom:1px solid #ddd; margin: 50px auto"></div>
-                    <button type="submit" class="btn btn-mint">상품등록완료</button>
+                    <button type="button" class="btn btn-mint" onclick="goSave()">상품등록완료</button>
 
                 </div>
             </div>
@@ -164,6 +104,81 @@
 </div>
 
 <script>
+
+    function goSave() {
+        $("#saveForm").on("submit", function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            // 폼 데이터에 (this를 써서) 이미 포함되어 있기 때문에 files 변수를 별도로 정의하고 추가할 필요가 없다.
+            // let check = $(this).find("#imageUpload");
+            // let files = check[0].files;
+            //
+            // for (let i = 0; i < files.length; i++) {
+            //     formData.append(`files`, files[i]);
+            // }
+
+            formData.forEach((value, key) => {
+                if (value instanceof File) {
+                    console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
+                } else {
+                    console.log(`${key}: ${value}`);
+                }
+            });
+
+            $.ajax({
+                url: "/product/save",
+                data: formData,
+                contentType: false,
+                processData: false,
+                type: 'POST'
+
+            }).done((res)=>{
+                alert("이미지 업로드 성공")
+
+            }).fail((res)=>{
+                alert("이미지 업로드 실패")
+
+            });
+
+        });
+    }
+
+
+    function previewImages() {
+        let imgUpload = $("#imageUpload")[0];
+        let previewContainer = $(".profilePreview");
+        if (imgUpload.files) {
+            let files = imgUpload.files;
+            let maxFiles = 4;
+            previewContainer.empty(); // 미리보기 컨테이너를 비웁니다.
+
+            for (let i = 0; i < files.length && i < maxFiles; i++) {
+                let file = files[i];
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // console.log("여기에 이벤트 " + e.target.result);
+                    // 이미지 미리보기를 생성합니다.
+                    let imgPreview = $('<div class="save-img d-flex justify-content-center align-items-center" style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px">' +
+                            '<img src="' + e.target.result + '" style="width: 100%; height: 100%; object-fit: cover;"></div>');
+                    previewContainer.eq(i).html(imgPreview); // 새 미리보기를 추가합니다.
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+    $("#imageUpload").change(function() {
+        previewImages(); // 파일이 변경될 때마다 미리보기를 업데이트합니다.
+    });
+
+
+
+
+
     <!--    천단위 표시 재사용 해야할 함수 -->
     function numberWithCommas(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
