@@ -32,9 +32,8 @@ public class ProductRequest {
         public Product toEntity(Category category){
             List<String> imgFileName = ImgSaveUtil.save(img);
             return Product.builder()
-//                    .img(imgFileName)
+                    .img(imgFileName)
                     .name(name)
-
                     .category(category)
                     .build();
         }
