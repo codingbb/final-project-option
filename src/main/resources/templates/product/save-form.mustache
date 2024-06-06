@@ -1,29 +1,29 @@
 {{> layout/header}}
 
 <div class="container sub-page w14" style="margin: 0 auto;">
-    <form action="/product/save" method="post" enctype="multipart/form-data">
+    <form action="/product/save" id="imageUploadForm" method="post" enctype="multipart/form-data">
 
         <div class="d-flex prodsav-W">
             <!--상품 이미지 등록-->
             <div class="prodsave-L">
                 <div class="p-3 m-3">
                     <div class="row">
-                        <div class="save-img d-flex justify-content-center align-items-center"
+                        <div class="save-img d-flex justify-content-center align-items-center profilePreview"
                              style=""
                              id="profilePreview">
                             <b>대표 사진을 등록해 주세요.</b>
                         </div>
-                        <div class="save-img d-flex justify-content-center align-items-center"
+                        <div class="save-img d-flex justify-content-center align-items-center profilePreview"
                              style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px"
                              id="profilePreview">
                             <b>사진 등록</b>
                         </div>
-                        <div class="save-img d-flex justify-content-center align-items-center"
+                        <div class="save-img d-flex justify-content-center align-items-center profilePreview"
                              style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px"
                              id="profilePreview">
                             <b>사진 등록</b>
                         </div>
-                        <div class="save-img d-flex justify-content-center align-items-center"
+                        <div class="save-img d-flex justify-content-center align-items-center profilePreview"
                              style="width: 130px; height: 100px; margin-right: 5px; margin-top: 5px"
                              id="profilePreview">
                             <b>사진 등록</b>
@@ -31,10 +31,42 @@
                         <input type="file" id="imageUpload" name="img"
                                class="real-upload mx-auto d-block mt-2 w-50 h-50" accept="upload/*" required
                                multiple>
+                        <span style="font-size:10px; color: gray;">※첨부파일은 최대 4개까지 등록이 가능합니다.</span>
                     </div>
                 </div>
             </div>
             <!--상품 이미지 등록-->
+
+            <script>
+                $("#imageUploadForm").on("submit", function (e) {
+                    e.preventDefault();
+
+                    let check = $(this).find("#imageUpload");
+                    let formData = new FormData();
+                    let files = check[0].files;
+
+                    for (let i = 0; i < files.length; i++) {
+                        formData.append(`files`, files[i]);
+                    }
+
+                    $.ajax({
+                        url: "/product/save",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+
+                    }).done((res)=>{
+                        alert("이미지 업로드 성공")
+
+                    }).fail((res)=>{
+                        alert("이미지 업로드 실패")
+
+                    });
+
+                });
+
+            </script>
 
             <!--상품등록-->
             <div class="prodsave-R ml-10">
