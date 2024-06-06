@@ -45,7 +45,7 @@
                         <tr>
                             <th>상품명</th>
                             <td>
-                                <input id="name" name="name" type="text" class="form-control"
+                                <input id="pName" name="name" type="text" class="form-control"
                                        placeholder="상품명을 적어주세요." style="width: 100%">
                             </td>
                             <td>
@@ -59,7 +59,7 @@
                         <tr>
                             <th>상품가격</th>
                             <td colspan="2">
-                                <input name="price" type="text" class="form-control price price-class"
+                                <input name="price" id="pPrice" type="text" class="form-control price price-class"
                                        placeholder="상품 가격을 적어주세요." style="width: 100%">
                             </td>
                         </tr>
@@ -72,7 +72,7 @@
                                 <div class="quantity-controls d-flex"
                                      style="width: 100px;">
                                     <button type="button" class="decrease-btn" aria-label="수량내리기">-</button>
-                                    <input type="number" class="quantity" name="qty" value="1"
+                                    <input type="number" class="quantity" name="qty" id="pQty" value="1"
                                            style="text-align: center;">
                                     <button type="button" class="increase-btn" aria-label="수량올리기">+</button>
                                 </div>
@@ -94,7 +94,7 @@
                     </table>
 
                     <div class="line" style="border-bottom:1px solid #ddd; margin: 50px auto"></div>
-                    <button type="button" class="btn btn-mint" onclick="goSave()">상품등록완료</button>
+                    <button type="submit" class="btn btn-mint">상품등록완료</button>
 
                 </div>
             </div>
@@ -105,27 +105,46 @@
 
 <script>
 
-    function goSave() {
         $("#saveForm").on("submit", function (e) {
             e.preventDefault();
 
-            let formData = new FormData(this);
+            let formData = new FormData();
 
-            // 폼 데이터에 (this를 써서) 이미 포함되어 있기 때문에 files 변수를 별도로 정의하고 추가할 필요가 없다.
-            // let check = $(this).find("#imageUpload");
-            // let files = check[0].files;
-            //
-            // for (let i = 0; i < files.length; i++) {
-            //     formData.append(`files`, files[i]);
-            // }
+            let nameForm = $(this).find("#pName").val();
+            // console.log("nameForm " + nameForm);
 
-            formData.forEach((value, key) => {
-                if (value instanceof File) {
-                    console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
-                } else {
-                    console.log(`${key}: ${value}`);
-                }
-            });
+            let priceForm = $(this).find("#pPrice").val();
+            // console.log("priceForm " + priceForm);
+
+            let qtyForm = $(this).find("#pQty").val();
+            // console.log("qtyForm " + qtyForm);
+
+            let categoryForm = $(this).find("#category").val();
+            // console.log("categoryForm " + categoryForm);
+
+            let check = $(this).find("#imageUpload");
+            let files = check[0].files;
+            // console.log("check " + check);
+            // console.log("files " + files);
+
+            formData.append('name', nameForm);
+            formData.append('price', priceForm);
+            formData.append('qty', qtyForm);
+            formData.append('categoryId', categoryForm);
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append(`img`, files[i]);
+            }
+
+            // console.log("배열인인가" + formData);
+
+            // formData.forEach((value, key) => {
+            //     if (value instanceof File) {
+            //         console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
+            //     } else {
+            //         console.log(`${key}: ${value}`);
+            //     }
+            // });
 
             $.ajax({
                 url: "/product/save",
@@ -143,7 +162,7 @@
             });
 
         });
-    }
+
 
 
     function previewImages() {
