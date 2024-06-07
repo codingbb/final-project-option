@@ -37,17 +37,18 @@ public class ProductController {
 
     // 상품목록보기
     @GetMapping("/")
-    public String list(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
-    List<Product> productList = productService.findAll();
-    request.setAttribute("productList", productList);
+    public String list(HttpServletRequest request, @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+//    List<Product> productList = productService.findAll();
+        List<ProductResponse.IndexDTO> productList = productService.findProductAndImgAll();
+        request.setAttribute("productList", productList);
 
         if (keyword.isBlank()) {
-            productList = productService.findAll();
+            productList = productService.findProductAndImgAll();
             request.setAttribute("keyword", "");
             request.setAttribute("keywordList", productList);
 
         } else {
-            productList = productService.findAll(keyword);
+            productList = productService.findProductAndImgAll(keyword);
             request.setAttribute("keyword", keyword);
             request.setAttribute("keywordList", productList);
 //            System.out.println("넘어오나");

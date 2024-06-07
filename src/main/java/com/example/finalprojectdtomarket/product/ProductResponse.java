@@ -12,6 +12,17 @@ import java.sql.Timestamp;
 
 public class ProductResponse {
 
+    @Data
+    public static class IndexDTO {
+        private Integer id;
+        private String pName;
+        private Integer price;
+
+        private Integer imgId;
+        private String img;     //filePath
+
+    }
+
 
     @Data
     public static class CategoryDTO {
@@ -85,20 +96,5 @@ public class ProductResponse {
         }
     }
 
-    //상품 목록보기
-    @Data
-    public static class ListDTO{
-        private Integer id;
-        private String name;
-        private Integer price;
-        private Integer qty;
-        private String img;
 
-        public ListDTO(Product product) {
-            this.id = product.getId();
-            this.name = product.getName();
-            //TODO: 이미지
-//            this.img = product.getImg();
-        }
-    }
 }

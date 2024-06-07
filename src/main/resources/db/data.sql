@@ -18,6 +18,12 @@ INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('오이지 
 INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('애플청포도', 11900, 1, NOW());
 INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('성주 참외', 17900, 1, NOW());
 
+-- image 정보
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
+INSERT INTO image_tb(file_path, product_id) values ('prod_3', 7);
+INSERT INTO image_tb(file_path, product_id) values ('prod_4', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_2', 4);
+
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 6입', 50, 15000, 1, NOW());
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 12입', 50, 30000, 1, NOW());

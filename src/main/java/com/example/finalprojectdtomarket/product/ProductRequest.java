@@ -11,6 +11,9 @@ import java.util.List;
 
 public class ProductRequest {
 
+
+
+
     @Data
     public static class UpdateDTO {
         private String name;

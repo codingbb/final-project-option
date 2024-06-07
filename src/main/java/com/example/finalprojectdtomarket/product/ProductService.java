@@ -4,6 +4,7 @@ package com.example.finalprojectdtomarket.product;
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
+import com.example.finalprojectdtomarket.image.Image;
 import com.example.finalprojectdtomarket.image.ImageJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import jakarta.transaction.Transactional;
@@ -66,6 +67,31 @@ public class ProductService {
         }
 
 
+    }
+
+    @Transactional
+    public List<ProductResponse.IndexDTO> findProductAndImgAll() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<Product> productList = productRepo.findAll(sort);
+        System.out.println("productList = " + productList);
+
+        List<Image> imageList = imageRepo.findAll();
+        System.out.println("imageList = " + imageList);
+
+        return null;
+    }
+
+
+    @Transactional
+    public List<ProductResponse.IndexDTO> findProductAndImgAll(String keyword) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<Product> productList = productRepo.findAll(sort);
+        System.out.println("productList = " + productList);
+
+        List<Image> imageList = imageRepo.findAll();
+        System.out.println("imageList = " + imageList);
+
+        return null;
     }
 
 
