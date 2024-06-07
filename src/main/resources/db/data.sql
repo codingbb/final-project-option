@@ -19,24 +19,27 @@ INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('애플청�
 INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('성주 참외', 17900, 1, NOW());
 
 -- image 정보
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
-INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
-INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
-INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
-INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
-INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
-INSERT INTO image_tb(file_path, product_id) values ('prod_4', 5);
-INSERT INTO image_tb(file_path, product_id) values ('prod_4', 5);
-INSERT INTO image_tb(file_path, product_id) values ('prod_2', 6);
-INSERT INTO image_tb(file_path, product_id) values ('prod_2', 7);
-INSERT INTO image_tb(file_path, product_id) values ('prod_2', 7);
+INSERT INTO image_tb(file_path, product_id) values ('milk.jpg', 1);
+INSERT INTO image_tb(file_path, product_id) values ('milk2.jpg', 1);
+INSERT INTO image_tb(file_path, product_id) values ('milk3.jpg', 1);
+INSERT INTO image_tb(file_path, product_id) values ('banana.jpg', 2);
+INSERT INTO image_tb(file_path, product_id) values ('banana2.jpg', 2);
+INSERT INTO image_tb(file_path, product_id) values ('banana3.png', 2);
+INSERT INTO image_tb(file_path, product_id) values ('banana3.png', 2);
+INSERT INTO image_tb(file_path, product_id) values ('banana4.jpg', 2);
+INSERT INTO image_tb(file_path, product_id) values ('orange2.jpg', 3);
+INSERT INTO image_tb(file_path, product_id) values ('orange.jpg', 3);
+INSERT INTO image_tb(file_path, product_id) values ('carrot.jpeg', 4);
+INSERT INTO image_tb(file_path, product_id) values ('carrot2.jpg', 4);
+INSERT INTO image_tb(file_path, product_id) values ('carrot3.jpg', 4);
+INSERT INTO image_tb(file_path, product_id) values ('carrot4.jpg', 4);
+INSERT INTO image_tb(file_path, product_id) values ('oi.jpeg', 5);
+INSERT INTO image_tb(file_path, product_id) values ('oi.jpg', 5);
+INSERT INTO image_tb(file_path, product_id) values ('grape2.jpg', 6);
+INSERT INTO image_tb(file_path, product_id) values ('grape.jpg', 6);
+INSERT INTO image_tb(file_path, product_id) values ('yellowMelon.jpg', 7);
+INSERT INTO image_tb(file_path, product_id) values ('yellowMelon2.jpg', 7);
+INSERT INTO image_tb(file_path, product_id) values ('yellowMelon3.jpg', 7);
 
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 6입', 50, 15000, 1, NOW());

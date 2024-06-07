@@ -66,8 +66,6 @@ public class ProductService {
             //각 MultipartFile을 받아서 이미지 엔티티를 생성
             imageRepo.save(reqDTO.toImgEntity(file, product));
         }
-
-
     }
 
     // 메인 창
@@ -76,29 +74,17 @@ public class ProductService {
 //        Sort sort = Sort.by(Sort.Direction.DESC, "id");
 //        List<Product> productList = productRepo.findAll(sort);
         List<Product> productList = productRepo.findAllWithImages();
-        System.out.println("productList = " + productList);
-
-        // toString 없어... img 조회 안되어서 직접 함
-        for (Product product : productList) {
-            System.out.println("이미지 확인 : " + product.getImages());
-        }
+//        System.out.println("productList = " + productList);
+//
+//        // toString 없어... img 조회 안되어서 직접 함
+//        for (Product product : productList) {
+//            System.out.println("이미지 확인 : " + product.getImages());
+//        }
 
         List<ProductResponse.IndexDTO> indexDTOList = productList.stream().map(product ->
                 new ProductResponse.IndexDTO(product)).toList();
 
         return indexDTOList;
-//        List<ProductResponse.IndexDTO> indexDTOList = new ArrayList<>();
-//
-//        for (Product product : productList) {
-//            // 각 상품에 대한 이미지 정보를 가져오는 로직 필요
-//            List<Image> imageList = imageRepo.findAll();
-//            System.out.println("imageList 222 = " + imageList);
-//
-//            // 대표이미지 가져오기~
-//            Image ceoImage = imageList.get(0);
-//            ProductResponse.IndexDTO indexDTO = new ProductResponse.IndexDTO(ceoImage);
-//            indexDTOList.add(indexDTO);
-//        }
 
     }
 
