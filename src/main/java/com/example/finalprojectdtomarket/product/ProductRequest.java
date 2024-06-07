@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket.category.Category;
+import com.example.finalprojectdtomarket.image.Image;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,12 +31,21 @@ public class ProductRequest {
 
 
         public Product toEntity(Category category){
-            List<String> imgFileName = ImgSaveUtil.save(img);
             return Product.builder()
-                    .img(imgFileName)
+//                    .img(imgFileName)
                     .name(name)
+                    .price(price)
                     .category(category)
                     .build();
+        }
+
+        public Image toImgEntity(Product product) {
+            String imgFileName = ImgSaveUtil.save((MultipartFile) img);
+            return Image.builder()
+                    .filePath(imgFileName)
+                    .product(product)
+                    .build();
+
         }
     }
 }

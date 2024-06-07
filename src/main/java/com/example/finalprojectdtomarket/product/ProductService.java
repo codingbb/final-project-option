@@ -4,6 +4,7 @@ package com.example.finalprojectdtomarket.product;
 import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
+import com.example.finalprojectdtomarket.image.ImageJPARepository;
 import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.List;
 @Service
 public class ProductService {
     private final ProductJPARepository productRepo;
-    private final OrderItemJPARepository orderItemRepo;
     private final CategoryJPARepository categoryRepo;
+    private final ImageJPARepository imageRepo;
 
 
     //상품 삭제하기
@@ -54,7 +55,9 @@ public class ProductService {
         Category category = categoryRepo.findById(reqDTO.getCategoryId())
                         .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
 
-        productRepo.save(reqDTO.toEntity(category));
+        Product product = productRepo.save(reqDTO.toEntity(category));
+        imageRepo.save(reqDTO.toImgEntity(product));
+
     }
 
 

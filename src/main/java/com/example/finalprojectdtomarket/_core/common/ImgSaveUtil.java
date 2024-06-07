@@ -15,27 +15,46 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class ImgSaveUtil {
-    public static List<String> save(List<MultipartFile> profile) {
 
-        List<String> saveFileNames = new ArrayList<>();
+    public static String save(MultipartFile profile) {
 
-        for (MultipartFile file : profile) {
+        String profileFilename = UUID.randomUUID() + "_" + profile.getOriginalFilename();
+        Path profilePath = Paths.get("./upload/" + profileFilename);
 
-            String profileFilename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path profilePath = Paths.get("./upload/" + profileFilename);
+        try {
+            Files.write(profilePath, profile.getBytes());
 
-            try {
-                Files.write(profilePath, file.getBytes());
-                saveFileNames.add(profileFilename);
 
-            } catch (IOException e) {
-                throw new RuntimeException("이미지 오류", e);
-            }
-
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 오류", e);
         }
-
-        return saveFileNames;
-
+        return profileFilename;
     }
 
 }
+
+
+//    public static List<String> save(List<MultipartFile> profile) {
+//
+//        List<String> saveFileNames = new ArrayList<>();
+//
+//        for (MultipartFile file : profile) {
+//
+//            String profileFilename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+//            Path profilePath = Paths.get("./upload/" + profileFilename);
+//
+//            try {
+//                Files.write(profilePath, file.getBytes());
+//                saveFileNames.add(profileFilename);
+//
+//            } catch (IOException e) {
+//                throw new RuntimeException("이미지 오류", e);
+//            }
+//
+//        }
+//
+//        return saveFileNames;
+//
+//    }
+
+//}

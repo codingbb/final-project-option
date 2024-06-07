@@ -27,8 +27,8 @@ public class Product {
 //    @Column(nullable = false)
 //    private Integer qty;             // 상품 재고
 
-    @Column(nullable = false)
-    private String img;              // 상품이미지
+//    @Column(nullable = false)
+//    private String img;              // 상품이미지
 
     //code 추가
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,11 +38,10 @@ public class Product {
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, Integer price, String img, Category category, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, Category category, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.img = img;
         this.category = category;
         this.createdAt = createdAt;
     }

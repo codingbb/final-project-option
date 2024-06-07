@@ -41,7 +41,8 @@ public class ProductResponse {
             this.name = product.getName();
 
             this.categoryName = product.getCategory().getCategoryName();
-            this.img = product.getImg();
+            //TODO: 이미지
+//            this.img = product.getImg();
         }
     }
 
@@ -57,8 +58,8 @@ public class ProductResponse {
         public SaveDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-
-            this.img = product.getImg();
+            //TODO: 이미지
+//            this.img = product.getImg();
         }
     }
 
@@ -79,7 +80,8 @@ public class ProductResponse {
 
             this.categoryId = product.getCategory().getId();
             this.categoryName = product.getCategory().getCategoryName();
-            this.img = product.getImg();
+            //TODO: 이미지
+//            this.img = product.getImg();
         }
     }
 
@@ -95,8 +97,8 @@ public class ProductResponse {
         public ListDTO(Product product) {
             this.id = product.getId();
             this.name = product.getName();
-
-            this.img = product.getImg();
+            //TODO: 이미지
+//            this.img = product.getImg();
         }
     }
 }

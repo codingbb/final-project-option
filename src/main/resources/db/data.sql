@@ -10,13 +10,13 @@ INSERT INTO category_tb(category_name, created_at) VALUES ('채소', NOW());
 INSERT INTO category_tb(category_name, created_at) VALUES ('유제품', NOW());
 
 -- product 정보
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('우유오리지널', 15000, 'milk.jpg', 3, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('바나나', 4800, 'prod_4.jpg', 1, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('당도선별 천혜향', 15000, 'prod_1.jpg', 1, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('햇당근', 1900, 'carrot.jpeg', 2, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('오이지 오이', 5900, 'oi.jpeg', 2, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('애플청포도', 11900, 'prod_7.jpg', 1, NOW());
-INSERT INTO product_tb(name, price, img, category_id, created_at) VALUES ('성주 참외', 17900, 'prod_3.jpg', 1, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('우유오리지널', 15000, 3, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('바나나', 4800, 1, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('당도선별 천혜향', 15000, 1, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('햇당근', 1900, 2, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('오이지 오이', 5900, 2, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('애플청포도', 11900, 1, NOW());
+INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('성주 참외', 17900, 1, NOW());
 
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 6입', 50, 15000, 1, NOW());
