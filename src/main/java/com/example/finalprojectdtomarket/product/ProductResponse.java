@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket.category.Category;
+import com.example.finalprojectdtomarket.image.Image;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,18 +10,27 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductResponse {
 
     @Data
     public static class IndexDTO {
-        private Integer id;
-        private String pName;
-        private Integer price;
+        private Integer id;     // productId
+        private String name;
+        private Integer price;  // 뿌릴용.. price ...
 
-        private Integer imgId;
-        private String img;     //filePath
+        // img는 경로만 있으면 됨
+        private String img;
+//        private List<String> img = new ArrayList<>();
 
+        public IndexDTO(Image image) {
+            this.id = image.getProduct().getId();
+            this.name = image.getProduct().getName();
+            this.price = image.getProduct().getPrice();
+            this.img = image.getFilePath();
+        }
     }
 
 

@@ -19,10 +19,24 @@ INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('애플청�
 INSERT INTO product_tb(name, price, category_id, created_at) VALUES ('성주 참외', 17900, 1, NOW());
 
 -- image 정보
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 1);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 2);
 INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
-INSERT INTO image_tb(file_path, product_id) values ('prod_3', 7);
-INSERT INTO image_tb(file_path, product_id) values ('prod_4', 4);
-INSERT INTO image_tb(file_path, product_id) values ('prod_2', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
+INSERT INTO image_tb(file_path, product_id) values ('prod_1', 3);
+INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_3', 4);
+INSERT INTO image_tb(file_path, product_id) values ('prod_4', 5);
+INSERT INTO image_tb(file_path, product_id) values ('prod_4', 5);
+INSERT INTO image_tb(file_path, product_id) values ('prod_2', 6);
+INSERT INTO image_tb(file_path, product_id) values ('prod_2', 7);
+INSERT INTO image_tb(file_path, product_id) values ('prod_2', 7);
 
 -- option 정보
 INSERT INTO option_tb(option_name, qty, price, product_id, created_at) VALUES ('우유오리지널 1000ml 6입', 50, 15000, 1, NOW());

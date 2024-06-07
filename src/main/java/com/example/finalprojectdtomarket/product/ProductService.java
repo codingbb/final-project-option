@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,7 +57,7 @@ public class ProductService {
     @Transactional
     public void save(ProductRequest.SaveDTO reqDTO) {
         Category category = categoryRepo.findById(reqDTO.getCategoryId())
-                        .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
+                .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
 
         Product product = productRepo.save(reqDTO.toEntity(category));
 
@@ -69,16 +70,28 @@ public class ProductService {
 
     }
 
+    // 메인 창
     @Transactional
     public List<ProductResponse.IndexDTO> findProductAndImgAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
         List<Product> productList = productRepo.findAll(sort);
         System.out.println("productList = " + productList);
+        List<ProductResponse.IndexDTO> indexDTOList = new ArrayList<>();
 
-        List<Image> imageList = imageRepo.findAll();
-        System.out.println("imageList = " + imageList);
+        for (Product product : productList) {
+            // 각 상품에 대한 이미지 정보를 가져오는 로직 필요
+            List<Image> imageList = imageRepo.findByProduct(product.getId());
+            System.out.println("imageList 222 = " + imageList);
 
-        return null;
+            // 대표이미지 가져오기~
+            Image ceoImage = imageList.get(0);
+            ProductResponse.IndexDTO indexDTO = new ProductResponse.IndexDTO(ceoImage);
+            indexDTOList.add(indexDTO);
+        }
+
+
+        return indexDTOList;
     }
 
 
