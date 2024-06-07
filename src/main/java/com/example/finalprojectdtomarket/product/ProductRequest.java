@@ -39,8 +39,8 @@ public class ProductRequest {
                     .build();
         }
 
-        public Image toImgEntity(Product product) {
-            String imgFileName = ImgSaveUtil.save((MultipartFile) img);
+        public Image toImgEntity(MultipartFile file, Product product) {
+            String imgFileName = ImgSaveUtil.save(file);
             return Image.builder()
                     .filePath(imgFileName)
                     .product(product)

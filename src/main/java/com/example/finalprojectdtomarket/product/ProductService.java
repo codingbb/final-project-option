@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 
@@ -56,7 +58,13 @@ public class ProductService {
                         .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
 
         Product product = productRepo.save(reqDTO.toEntity(category));
-        imageRepo.save(reqDTO.toImgEntity(product));
+
+        // 애가 ProductRequest.SaveDTO 타입이 아니고 MultipartFile 타입임 이미지니까!
+        for (MultipartFile file : reqDTO.getImg()) {
+            //각 MultipartFile을 받아서 이미지 엔티티를 생성
+            imageRepo.save(reqDTO.toImgEntity(file, product));
+        }
+
 
     }
 

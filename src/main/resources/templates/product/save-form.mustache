@@ -111,23 +111,23 @@
             let formData = new FormData();
 
             let nameForm = $(this).find("#pName").val();
-            console.log("nameForm " + nameForm);
+            // console.log("nameForm " + nameForm);
 
             // 이렇게하면 자꾸 문자로 가져와져서... 바꾸겠다
-            let priceForm = parseInt($(this).find("#pPrice").val().replace(/,/g, ""));
             // let priceForm = $(this).find("#pPrice").val();
-            console.log("priceForm " + priceForm);
+            let priceForm = parseInt($(this).find("#pPrice").val().replace(/,/g, ""));
+            // console.log("priceForm " + priceForm);
 
             let qtyForm = $(this).find("#pQty").val();
-            console.log("qtyForm " + qtyForm);
+            // console.log("qtyForm " + qtyForm);
 
             let categoryForm = $(this).find("#category").val();
-            console.log("categoryForm " + categoryForm);
+            // console.log("categoryForm " + categoryForm);
 
             let check = $(this).find("#imageUpload");
             let files = check[0].files;
             // console.log("check " + check);
-            console.log("files " + files);
+            // console.log("files " + files);
 
             formData.append('name', nameForm);
             formData.append('price', priceForm);
@@ -140,13 +140,14 @@
 
             // console.log("배열인가" + formData);
 
-            formData.forEach((value, key) => {
-                if (value instanceof File) {
-                    console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
-                } else {
-                    console.log(`${key}: ${value}`);
-                }
-            });
+            // formData의 내부를 확인할 땐 console.log 로는 불가능! 이걸 해야함
+            // formData.forEach((value, key) => {
+            //     if (value instanceof File) {
+            //         console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
+            //     } else {
+            //         console.log(`${key}: ${value}`);
+            //     }
+            // });
 
             $.ajax({
                 url: "/product/save",
@@ -156,7 +157,8 @@
                 type: 'POST'
 
             }).done((res)=>{
-                alert("이미지 업로드 성공")
+                alert("업로드 성공");
+                window.location.href = "/";
 
             }).fail((res)=>{
                 alert("이미지 업로드 실패")
