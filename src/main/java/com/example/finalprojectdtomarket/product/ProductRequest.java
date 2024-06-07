@@ -32,7 +32,6 @@ public class ProductRequest {
         private Integer categoryId;
         private List<MultipartFile> img;
 
-
         public Product toEntity(Category category){
             return Product.builder()
 //                    .img(imgFileName)

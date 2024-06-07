@@ -1,13 +1,17 @@
 package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket.category.Category;
+import com.example.finalprojectdtomarket.image.Image;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -30,6 +34,10 @@ public class Product {
 //    @Column(nullable = false)
 //    private String img;              // 상품이미지
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Image> images = new ArrayList<>();
+
     //code 추가
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
@@ -38,10 +46,11 @@ public class Product {
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, Integer price, Category category, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, List<Image> images, Category category, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.images = images;
         this.category = category;
         this.createdAt = createdAt;
     }

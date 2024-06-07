@@ -23,13 +23,13 @@ public class ProductResponse {
 
         // img는 경로만 있으면 됨
         private String img;
-//        private List<String> img = new ArrayList<>();
+//        private List<String> imgs = new ArrayList<>();
 
-        public IndexDTO(Image image) {
-            this.id = image.getProduct().getId();
-            this.name = image.getProduct().getName();
-            this.price = image.getProduct().getPrice();
-            this.img = image.getFilePath();
+        public IndexDTO(Product product) {
+            this.id = product.getId();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.img = product.getImages().get(0).getFilePath();
         }
     }
 

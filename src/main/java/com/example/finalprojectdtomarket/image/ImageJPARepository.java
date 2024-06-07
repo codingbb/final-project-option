@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface ImageJPARepository extends JpaRepository<Image, Integer> {
 
-    @Query("select i from Image i join fetch i.product p where p.id = :productId")
-    List<Image> findByProduct(@Param("productId") Integer productId);
+
 }

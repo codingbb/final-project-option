@@ -21,4 +21,6 @@ public interface ProductJPARepository extends JpaRepository<Product, Integer> {
     Product findByIdWithCategory(@Param("productId") Integer productId);
 
 
+    @Query("select p from Product p join fetch p.images i order by p.id DESC")
+    List<Product> findAllWithImages();
 }
