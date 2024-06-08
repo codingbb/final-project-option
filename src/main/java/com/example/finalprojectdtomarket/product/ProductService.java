@@ -47,9 +47,11 @@ public class ProductService {
                 .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
 
         Product newProduct = productRepo.findByIdWithCategory(product.getId());
+        System.out.println("newProduct = " + newProduct);
+        List<Image> images = imageRepo.findAll();
 
 //        System.out.println("dto확인 " + product);
-        return new ProductResponse.DetailDTO(newProduct);
+        return new ProductResponse.DetailDTO(newProduct, images);
 
     }
 

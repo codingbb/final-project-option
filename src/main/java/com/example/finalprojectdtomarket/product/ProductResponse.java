@@ -55,16 +55,30 @@ public class ProductResponse {
         private Integer price;
         private Integer qty;
         private String categoryName;
-        private String img;
 
-        public DetailDTO(Product product) {
+        private List<ImageDTO> images = new ArrayList<>();
+
+        public DetailDTO(Product product, List<Image> images) {
             this.id = product.getId();
             this.name = product.getName();
-
+            this.price = product.getPrice();
             this.categoryName = product.getCategory().getCategoryName();
-            //TODO: 이미지
-//            this.img = product.getImg();
+            this.images = images.stream().filter(image ->
+                    image.getProduct().getId().equals(product.getId()))
+                    .map(image -> new ImageDTO(image)).toList();
         }
+
+        @Data
+        public class ImageDTO {
+            private String img;
+
+            public ImageDTO(Image img) {
+                this.img = img.getFilePath();
+            }
+        }
+
+
+
     }
 
     //상품 등록
