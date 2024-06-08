@@ -43,7 +43,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 15%;
+        margin-left: 20%;
+        margin-right: 5%;
     }
 
     .saveImg img {
@@ -158,6 +159,8 @@
                             {{/product.images}}
                         </div>
                         <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
                 <!--상품 이미지-->
@@ -363,13 +366,29 @@
 
     // 슬라이드용
     var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
         spaceBetween: 30,
-        slidesPerView: 'auto',
+        slidesPerGroup: 1,
+        loop: true,
+        loopFillGroupWithBlank: true,
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
         },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
     });
+    //
+    // var swiper = new Swiper('.swiper-container', {
+    //     spaceBetween: 30,
+    //     slidesPerView: 'auto',
+    //     pagination: {
+    //         el: '.swiper-pagination',
+    //         clickable: true,
+    //     },
+    // });
 </script>
 
 </script>
