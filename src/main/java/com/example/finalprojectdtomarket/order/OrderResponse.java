@@ -43,7 +43,7 @@ public class OrderResponse {
             this.optionId = orderItem.getOption().getId();
             this.createdAt = orderItem.getOrder().getCreatedAt().toLocalDateTime().toLocalDate();
             //TODO: 이미지
-//            this.img = orderItem.getOption().getProduct().getImg();
+            this.img = orderItem.getOption().getProduct().getImages().get(0).getFilePath();
             this.address = orderItem.getOrder().getAddress();
             this.personName = orderItem.getOrder().getUser().getPersonName();
             this.orderNumb = orderItem.getOrder().getOrderNumb();
@@ -78,7 +78,7 @@ public class OrderResponse {
                 this.price = orderItem.getOption().getPrice();
                 this.qty = orderItem.getOption().getQty();
                 //TODO: 이미지
-//                this.img = orderItem.getOption().getProduct().getImg();
+                this.img = orderItem.getOption().getProduct().getImages().get(0).getFilePath();
                 this.classChange = classChange();
             }
 

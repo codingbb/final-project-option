@@ -37,8 +37,7 @@ public class CartResponse {
             this.id = cart.getId();
             this.orderQty = cart.getOrderQty();
             // product나 option 어떻게 해야할지 몰라서 join fetch c.option o join fetch o.product p 로 들고옴
-            //TODO: 이미지
-//            this.img = cart.getOption().getProduct().getImg();
+            this.img = cart.getOption().getProduct().getImages().get(0).getFilePath();
             this.optionId = cart.getOption().getId();
             this.pName = cart.getOption().getOptionName();
             this.price = cart.getOption().getPrice();
