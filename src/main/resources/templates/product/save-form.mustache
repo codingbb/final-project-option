@@ -180,8 +180,16 @@
             for (let i = 0; i < files.length && i < maxFiles; i++) {
                 let file = files[i];
 
-                // TODO: file 타입 확인하기
+                // file 타입 확인하기
                 uploadFile();
+
+                // file 개수 최대 4개
+                if (imgUpload.files.length > maxFiles) {
+                    alert('최대 4개의 파일만 업로드할 수 있습니다.');
+                    $("#imageUpload").val(''); // 파일 입력 필드를 초기화
+                    previewContainer.empty(); // 미리보기 컨테이너를 비우기
+                    return;
+                }
 
                 let reader = new FileReader();
 

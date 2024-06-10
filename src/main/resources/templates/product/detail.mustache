@@ -246,15 +246,23 @@
     <!--비회원 로그인시 -->
     <form action="/order/1/add" method="post">
         <div class="d-flex prodsav-W">
-            <!--상품이미지-->
+            <!--상품 이미지-->
             <div class="prodsave-L">
-                <div class="mb-3 mt-3"
-                     style="width: 400px; height: 400px; border: 1px solid #ddd; color: #ddd; overflow: hidden">
-                    <img src="/upload/product.img}}" alt="Product Image"
-                         style="max-width: 100%; max-height: 100%;">
+                <div class="p-3 m-3 swiper-container">
+                    <div class="swiper-wrapper">
+                        {{#product.images}}
+                            <div class="d-flex justify-content-center align-items-center saveImg swiper-slide" id="profilePreview">
+                                <!-- 이미지를 표시하는 부분 업데이트로 가서 수정한다 -->
+                                <img src="/upload/{{img}}" style="max-width: 100%; max-height: 100%;">
+                            </div>
+                        {{/product.images}}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
-            <!--상품이미지-->
+            <!--상품 이미지-->
 
             <!--구매정보 체크-->
             <div class="prodsave-R ml-10">
@@ -275,7 +283,7 @@
                         <th>상품가격</th>
                         <td colspan="2">
                             <input name="price" type="text" class="form-control price price-class"
-                                   value="price" disabled style="width: 100%">
+                                   value="{{product.price}}" disabled style="width: 100%">
                         </td>
                     </tr>
                     <!--상품가격-->
