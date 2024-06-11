@@ -1,6 +1,7 @@
 package com.example.finalprojectdtomarket.user;
 
 
+import com.example.finalprojectdtomarket._core.errors.exception.LoginFailException;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception401;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,7 @@ public class UserService {
     //로그인 용
     public UserResponse.LoginDTO login(UserRequest.LoginDTO requestDTO) {
         User sessionUser = userRepo.findByUsernameAndPassword(requestDTO.getUsername(), requestDTO.getPassword())
-                .orElseThrow(() -> new Exception401("아이디 혹은 비밀번호가 일치하지 않습니다."));
+                .orElseThrow(() -> new LoginFailException());
 
         //sessionUser.getRole 에서 2가 들어오면 true (2면 유저) 유저냐? 예스예스
         Boolean isCheck = sessionUser.getRole() == 2;
@@ -24,6 +25,7 @@ public class UserService {
 
     }
 
+    //회원정보 수정 페이지 없음
     //회원정보수정
     public User findById(int id, UserRequest.UpdateDTO reqDTO) {
         User user = userRepo.findById(id)
@@ -33,6 +35,7 @@ public class UserService {
 
     }
 
+    // 회원가입 중복체크
     public User getUsername(String username) {
         return userRepo.findByUsername(username);
     }
@@ -46,11 +49,11 @@ public class UserService {
         return new UserResponse.JoinDTO(user);
     }
 
+    // user에서 쓰는 거 아님
     public User findUserId(Integer id) {
 
         System.out.println("10. UserService에 findUserId 실행함");
 
-        //TODO: 이거 404 맞는지?
         User user = userRepo.findById(id)
                 .orElseThrow(() -> new Exception404("존재하지 않는 사용자 입니다"));
 

@@ -1,6 +1,8 @@
 package com.example.finalprojectdtomarket.product;
 
 
+import com.example.finalprojectdtomarket._core.errors.exception.CategoryExistException;
+import com.example.finalprojectdtomarket._core.errors.exception.ProductExistException;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
@@ -27,7 +29,7 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Integer productId) {
         Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new ProductExistException());
 
         //근데 admin 1명 밖에 없어서 삭제 권한 여부 확인할 필요 없지않나? -> 생략함
 
@@ -42,10 +44,10 @@ public class ProductService {
     //상품 상세보기
     public ProductResponse.DetailDTO getDetail(Integer id) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new ProductExistException());
 
         Product newProduct = productRepo.findByIdWithCategory(product.getId());
-        System.out.println("newProduct = " + newProduct);
+//        System.out.println("newProduct = " + newProduct);
         List<Image> images = imageRepo.findAll();
 
 //        System.out.println("dto확인 " + product);
@@ -57,7 +59,7 @@ public class ProductService {
     @Transactional
     public void save(ProductRequest.SaveDTO reqDTO) {
         Category category = categoryRepo.findById(reqDTO.getCategoryId())
-                .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다."));
+                .orElseThrow(() -> new CategoryExistException());
 
         Product product = productRepo.save(reqDTO.toEntity(category));
 
@@ -93,10 +95,10 @@ public class ProductService {
     public List<ProductResponse.IndexDTO> findProductAndImgAll(String keyword) {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<Product> productList = productRepo.findAll(sort);
-        System.out.println("productList = " + productList);
+//        System.out.println("productList = " + productList);
 
         List<Image> imageList = imageRepo.findAll();
-        System.out.println("imageList = " + imageList);
+//        System.out.println("imageList = " + imageList);
 
         return null;
     }
@@ -118,7 +120,7 @@ public class ProductService {
     //상품 업데이트폼 줘
     public ProductResponse.UpdateDTO findByIdUpdate(Integer id) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new ProductExistException());
 
         Product newProduct = productRepo.findByIdWithCategory(product.getId());
 
@@ -130,11 +132,11 @@ public class ProductService {
     @Transactional
     public void updateProduct(Integer id, ProductRequest.UpdateDTO requestDTO, String imgFileName) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다."));
+                .orElseThrow(() -> new ProductExistException());
 
         //카테고리를 한번 조회하고 들어와야함
         Category category = categoryRepo.findById(requestDTO.getCategoryId())
-                .orElseThrow(() -> new Exception404("카테고리가 존재하지 않습니다"));
+                .orElseThrow(() -> new CategoryExistException());
 
         // TODO: set으로 말고 의미있는 메소드 만들어서 하는건?
         product.setName(requestDTO.getName());

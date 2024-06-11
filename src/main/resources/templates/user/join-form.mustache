@@ -35,7 +35,7 @@
                         <td>
                             <input id="username" type="text" class="form-control text-secondary"
                                    placeholder="아이디를 입력하세요."
-                                   name="username" value="good">
+                                   name="username" value="ssar">
                         </td>
                         <!--아이디중복체크-->
                         <td class="pl-10">
@@ -164,14 +164,16 @@
             url: "/api/username-same-check?username=" + username,
             type: "get"
         }).done((res) => {
+            // console.log("1" + res);
+
             if (res.body === true) {
                 isSameCheck = true;
                 alert("사용 가능한 아이디입니다.");
             } else {
                 isSameCheck = false;
-                alert("동일한 아이디가 존재합니다.");
             }
         }).fail((res) => {
+            console.log("2" + res);
             alert(res.responseJSON.msg);
         });
     }

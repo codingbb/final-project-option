@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket._core.errors;
 
+import com.example.finalprojectdtomarket._core.errors.exception.UkException;
 import com.example.finalprojectdtomarket._core.errors.exception2.ApiException400;
 import com.example.finalprojectdtomarket._core.util.ApiUtil;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,14 @@ public class MyApiExceptionHandler {
     public ResponseEntity<?> exApi400(ApiException400 e) {
 //        System.out.println(e.getMessage() + "잘 들어오나요??");
         ApiUtil<?> apiUtil = new ApiUtil<>(400, e.getMessage());
+        return new ResponseEntity<>(apiUtil, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(UkException.class)
+    public ResponseEntity<?> ukException(UkException e) {
+        System.out.println(e.getMessage() + "잘 들어오나요??");
+        ApiUtil<?> apiUtil = new ApiUtil<>(false, e.getMessage());
         return new ResponseEntity<>(apiUtil, HttpStatus.BAD_REQUEST);
     }
 

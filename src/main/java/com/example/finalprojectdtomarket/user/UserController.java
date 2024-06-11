@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.user;
 
+import com.example.finalprojectdtomarket._core.errors.exception.UkException;
 import com.example.finalprojectdtomarket._core.util.ApiUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +22,7 @@ public class UserController {
     // 회원가입
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
-        System.out.println("age 받나요? " + reqDTO);
+//        System.out.println("age 받나요? " + reqDTO);
         userService.joinUser(reqDTO);
         return "redirect:/login-form";
     }
@@ -39,7 +40,7 @@ public class UserController {
         if (user == null) { // 회원가입 해도 된다.
             return new ApiUtil<>(true);
         } else { // 회원가입 하면 안된다.
-            return new ApiUtil<>(false);
+            throw new UkException();
         }
     }
 
