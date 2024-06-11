@@ -1,6 +1,6 @@
 package com.example.finalprojectdtomarket.order;
 
-import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
+import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.cart.Cart;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.cart.CartResponse;

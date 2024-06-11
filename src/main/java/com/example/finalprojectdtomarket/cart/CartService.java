@@ -1,8 +1,8 @@
 package com.example.finalprojectdtomarket.cart;
 
-import com.example.finalprojectdtomarket._core.errors.exception.ApiException400;
-import com.example.finalprojectdtomarket._core.errors.exception.Exception400;
-import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
+import com.example.finalprojectdtomarket._core.errors.exception2.ApiException400;
+import com.example.finalprojectdtomarket._core.errors.exception2.Exception400;
+import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
 import com.example.finalprojectdtomarket.user.User;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Transactional(readOnly = true)

@@ -1,6 +1,6 @@
 package com.example.finalprojectdtomarket._core.errors;
 
-import com.example.finalprojectdtomarket._core.errors.exception.*;
+import com.example.finalprojectdtomarket._core.errors.exception2.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

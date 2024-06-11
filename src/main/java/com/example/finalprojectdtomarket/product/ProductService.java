@@ -1,19 +1,17 @@
 package com.example.finalprojectdtomarket.product;
 
 
-import com.example.finalprojectdtomarket._core.errors.exception.Exception404;
+import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.image.Image;
 import com.example.finalprojectdtomarket.image.ImageJPARepository;
-import com.example.finalprojectdtomarket.orderItem.OrderItemJPARepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

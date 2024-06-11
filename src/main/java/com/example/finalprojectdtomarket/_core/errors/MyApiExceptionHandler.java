@@ -1,14 +1,10 @@
 package com.example.finalprojectdtomarket._core.errors;
 
-import com.example.finalprojectdtomarket._core.errors.exception.ApiException400;
-import com.example.finalprojectdtomarket._core.errors.exception.Exception400;
+import com.example.finalprojectdtomarket._core.errors.exception2.ApiException400;
 import com.example.finalprojectdtomarket._core.util.ApiUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 // RuntimeException이 터지면 해당 파일로 오류가 모인다
