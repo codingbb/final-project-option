@@ -164,17 +164,13 @@
             url: "/api/username-same-check?username=" + username,
             type: "get"
         }).done((res) => {
-            // console.log("1" + res);
+            console.log("1" + res);
 
-            if (res.body === true) {
-                isSameCheck = true;
-                alert("사용 가능한 아이디입니다.");
-            } else {
-                isSameCheck = false;
-            }
+            isSameCheck = true;
+            alert("사용 가능한 아이디입니다.");
         }).fail((res) => {
             console.log("2" + res);
-            alert(res.responseJSON.msg);
+            isSameCheck = false;
         });
     }
 </script>
