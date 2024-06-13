@@ -1,8 +1,8 @@
 package com.example.finalprojectdtomarket.cart;
 
-import com.example.finalprojectdtomarket._core.errors.exception2.ApiException400;
-import com.example.finalprojectdtomarket._core.errors.exception2.Exception400;
-import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
+import com.example.finalprojectdtomarket._core.errors.exception.CartNotFoundException;
+import com.example.finalprojectdtomarket._core.errors.exception.OutOfStockException;
+import com.example.finalprojectdtomarket._core.errors.exception.ProductExistException;
 import com.example.finalprojectdtomarket.option.Option;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
 import com.example.finalprojectdtomarket.user.User;
@@ -64,7 +64,7 @@ public class CartService {
         //장바구니에 존재하지 않는 상품을 넣을 수도 있으니까
         for (CartRequest.saveDTO requestDTO : requestDTOs) {
             Option option = optionRepo.findById(requestDTO.getOptionId())
-                    .orElseThrow(() -> new Exception404("상품이 존재하지 않습니다"));
+                    .orElseThrow(() -> new ProductExistException());
 
             Cart cart = cartRepo.findByUserAndOption(sessionUser.getId(), requestDTO.getOptionId());
 
@@ -98,13 +98,13 @@ public class CartService {
             CartRequest.UpdateDTO cartMatching = requestDTOs.stream().filter(updateDTO ->
                     updateDTO.getCartId().equals(cart.getId()))
                     .findFirst()
-                    .orElseThrow(() -> new Exception400("장바구니 에러"));
+                    .orElseThrow(() -> new CartNotFoundException());
 
             cart.setOrderQty(cartMatching.getOrderQty());
             cart.setStatus(cartMatching.getStatus());
 
             if (cart.getOrderQty() > option.getQty()) {
-                throw new ApiException400("재고 부족! 구매 불가");
+                throw new OutOfStockException();
             }
 
 //            System.out.println("오더 큐티와이 2 " + cart.getOrderQty());

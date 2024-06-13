@@ -1,5 +1,6 @@
 package com.example.finalprojectdtomarket.order;
 
+import com.example.finalprojectdtomarket._core.errors.exception.ProductExistException;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.cart.Cart;
 import com.example.finalprojectdtomarket.cart.CartJPARepository;
@@ -68,7 +69,7 @@ public class OrderService {
         //오더 아이템 저장
         for (int i = 0; i < requestDTO.getOptionId().size(); i++) {
             Option option = optionRepo.findById(requestDTO.getOptionId().get(i))
-                    .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new ProductExistException());
 
             System.out.println("13. 없는 상품을 저장하려고 할 수도 있으니까 option을 findById 해주기");
 

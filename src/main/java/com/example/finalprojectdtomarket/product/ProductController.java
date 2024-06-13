@@ -82,7 +82,7 @@ public class ProductController {
     // 상품 save
     @PostMapping("/product/save")
     public String save(@ModelAttribute ProductRequest.SaveDTO requestDTO) {
-        System.out.println("save 확인" + requestDTO);
+//        System.out.println("save 확인" + requestDTO);
         productService.save(requestDTO);
 
         return "redirect:/";

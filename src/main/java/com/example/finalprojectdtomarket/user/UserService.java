@@ -2,6 +2,7 @@ package com.example.finalprojectdtomarket.user;
 
 
 import com.example.finalprojectdtomarket._core.errors.exception.LoginFailException;
+import com.example.finalprojectdtomarket._core.errors.exception.UserExistException;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception401;
 import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import jakarta.transaction.Transactional;
@@ -25,11 +26,11 @@ public class UserService {
 
     }
 
-    //회원정보 수정 페이지 없음
+    //회원정보 수정 페이지 뷰가 없음
     //회원정보수정
     public User findById(int id, UserRequest.UpdateDTO reqDTO) {
         User user = userRepo.findById(id)
-                .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new LoginFailException());
         user.setPassword(reqDTO.getPassword());
         return user; //더티체킹
 
@@ -55,7 +56,7 @@ public class UserService {
         System.out.println("10. UserService에 findUserId 실행함");
 
         User user = userRepo.findById(id)
-                .orElseThrow(() -> new Exception404("존재하지 않는 사용자 입니다"));
+                .orElseThrow(() -> new UserExistException());
 
         return user;
     }
