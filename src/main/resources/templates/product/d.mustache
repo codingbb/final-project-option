@@ -1,0 +1,90 @@
+<!--개인 로그인시-->
+
+<input type="hidden" name="productId" value="{{product.id}}">
+<input type="hidden" name="status" value="0">
+<div class="d-flex prodsav-W">
+    <!--상품 이미지-->
+    <div class="prodsave-L">
+        <div class="p-3 m-3 swiper-container">
+            <div class="swiper-wrapper">
+                {{#product.images}}
+                    <div class="d-flex justify-content-center align-items-center saveImg swiper-slide" id="profilePreview">
+                        <!-- 이미지를 표시하는 부분 업데이트로 가서 수정한다 -->
+                        <img src="/upload/{{img}}" style="max-width: 100%; max-height: 100%;">
+                    </div>
+                {{/product.images}}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+    <!--상품 이미지-->
+
+    <!--구매정보 체크-->
+    <div class="prodsave-R ml-10">
+        <!--상품 table-->
+        <table class="prod-info">
+            <!--상품명-->
+            <tr>
+                <th>상품명</th>
+                <td>
+                    <input id="name" name="name" type="text" class="form-control"
+                           value="{{product.name}}" disabled style="width: 100%">
+                </td>
+            </tr>
+            <!--상품명-->
+
+            <!--상품가격-->
+            <tr>
+                <th>상품가격</th>
+                <td colspan="2">
+                    <input name="price" id="allTotal" type="text" class="form-control price price-class"
+                           value="0" disabled style="width: 100%">
+                </td>
+            </tr>
+            <!--상품가격-->
+
+        </table>
+        <!--상품 table-->
+
+        <div class="stock-info" style="margin-left: 120px; color: gray">
+            #<span class="product-qty">{{product.categoryName}}</span>
+        </div>
+
+        <!--장바구니 btn-->
+        <div class="row pr-5 pt-5" style="">
+            <button class="btn btn-mint" onclick="checkList()" type="submit" height="36" radius="3">
+                <span class="">장바구니 담기</span>
+            </button>
+        </div>
+        <!--장바구니 btn-->
+
+    </div>
+    <!--구매정보 체크-->
+
+    <!--    옵션 선택 -->
+    <div class="option-container">
+        <ul class="list-group"
+            style="margin-left: 50px; width: 300px; margin-top: -140px; border-radius: 10px">
+            <b>옵션선택</b>
+            <li class="list-group-item flip" style="background-color: #2BB457; color: white">상품명 ▼</li>
+            {{#optionList}}
+                <li class="list-group-item panel" id="options{{id}}">
+                    {{optionName}} <span class="options{{id}}price-class"
+                                         data-price="{{price}}">({{price}})</span>
+                </li>
+            {{/optionList}}
+        </ul>
+
+        <div id="selectedOptions"></div>
+
+    </div>
+    <!--    옵션 선택 -->
+
+</div>
+
+<!-- 선택한 옵션이 표시될 곳 -->
+
+{{/isCheck}}
+<!--개인 로그인시-->

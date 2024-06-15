@@ -23,7 +23,7 @@ $(".panel").click(function () {
     //디자인 넣기
     if (!isOptionSelected) {
         let newElement = $(`<div class='selected-item' id='${optionId}' style="position: relative; padding-right: 30px;">
-                        ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-option-id="${optionId}" data-price="${price}">${price}</span>
+                        ${optionName} - <span id="${optionId}price-class" class="${optionId}price-class price-class" data-option-id="${optionId}" data-price="${price}">${formatPrice(price)}</span>
 
                         <button type="button" class="remove-option" aria-label="옵션 삭제" style="position: absolute; top: 0; right: 15px; background-color: transparent; border: none; cursor: pointer; color: black; font-size: 20px;">x</button>
 
@@ -63,9 +63,13 @@ $(".panel").click(function () {
 
             let price = $(`.${optionId}price-class`).data("price");
             // console.log("가격 " + price);
+            // 천 단위 구분자를 제거합니다.
+            let priceText = price.toString().replace(/,/g, '');
+            // 숫자로 변환합니다.
+            let priceValue = parseInt(priceText, 10);
 
-            let total = orderQty * price;
-            $(`#${optionId}price-class`).text(total);
+            let total = orderQty * priceValue;
+            $(`#${optionId}price-class`).text(formatPrice(total));
             // console.log("토탈" + total)
 
             updateTotal();
@@ -80,9 +84,17 @@ $(".panel").click(function () {
         });
 
     }
+
     $("#selectedOptions").show();
 
 });
+
+// 천단위 구분자 추가 함수
+function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
 
 //재사용 위해서 뺌
 function updateTotal() {
@@ -92,6 +104,7 @@ function updateTotal() {
         // console.log("변환 전 텍스트: ", $(this).text());
 
         let priceText = $(this).text().trim();
+        priceText = priceText.replace(/,/g, '');
         // 숫자로 시작하는 부분을 찾아서 변환합니다.
         let matches = priceText.match(/\d+/);
         let priceTotal = 0;
@@ -102,7 +115,8 @@ function updateTotal() {
         allTotal += priceTotal;
     });
 
-    $("#allTotal").val(allTotal);
+    let formattedTotal = allTotal.toLocaleString();
+    $("#allTotal").val(formattedTotal);
 
 }
 
