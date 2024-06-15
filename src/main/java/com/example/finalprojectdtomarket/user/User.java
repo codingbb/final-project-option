@@ -46,21 +46,25 @@ public class User {
     @Column
     private String gender;  // male / female
 
+    //oauth
+    private String provider;
+
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
     @Builder
-    public User(Integer id, String password, String username, String phone, String email, Integer age, LocalDate birth, Integer role, String personName, String gender, Timestamp createdAt) {
+    public User(Integer id, String password, String username, String personName, String phone, String email, LocalDate birth, Integer age, Integer role, String gender, String provider, Timestamp createdAt) {
         this.id = id;
         this.password = password;
         this.username = username;
+        this.personName = personName;
         this.phone = phone;
         this.email = email;
-        this.age = age;
         this.birth = birth;
+        this.age = age;
         this.role = role;
-        this.personName = personName;
         this.gender = gender;
+        this.provider = provider;
         this.createdAt = createdAt;
     }
 }

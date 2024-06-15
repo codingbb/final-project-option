@@ -5,7 +5,14 @@ import com.example.finalprojectdtomarket._core.errors.exception.LoginFailExcepti
 import com.example.finalprojectdtomarket._core.errors.exception.UserExistException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Service
@@ -57,5 +64,54 @@ public class UserService {
                 .orElseThrow(() -> new UserExistException());
 
         return user;
+    }
+
+    public User kakaoLogin(String code) {
+        // 1.1 RestTemplate 설정
+        RestTemplate rt = new RestTemplate();
+
+
+        // 1.2 http header 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // 1.3 http body 설정
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", "a09e968e05cf3368fa5d3c415043fcab");
+        body.add("redirect_uri", "http://localhost:8080/oauth/callback");
+        body.add("code", code);
+
+        // 1.4 body+header 객체 만들기
+        HttpEntity<MultiValueMap<String, String>> request =
+                new HttpEntity<>(body, headers);
+
+        // 1.5 api 요청하기 (토큰 받기)
+        ResponseEntity<KakaoResponse.TokenDTO> response = rt.exchange(
+                "https://kauth.kakao.com/oauth/token",
+                HttpMethod.POST,
+                request,
+                KakaoResponse.TokenDTO.class);
+
+        // 1.6 값 확인
+        System.out.println(response.getBody().toString());
+
+        // 2. 토큰으로 사용자 정보 받기 (PK, Email)
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers2.add("Authorization", "Bearer "+response.getBody().getAccessToken());
+
+        HttpEntity<MultiValueMap<String, String>> request2 =
+                new HttpEntity<>(headers2);
+
+        ResponseEntity<KakaoResponse.KakaoUserDTO> response2 = rt.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.GET,
+                request2,
+                KakaoResponse.KakaoUserDTO.class);
+
+        System.out.println("response2 : "+response2.getBody().toString());
+
+        return null;
     }
 }

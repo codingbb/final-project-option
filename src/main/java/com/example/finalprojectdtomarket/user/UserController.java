@@ -19,6 +19,15 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    // http://localhost:8080/oauth/callback?code=3u9fk
+    @GetMapping("/oauth/callback")
+    public String oauthCallback(String code) {
+        System.out.println("콜백 " + code);
+        User sessionUser = userService.kakaoLogin(code);
+        session.setAttribute("sessionUser", sessionUser);
+        return "redirect:/";
+    }
+
     // 회원가입
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
