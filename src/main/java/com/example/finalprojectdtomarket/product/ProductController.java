@@ -138,7 +138,7 @@ public class ProductController {
 //        System.out.println("아이디 " + id);
         productService.deleteProduct(id);
 
-        return "redirect:/product-list";
+        return "redirect:/";
     }
 
 

@@ -3,10 +3,12 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket._core.errors.exception.CategoryExistException;
 import com.example.finalprojectdtomarket._core.errors.exception.ProductExistException;
+import com.example.finalprojectdtomarket.cart.CartJPARepository;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.image.Image;
 import com.example.finalprojectdtomarket.image.ImageJPARepository;
+import com.example.finalprojectdtomarket.option.OptionJPARepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -22,6 +24,8 @@ public class ProductService {
     private final ProductJPARepository productRepo;
     private final CategoryJPARepository categoryRepo;
     private final ImageJPARepository imageRepo;
+    private final OptionJPARepository optionRepo;
+    private final CartJPARepository cartRepo;
 
 
     //상품 삭제하기
@@ -32,10 +36,9 @@ public class ProductService {
 
         //근데 admin 1명 밖에 없어서 삭제 권한 여부 확인할 필요 없지않나? -> 생략함
 
-        //orderItem이랑 cart에 있다고 제약조건 걸리는건 좀 이상한듯
-//        cartRepo.deleteByProductId(productId);
-        //TODO : 이거 다시 터짐
-//        orderItemRepo.deleteByProductId(productId);
+        cartRepo.deleteByProductId(productId);
+        optionRepo.deleteByProductId(productId);
+        imageRepo.deleteByProductId(productId);
         productRepo.deleteByProductId(productId);
 
     }

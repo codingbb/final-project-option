@@ -15,4 +15,8 @@ public interface OptionJPARepository extends JpaRepository<Option, Integer> {
     @Query("select o from Option o where o.product.id = :productId")
     List<Option> findOption(Sort sort, @Param("productId") Integer productId);
 
+    @Modifying(clearAutomatically = true)
+    @Query("delete from Option o where o.product.id = :productId")
+    void deleteByProductId(@Param("productId") Integer productId);
+
 }
