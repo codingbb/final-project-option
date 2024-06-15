@@ -3,8 +3,6 @@ package com.example.finalprojectdtomarket.user;
 
 import com.example.finalprojectdtomarket._core.errors.exception.LoginFailException;
 import com.example.finalprojectdtomarket._core.errors.exception.UserExistException;
-import com.example.finalprojectdtomarket._core.errors.exception2.Exception401;
-import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,6 @@ package com.example.finalprojectdtomarket.product;
 
 import com.example.finalprojectdtomarket._core.errors.exception.CategoryExistException;
 import com.example.finalprojectdtomarket._core.errors.exception.ProductExistException;
-import com.example.finalprojectdtomarket._core.errors.exception2.Exception404;
 import com.example.finalprojectdtomarket.category.Category;
 import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.image.Image;
@@ -94,13 +93,16 @@ public class ProductService {
     @Transactional
     public List<ProductResponse.IndexDTO> findProductAndImgAll(String keyword) {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        List<Product> productList = productRepo.findAll(sort);
+//        List<Product> productList = productRepo.findAll(sort);
 //        System.out.println("productList = " + productList);
 
-        List<Image> imageList = imageRepo.findAll();
+        List<Product> productList = productRepo.findKeyword(keyword);
+        List<ProductResponse.IndexDTO> indexDTOList = productList.stream().map(product ->
+                new ProductResponse.IndexDTO(product)).toList();
+//        List<Image> imageList = imageRepo.findAll();
 //        System.out.println("imageList = " + imageList);
 
-        return null;
+        return indexDTOList;
     }
 
 
