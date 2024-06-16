@@ -25,16 +25,16 @@ public class User {
     @Column(unique = true)
     private String username;  //아이디
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String personName;  //성함
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String phone;     //폰번호
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String email;     //이메일
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private LocalDate birth;       //생년월일
 
     @Column

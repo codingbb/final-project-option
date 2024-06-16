@@ -122,7 +122,7 @@ public class ProductController {
         } else {
             // 이미지 파일이 없을 경우, 기존 파일명 유지
             ProductResponse.UpdateDTO existImg = productService.findByIdUpdate(id);
-            imgFileName = existImg.getImg(); // 기존의 imgFileName을 가져와서 사용
+            imgFileName = existImg.getImages().get(0).getImg(); // 기존의 imgFileName을 가져와서 사용
 
         }
 

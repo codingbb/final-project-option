@@ -128,8 +128,9 @@ public class ProductService {
                 .orElseThrow(() -> new ProductExistException());
 
         Product newProduct = productRepo.findByIdWithCategory(product.getId());
+        List<Image> images = imageRepo.findAll();
 
-        return new ProductResponse.UpdateDTO(newProduct);
+        return new ProductResponse.UpdateDTO(newProduct, images);
 
     }
 

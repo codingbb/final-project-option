@@ -107,18 +107,31 @@ public class ProductResponse {
         private Integer qty;
         private Integer categoryId;
         private String categoryName;
-        private String img;
 
-        public UpdateDTO(Product product) {
+        private List<ImageDTO> images = new ArrayList<>();
+
+        public UpdateDTO(Product product, List<Image> images) {
             this.id = product.getId();
             this.name = product.getName();
 
             this.categoryId = product.getCategory().getId();
             this.categoryName = product.getCategory().getCategoryName();
-            //TODO: 이미지
-//            this.img = product.getImg();
+            this.images = images.stream().filter(image ->
+                            image.getProduct().getId().equals(product.getId()))
+                    .map(image -> new UpdateDTO.ImageDTO(image)).toList();
         }
+
+        @Data
+        public class ImageDTO {
+            private String img;
+
+            public ImageDTO(Image img) {
+                this.img = img.getFilePath();
+            }
+        }
+
     }
+
 
 
 }

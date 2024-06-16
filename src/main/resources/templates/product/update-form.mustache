@@ -8,13 +8,14 @@
             <div class="prodsave-L">
                 <div class="p-3 m-3">
                     <div class="row">
+                        {{#product.images}}
                         <div class="d-flex justify-content-center align-items-center saveImg"
                              style=""
                              id="profilePreview">
-                            <img src="/upload/{{product.img}}" style="width: 100%">
+                            <img src="/upload/{{img}}" style="width: 100%">
                             <!--<img class="card-img-top" src="/images/prod_2.jpg" alt="Card image" style="width:100%">-->
-
                         </div>
+                        {{/product.images}}
                         <!-- 파일 업로드 입력 필드 -->
                         <input type="file" id="imageUpload" name="img"
                                class="real-upload mx-auto d-block mt-2 w-50 h-50" accept="image/*">
@@ -40,7 +41,7 @@
                         <tr>
                             <th>상품가격</th>
                             <td>
-                                <input name="price" type="text" class="form-control price price-class" value="{{product.price}}">
+                                <input name="price" type="text" class="form-control price price-class" value="0">
                             </td>
                         </tr>
                         <!--상품가격-->
@@ -49,7 +50,7 @@
                         <tr>
                             <th>상품수량</th>
                             <td>
-                                <input name="qty" type="number" class="form-control price" value="{{product.qty}}">
+                                <input name="qty" type="number" class="form-control price" value="0">
                             </td>
                         </tr>
                         <!--상품수량-->

@@ -14,6 +14,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -70,7 +72,6 @@ public class UserService {
         // 1.1 RestTemplate 설정
         RestTemplate rt = new RestTemplate();
 
-
         // 1.2 http header 설정
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -110,8 +111,37 @@ public class UserService {
                 request2,
                 KakaoResponse.KakaoUserDTO.class);
 
-        System.out.println("response2 : "+response2.getBody().toString());
+        System.out.println("response2 : " + response2.getBody().toString());
 
-        return null;
+        // 3. 해당정보로 DB조회 (있을수, 없을수)
+        String username = "kakao_" + response2.getBody().getId();
+        User userPS = userRepo.findByUsername(username);
+
+        // 4. 있으면? - 조회된 유저정보 리턴
+        if(userPS != null){
+            System.out.println("강제로그인 진행");
+            return userPS;
+
+        }else{
+            System.out.println("강제 회원가입 and 강제 로그인 진행");
+            // 5. 없으면? - 강제 회원가입
+            // 유저네임 : (provider_pk)
+            // 비밀번호 : UUID
+            // 이메일 : email 받은 값
+            // 프로바이더 : kakao
+            User user = User.builder()
+                    .username(username)
+                    .password(UUID.randomUUID().toString())
+                    .email(response2.getBody().getProperties().getNickname()+"@nate.com")
+                    .provider("kakao")
+                    .role(2)
+                    .personName(response2.getBody().getProperties().getNickname())
+                    .phone(response2.getBody().getProperties().getNickname())
+                    .build();
+
+            User returnUser = userRepo.save(user);
+            return returnUser;
+        }
+
     }
 }

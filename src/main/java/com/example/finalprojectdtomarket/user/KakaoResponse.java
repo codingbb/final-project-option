@@ -1,9 +1,10 @@
 package com.example.finalprojectdtomarket.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class KakaoResponse {
 
