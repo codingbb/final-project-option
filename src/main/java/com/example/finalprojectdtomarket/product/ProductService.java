@@ -9,7 +9,7 @@ import com.example.finalprojectdtomarket.category.CategoryJPARepository;
 import com.example.finalprojectdtomarket.image.Image;
 import com.example.finalprojectdtomarket.image.ImageJPARepository;
 import com.example.finalprojectdtomarket.option.OptionJPARepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class ProductService {
@@ -110,10 +110,14 @@ public class ProductService {
 
 
     //상품 목록보기
-    public List<Product> findAll() {
+    public List<ProductResponse.adminListDTO> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<Product> productList = productRepo.findAll(sort);
-        return productList;
+
+        List<ProductResponse.adminListDTO> adminListDTO = productList.stream().map(product ->
+                new ProductResponse.adminListDTO(product)).toList();
+
+        return adminListDTO;
     }
 
     //키워드 용

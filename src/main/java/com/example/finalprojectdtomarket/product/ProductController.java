@@ -29,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/product-list")
     public String productList(HttpServletRequest request) {
-        List<Product> productList = productService.findAll();
+        List<ProductResponse.adminListDTO> productList = productService.findAll();
         request.setAttribute("productList", productList);
 
         return "/product/product-list";

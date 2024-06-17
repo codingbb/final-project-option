@@ -16,6 +16,23 @@ import java.util.List;
 public class ProductResponse {
 
     @Data
+    public static class adminListDTO {
+        private Integer id;     // productId
+        private String name;
+        private Integer price;  // 뿌릴용.. price ...
+
+        // img는 경로만 있으면 됨
+        private String img;
+
+        public adminListDTO(Product product) {
+            this.id = product.getId();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.img = product.getImages().get(0).getFilePath();
+        }
+    }
+
+    @Data
     public static class IndexDTO {
         private Integer id;     // productId
         private String name;

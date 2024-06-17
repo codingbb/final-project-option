@@ -23,4 +23,6 @@ public interface ProductJPARepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p join fetch p.images i order by p.id DESC")
     List<Product> findAllWithImages();
+
+
 }
