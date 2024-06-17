@@ -5,7 +5,7 @@
 </a>
 
 ### DTO Market - 과일의 신선함을 제공하는 쇼핑몰 사이트
-기간 : 2024.05.01 ~ 2024.05.20 ( 총 20일 ) <br>
+기간 : 2024.04.22 ~ 2024.05.20 ( 총 28일 ) <br>
 <div style="display: flex; align-items: flex-start;">
   <a href ="https://github.com/yuzusim/finalproject-dtomarket">
     <img src="https://img.shields.io/badge/githube-181717?style=for-the-badge&logo=github&logoColor=white">
@@ -34,33 +34,22 @@ ___
     </td>
     <td align="center">
       <p align="start">
-      - 구매자 로그인 페이지 디자인 및 퍼블리싱 <br>
-      - 구매자 회원가입 디자인 및 퍼블리싱<br>
-      - 구매자 회원가입수정 디자인 및 퍼블리싱<br>
-      - 판매자 메인 페이지 및 애니메이션 <br> 
-        구동 퍼블리싱<br>
-      - 판매자 상품 상세 디자인 및 퍼블리싱<br>
-      - 판매자 상품 등록 디자인 및 퍼블리싱<br>
-      - 판매자 상품 수정, 삭제 디자인 및 퍼블리싱<br>
-      - 장바구니 목록 디자인 및 퍼블리싱<br>
-      - 내 주문현황보기 디자인 및 퍼블리싱<br>
-      - 내 구매 목록보기 디자인 및 퍼블리싱<br>
-      - 헤더에 검색바 라이브러리 셋팅 <br>
-        스크립트 컴포넌트 되게 코딩
-      </p>    
+      - 카카오톡 OAuth 로그인<br>
+      - 일반 User 회원가입<br>
+      - 판매자 상품 삭제<br> 
+      - 상품 검색 기능<br>
+      - 상품 주문하기 <br>
+      - 상품 주문 취소하기<br>
+      - 상품 옵션 다중 선택 및 장바구니 담기<br>
+      - 판매자 상품 멀티 이미지 (최대 4개) 등록<br>
+      </p>
     </td>
     <td align="center">
       <p align="start">
-      - 구매자 회원가입 수정<br>
-      - 판매자 상품 목록<br>
-      - 판매자 상품 등록<br>
-      - 로그인 관리자, 구매자,<br> 
-        비회원 헤더 설정<br>
-      - 장바구니 목록 <br>
-      - 장바구니 체크 박스 전송<br>
-      - 장바구니 업데이트 (ajax)<br>
-      - 주문 상품 목록
-      </p>
+      - 상품 상세 옵션 디자인 및 퍼블리싱 <br>
+      - 구매자 주문 폼 디자인 및 퍼블리싱<br>
+      - 내 구매 목록 디자인 및 퍼블리싱
+      </p> 
     </td>
   </tr>
 </table>
